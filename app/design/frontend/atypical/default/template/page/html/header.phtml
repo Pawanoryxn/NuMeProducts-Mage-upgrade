@@ -1,0 +1,225 @@
+<?php
+/**
+ *
+ * This file is part of the GPMD Magento Responsive Theme.
+ *
+ * The GPMD Magento Responsive Theme is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * The GPMD Magento Responsive Theme is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with the GPMD Magento Responsive Theme. If not, see
+ * http://www.gnu.org/licenses/.
+ *
+ * @category    GPMD
+ * @package     GPMD_Responsive_Theme
+ * @copyright   Copyright (c) 2012 GPMD.
+ * @author      Matt Bailey @GPMD LTD
+ */
+?>
+<?php
+$pageRoute = Mage::app()->getRequest()->getRouteName();
+$pageId = Mage::getSingleton('cms/page')->getIdentifier();
+$productPage  = Mage::registry('product');
+$categoryPage = Mage::registry('current_category');
+if (isset($_GET["subid"])){
+	$subId = $_GET["subid"];
+	Mage::getSingleton('core/session')->setSubId($subId);
+}
+?>
+<!-- header.phtml -->
+		<div class="storechanger">
+			<ul>
+				<li class="numestore"></li>
+				<li class="bellettostore"></li>
+				<li class="tumistore"></li>
+				<li class="guccistore"></li>
+				<li class="pradastore"></li>
+				<li class="rolexstore"></li>
+			</ul>
+		</div>
+	<div class="header">
+		<div class="top-bar">
+			<div class="container">
+				<ul class="top-bar-menu1">
+					<?php if (Mage::getSingleton('customer/session')->isLoggedIn()) { 
+					$customer = Mage::getSingleton('customer/session')->getCustomer();
+					?>
+					<li>Hi <strong><?php echo $customer->getFirstname(); ?>!</strong></li>
+					<?php }else{ ?>
+					<!-- <li>Hi <strong>Stranger!</strong></li> -->
+					<!-- <li><a href="<?php //echo Mage::helper('core/url')->getHomeUrl(); ?>">Home</a></li> -->
+					<?php } ?>
+					<li><a href="<?php echo Mage::helper('customer')->getLoginUrl(); ?>">My Account</a></li>
+					<!-- <li><a href="#">Wish List <img src="<?php //echo $this->getSkinUrl('images/arrow1.png') ?>" alt="" /></a></li> -->
+					<!-- <li><a href="#">Points <strong>563</strong><img src="<?php //echo $this->getSkinUrl('images/heart-icon.png') ?>" alt="" /></a></li> -->
+					<?php if($this->helper('customer')->isLoggedIn()): ?>
+						<li><a href="<?php echo Mage::helper('customer')->getLogoutUrl();?>">Logoff</a></li>
+					<?php endif; ?>
+				</ul>
+				<ul class="top-bar-menu2">
+					<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('topright-menu')->toHtml() ?>
+				</ul>
+			</div><!-- /container -->
+		</div><!-- /top-bar -->
+
+		<div class="head-main">
+			<div class="main-nav">
+				<nav id="navigation">
+					<ul id="main-menu">
+						<li class="shop"><a href="#" class="show_hide">SHOP</a></li>
+						<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('main-menu')->toHtml() ?>
+					</ul>
+				</nav>
+				<div class="hed-right">
+					<div class="search-icon"><a href="#"><img src="<?php echo $this->getSkinUrl('images/assets/search-icon.png') ?>" alt="" /></a></div>
+					<div class="shipping-icon">
+						<a href="<?php echo $this->getUrl('checkout/cart')?>">
+							<img src="<?php echo $this->getSkinUrl('images/shopping-cart.png') ?>" alt="" />
+							<?php if($this->helper('checkout/cart')->getSummaryCount()): ?><span><?php echo $this->helper('checkout/cart')->getSummaryCount(); ?></span><?php endif; ?>
+						</a>
+					</div>
+				</div><!-- /hed-right -->
+			</div><!-- /main-nav -->
+			
+		</div><!-- /head-main -->
+
+	</div><!-- /header -->
+
+	<div class="slider-container">
+		<?php if($this->getIsHomePage()): ?>
+		<div class="shop-product-main slidingDiv" style="position:absolute;"><!-- /home -->
+			<div class="shop-product-new">
+				<div class="container">
+					<div class="shop-new-product">
+						<ul id="menu-nav" class="menu">
+							<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('shop-menu')->toHtml() ?>
+						</ul>
+					</div><!-- /shop-new-product -->
+				</div><!-- /container -->
+			</div><!-- /shop-product-new -->
+		</div>
+		<div class="flexslider">
+			<ul class="slides">
+				<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('home-slider')->toHtml() ?>
+			</ul>
+		</div>
+		<?php elseif ($productPage || $categoryPage): ?>
+		<div class="shop-product-main slidingDiv" style="position:absolute;z-index:100;"><!-- /nothome -->
+			<div class="shop-product-new">
+				<div class="container">
+					<div class="shop-new-product">
+						<ul id="menu-nav" class="menu" >
+							<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('shop-menu')->toHtml() ?>
+						</ul>
+					</div><!-- /shop-new-product -->
+				</div><!-- /container -->
+			</div><!-- /shop-product-new -->
+		</div>
+		<div class="flexslider">
+			<ul class="slides">
+				<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('product-slider')->toHtml() ?>
+			</ul>
+		</div>
+		<?php elseif (Mage::app()->getFrontController()->getRequest()->getRouteName() == 'cms'): ?>
+		<div class="shop-product-main slidingDiv" style="position:absolute;z-index:100;"><!-- /nothome -->
+			<div class="shop-product-new">
+				<div class="container">
+					<div class="shop-new-product">
+						<ul id="menu-nav" class="menu" >
+							<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('shop-menu')->toHtml() ?>
+						</ul>
+					</div><!-- /shop-new-product -->
+				</div><!-- /container -->
+			</div><!-- /shop-product-new -->
+		</div>
+		<div class="flexslider">
+			<ul class="slides">
+				<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('product-slider')->toHtml() ?>
+			</ul>
+		</div>
+		<?php else: ?>
+		<div class="shop-product-main slidingDiv" style="position:absolute;z-index:100;"><!-- /nothome -->
+			<div class="shop-product-new">
+				<div class="container">
+					<div class="shop-new-product">
+						<ul id="menu-nav" class="menu" >
+							<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('shop-menu')->toHtml() ?>
+						</ul>
+					</div><!-- /shop-new-product -->
+				</div><!-- /container -->
+			</div><!-- /shop-product-new -->
+		</div><!-- /shop-product-main -->
+		<div class="flexslider-blank isUp"></div>
+		<?php endif; ?>
+
+		<div class="top-bar2 desktop">
+			<div class="container">
+				<?php //if($this->helper('customer')->isLoggedIn() && !$this->getIsHomePage()): ?>
+<!-- 				<ul class="nav" id="nav-main" style="display:none;">
+					<li><a href="<?php //echo Mage::getUrl('customer/account'); ?>">ACCOUNT DASHBOARD</a></li>
+					<li><a href="<?php //echo Mage::getUrl('sales/order/history'); ?>">MY ORDERS</a></li>
+					<li><a href="<?php //echo Mage::getUrl('review/customer'); ?>">MY REVIEWS</a></li>
+					<li><a href="<?php //echo Mage::getUrl('wishlist'); ?>">MY WISHLIST</a></li>
+					<li><a href="<?php //echo Mage::getUrl('affiliates'); ?>">AFFILIATES</a></li>
+					<li><a href="<?php //echo Mage::getUrl('customer/account/logoff'); ?>">LOGOFF</a></li>
+				</ul> -->
+				<?php //else: ?>
+				<ul class="nav" id="nav-main" style="display:none;">
+					<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('home-slider-links')->toHtml() ?>
+				</ul>
+				<?php //endif; ?>
+				<ul class="flex-control-nav"></ul>
+				<ul class="social-box">
+					<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('social-block')->toHtml() ?>
+				</ul>
+			</div>
+		</div>
+
+		<div class="top-bar2 mobile">
+			<ul class="shop-parent">
+				<li class="menu-parent"><a href="#">Shop <span>+</span></a></li>
+				<ul class="nav" id="nav-main">
+					<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('home-slider-links')->toHtml() ?>
+				</ul>
+			</ul>
+			<?php if($this->helper('customer')->isLoggedIn()): ?>
+			<ul class="account-parent">
+				<li class="menu-parent"><a href="#">Account <span>+</span></a></li>
+				<ul class="nav" id="nav-main">
+					<li><a href="<?php echo Mage::getUrl('customer/account'); ?>">ACCOUNT DASHBOARD</a></li>
+					<li><a href="<?php echo Mage::getUrl('sales/order/history'); ?>">MY ORDERS</a></li>
+					<li><a href="<?php echo Mage::getUrl('review/customer'); ?>">MY REVIEWS</a></li>
+					<li><a href="<?php echo Mage::getUrl('wishlist'); ?>">MY WISHLIST</a></li>
+					<li><a href="<?php echo Mage::getUrl('affiliates'); ?>">AFFILIATES</a></li>
+					<li><a href="<?php echo Mage::getUrl('customer/account/logoff'); ?>">LOGOFF</a></li>
+				</ul>
+			</ul>
+			<?php endif; ?>
+			<ul class="shop-categories">
+				<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('main-menu')->toHtml() ?>
+			</ul>
+			<ul class="topright-menu">
+				<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('topright-menu')->toHtml() ?>
+			</ul>
+			<div class="social">
+				<ul class="social-box">
+					<?php echo $this->getLayout()->createBlock('zblocks/block')->setPosition('social-block')->toHtml() ?>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+<?php //echo $this->getChildHtml('jumpToMenu') ?>
+<?php //echo $this->getChildHtml('topSearch') ?>
+<?php //echo $this->getChildHtml('topLinks') ?>
+<?php //echo $this->getChildHtml('store_language') ?>
+<?php //echo $this->getChildHtml('topContainer'); ?>
+<?php //echo $this->getChildHtml('topMenu') ?>
+

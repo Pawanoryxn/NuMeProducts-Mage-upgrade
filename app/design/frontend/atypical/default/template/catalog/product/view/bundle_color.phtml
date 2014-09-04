@@ -1,0 +1,41 @@
+<?php
+
+$prodid=$_REQUEST['product_id'];
+$product = Mage::getModel('catalog/product')->load($prodid);
+
+
+$bundled_product = new Mage_Catalog_Model_Product();
+	$bundled_product->load($prodid);
+	$selectionCollection = $bundled_product->getTypeInstance(true)->getSelectionsCollection(
+		$bundled_product->getTypeInstance(true)->getOptionsIds($bundled_product), $bundled_product
+	);
+	$bundled_items = array();
+	foreach($selectionCollection as $option)
+	{
+		$bundled_items[] = $option->product_id;
+	}
+	
+
+
+	foreach($bundled_items as $bundle) {
+		$product = Mage::getModel('catalog/product')->load($bundle);
+		$product_color[] = $product->getResource()->getAttribute('product_color')->getFrontend()->getValue($product);
+	}
+
+	$res=array_unique($product_color); 
+	
+
+	$str="<div id='bundle-color'><select id='bundle-colors' name='bundle-color' class='bundle-option-select change-container-classname'>
+	<option value=''>Color Tone</option>";
+	 foreach($res as $key=>$value) { 
+		$str.= "<option value='".$key."'>".$value."</option>";
+	} 
+	  $str.= "</select></div>";
+	
+	echo  $str;
+?>
+
+
+
+
+

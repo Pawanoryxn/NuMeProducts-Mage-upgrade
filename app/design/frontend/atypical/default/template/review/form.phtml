@@ -1,0 +1,186 @@
+<?php
+/**
+ *
+ * This file is part of the GPMD Magento Responsive Theme.
+ *
+ * The GPMD Magento Responsive Theme is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * The GPMD Magento Responsive Theme is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with the GPMD Magento Responsive Theme. If not, see
+ * http://www.gnu.org/licenses/.
+ *
+ * @category    GPMD
+ * @package     GPMD_Responsive_Theme
+ * @copyright   Copyright (c) 2012 GPMD.
+ * @author      Matt Bailey @GPMD LTD
+ */
+?>
+<div class="form-add" style="display:none;">
+    <h3><?php echo $this->__('Write Your Own Review') ?></h3>
+    <?php if ($this->getAllowWriteReviewFlag()): ?>
+    <!-- <form action="<?php echo $this->getAction() ?>" method="post" id="review-form"> -->
+        <!-- Messes with responsive layouts -->
+        <!--<fieldset>-->
+            <?php echo $this->getChildHtml('form_fields_before')?>
+            <h4><?php echo $this->__("You're reviewing:"); ?> <span style="color: #ff007a;"><?php echo $this->htmlEscape($this->getProductInfo()->getName()) ?></span></h4>
+            <?php if( $this->getRatings() && $this->getRatings()->getSize()): ?>
+                <h5><?php echo $this->__('How do you rate this product?') ?> <em class="required">*</em></h5>
+                <div>
+		            <table class="data-table" id="product-review-table">
+		                <col width="2" />
+		                <col width="2" />
+		                <col width="2" />
+		                <col width="2" />
+		                <col width="2" />
+		                <thead>
+		                    <tr>
+		                        <th><span class="nobr"><?php echo $this->__('1') ?></span></th>
+		                        <th><span class="nobr"><?php echo $this->__('2') ?></span></th>
+		                        <th><span class="nobr"><?php echo $this->__('3') ?></span></th>
+		                        <th><span class="nobr"><?php echo $this->__('4') ?></span></th>
+		                        <th><span class="nobr"><?php echo $this->__('5') ?></span></th>
+		                    </tr>
+		                </thead>
+		                <tbody>
+		                <?php foreach ($this->getRatings() as $_rating): ?>
+		                    <tr>
+		                        
+		                    <?php foreach ($_rating->getOptions() as $_option): ?>
+		                        <td class="value"><input type="radio" name="ratings[<?php echo $_rating->getId() ?>]" id="<?php echo $this->escapeHtml($_rating->getRatingCode()) ?>_<?php echo $_option->getValue() ?>" value="<?php echo $_option->getId() ?>" class="radio ratingid" checked /></td>
+		                    <?php endforeach; ?>
+		                    </tr>
+		                <?php endforeach; ?>
+		                </tbody>
+		            </table>
+                </div>
+                <?php echo $this->getBlockHtml('formkey'); ?>
+                <input type="hidden" name="validate_rating" class="validate-rating" value="" />
+                <script type="text/javascript">decorateTable('product-review-table')</script>
+            <?php endif; ?>
+                <ul class="form-list">
+                    <li>
+                        <label for="nickname_field" class="required"><em>*</em><?php echo $this->__('Nickname') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="nickname" id="nickname_field" class="input-text required-entry" value="<?php echo $this->htmlEscape($data->getNickname()) ?>" />
+                        </div>
+                    </li>
+                    <li>
+                        <label for="summary_field" class="required"><em>*</em><?php echo $this->__('Summary of Your Review') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="title" id="summary_field" class="input-text required-entry" value="<?php echo $this->htmlEscape($data->getTitle()) ?>" />
+                        </div>
+                    </li>
+                    <li>
+                        <label for="review_field" class="required"><em>*</em><?php echo $this->__('Review') ?></label>
+                        <div class="input-box">
+                            <textarea name="detail" id="review_field" cols="5" rows="3" class="required-entry"><?php echo $this->htmlEscape($data->getDetail()) ?></textarea>
+                        </div>
+                    </li>
+                </ul>
+            <!--</fieldset>-->
+            <div id="reviewloading" class="loadinghide"></div>
+            <div class="buttons-set">
+                <button type="submit" title="<?php echo $this->__('Submit Review') ?>" class="addcart" id="submitreviewa"><span><span><?php echo $this->__('Submit Review') ?></span></span></button>
+            </div>
+            <div id="input-message-box"></div>
+    <!-- </form> -->
+    <script type="text/javascript">
+    //<![CDATA[
+        var dataForm = new VarienForm('review-form');
+        Validation.addAllThese(
+        [
+               ['validate-rating', '<?php echo $this->__('Please select one of each of the ratings above') ?>', function(v) {
+                    var trs = $('product-review-table').select('tr');
+                    var inputs;
+                    var error = 1;
+    
+                    for( var j=0; j < trs.length; j++ ) {
+                        var tr = trs[j];
+                        if( j > 0 ) {
+                            inputs = tr.select('input');
+    
+                            for( i in inputs ) {
+                                if( inputs[i].checked == true ) {
+                                    error = 0;
+                                }
+                            }
+    
+                            if( error == 1 ) {
+                                return false;
+                            } else {
+                                error = 1;
+                            }
+                        }
+                    }
+                    return true;
+                }]
+        ]
+        );
+
+
+
+		
+jQuery('#submitreviewa').on('click', function(){
+	var nickname = jQuery('#nickname_field').val();
+            var validate_rating = jQuery('.validate-rating').val();
+	var summary_field =jQuery('#summary_field').val();
+	var review_field = jQuery('#review_field').val();
+	var ratingvalues = jQuery('.ratingid:checked').val();
+	var form_key = jQuery("input[name=form_key]").val();
+	var ratingvalue = [ ratingvalues, ratingvalues ];
+	if(nickname == '' && summary_field == '' && review_field == '')
+
+	{
+		jQuery('#input-message-box').html("All Fields Required");
+	}else
+	{
+	jQuery("#reviewloading").removeClass('loadinghide').addClass('loadingblockdata');
+	jQuery.ajax({
+		  type: "POST",
+		  url: "<?php echo $this->getAction() ?>",
+		  data: { nickname: nickname, title:summary_field, detail:review_field, ratings:ratingvalue, form_key:form_key,validate_rating:validate_rating}
+		}).done(function( msg ) {
+    		if(msg != '0'){
+                jQuery('div.form-add').slideUp(1000);
+                jQuery('#review-buttons a').text('Write a Review');
+    			jQuery("#reviewloading").removeClass('loadingblockdata').addClass('loadinghide');
+    			jQuery('#review-success-msg').html("Your review was submitted successfully and is being verified.").fadeIn(1000, function(){
+                    setTimeout(function(){
+                        jQuery('#review-success-msg').fadeOut(1000);
+                    },4000);
+                });
+    		}
+		});
+	}
+		
+	});
+		
+    //]]>
+    </script>
+    <?php else: ?>
+    <p class="review-nologged" id="review-form">
+        <?php echo $this->__('Only registered users can write reviews. Please, <a href="%s">log in</a> or <a href="%s">register</a>', $this->getLoginLink(), Mage::helper('customer')->getRegisterUrl()) ?>
+    </p>
+    <?php endif ?>
+</div>
+<style>
+.loadinghide
+{
+	display:none;
+}
+.loadingblockdata {
+	display:block;
+    width: 16px;
+    height: 16px;
+    background:url('//numeproducts.com/skin/frontend/nume/nume/images/opc-ajax-loader.gif') center no-repeat;
+    margin: 0px;
+}
+</style>

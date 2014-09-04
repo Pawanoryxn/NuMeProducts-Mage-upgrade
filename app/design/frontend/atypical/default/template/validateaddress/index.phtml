@@ -1,0 +1,37 @@
+<?php if($received_address) : ?>
+    <script type="text/javascript">
+	//<![CDATA[
+        alert(<?php echo '"' . $this->__($received_address) . '"' ?>);
+	//]]>
+    </script>
+    <?php 
+        Mage::getSingleton('core/session')->unsPostcodeVariable(); 
+    ?>
+<?php endif; ?>
+<script>
+//<![CDATA[
+jQuery(document).ready(function() {
+	jQuery( "#dialog-box" ).dialog({
+	autoOpen: false,
+	show: {
+		effect: "blind",
+		duration: 1000
+	},
+	hide: {
+	effect: "explode",
+	duration: 1000
+	}
+});
+jQuery( "#opener" ).click(function() {
+	jQuery( "#dialog-box" ).dialog( "open" );
+});
+});
+//]]>
+</script>
+
+
+<div id="dialog-box" title="Basic dialog">
+<p>This is an animated dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
+<button id="opener">Open Dialog</button>
+

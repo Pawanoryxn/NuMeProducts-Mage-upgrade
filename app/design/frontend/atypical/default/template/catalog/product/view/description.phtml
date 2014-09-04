@@ -1,0 +1,73 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product description template
+ *
+ * @see Mage_Catalog_Block_Product_View_Description
+ */
+?>
+<?php $_description = $this->getProduct()->getDescription(); ?>
+<?php if ($_description): ?>
+<div class="ac-container">
+    <div>
+        <input id="ac-1" name="accordion-1" type="radio" />
+        <label for="ac-1" id="lbl_1" onclick="showhidediv('ac-1');"><?php echo $this->__('Details') ?></label>
+        <article class="ac-medium" id="cont1">
+            <p><?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_description, 'description') ?></p>
+        </article>
+    </div>
+    <div>
+        <input id="ac-2" name="accordion-2" type="radio" />
+        <label for="ac-2" id="lbl_2" onclick="showhidediv('ac-2');"> Additional Info</label>
+        <article class="ac-medium" id="cont2">
+            <p><?php echo $this->getLayout()->createBlock('catalog/product_view_attributes', '', array('template'=> 'catalog/product/view/attributes.phtml'))->toHtml(); ?></p>
+        </article>
+    </div>
+</div>
+<?php endif; ?>
+<script type="text/javascript">
+	function showhidediv(ra){
+		if(ra=='ac-1'){
+			if(document.getElementById('cont1').style.display == 'block'){
+				document.getElementById('cont1').style.display = 'none';
+				document.getElementById('lbl_1').className = 'removeselected';
+			}else{
+				document.getElementById('cont1').style.display = 'block';
+				document.getElementById('lbl_1').className = 'selected';
+				
+			}
+		}else if(ra=='ac-2'){
+			if(document.getElementById('cont2').style.display == 'block'){
+				document.getElementById('cont2').style.display = 'none';
+				document.getElementById('lbl_2').className = 'removeselected';
+			}else{
+				document.getElementById('cont2').style.display = 'block';
+				document.getElementById('lbl_2').className = 'selected';
+			}
+		}
+	}
+</script>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+     <modules>
+        <Atypicalbrands_Randomrelatedp>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Atypicalbrands_Randomrelatedp>
+     </modules>
+</config>

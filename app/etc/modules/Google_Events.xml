@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Google_Events>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Google_Events>
+    </modules>
+</config>

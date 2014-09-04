@@ -1,0 +1,265 @@
+<?php echo $this->getChildHtml('progressbar'); ?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<div class="flexslider">
+	<div class="slides">
+
+		<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+		<div class="slide-d">
+			<div class="checkout-start clear">
+				<div class="login-options">
+					<ul>
+						<li><input type="radio" name="login-group" id="radio1" value=""  /><label for="radio1">Login</label></li>
+						<li><input type="radio" name="login-group" id="radio2" value="" /><label for="radio2">Create Account</label></li>
+						<li class="guest-checkout"><input type="radio" name="login-group" id="radio3" value="" /><label for="radio3">Guest Checkout</label></li>
+					</ul>
+				</div>
+				<div class="login-forms">
+					<?php echo $this->getChildHtml('customer.login'); ?>
+					<?php echo $this->getChildHtml('customer.forgot'); ?>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<?php endif; ?>
+
+		<?php
+		$seq_http = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']==='on');
+		$browser  = $_SERVER ['HTTP_USER_AGENT'];
+		$is_persistent = Mage::helper('onepagecheckout')->isPersistentMember();
+		?>
+		<script type="text/javascript">
+			var http_type = '<?php if($seq_http){echo 'https';}else{echo 'http';}?>';
+		</script>
+		<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/onepagecheckout.js') ?>"></script>
+		<script type="text/javascript">countryRegions = <?php echo $this->helper('directory')->getRegionJson() ?></script>
+
+		<div class="slide-d">
+			<form action="javascript:void(0)" method="POST" id="onepagecheckout_orderform" name="onepagecheckout_orderform" autocomplete="on">
+			<div class="info-group1">
+				<ul>
+					<li id="billing-tab" class="active">Billing</li>
+					<li id="shipping-tab" class="inactive">Shipping</li>
+				</ul>
+				<div class="billing-info">
+					<?php echo $this->getChildHtml('billing.address') ?>
+				</div>
+				<div class="shipping-info" style="display:none;">
+					<?php echo $this->getChildHtml('shipping.address') ?>
+				</div>
+			</div>
+			<div class="info-group2">
+				<ul>
+					<li class="active">Credit Card</li>
+				</ul>
+        			<?php echo $this->getChildHtml('payment.method') ?>
+				<?php if (Mage::getStoreConfig('onepagecheckout/general/comment')) : ?>
+					<div class="op_block_title">
+						<?php echo $this->helper('sales')->__('Comment') ?>
+					</div>
+					<div class="form_fields">
+						<div class="full">
+							<div class="data_area" id='comment-block'>
+								<textarea name="order-comment" id="order-comment"><?php echo trim(Mage::getSingleton('customer/session')->getOrderCustomerComment()) ?></textarea>
+							</div>
+						</div>
+					</div>
+				<?php endif; ?>
+				<?php if (Mage::helper('onepagecheckout')->isSubscribeNewAllowed()) : ?>
+					<p class="options newsletter">
+						<input type="checkbox" id="newsletter-signup" name="newsletter" value="1" title="<?php echo Mage::helper('newsletter')->__('Sign up for our newsletter') ?>" class="checkbox" checked />
+						<label for="newsletter-signup"><?php echo Mage::helper('newsletter')->__('Sign up for our newsletter') ?></label>
+					</p>
+				<?php endif; ?>
+			</div><?php // info-group2 ?>
+			<div class="continue-button">
+				<button type="button" title="<?php echo $this->__('Continue') ?>" class="continue">
+					<span><span><?php echo $this->__('Continue') ?></span></span>
+				</button>
+				<!-- <input name="formNext1" type="button" class="open1 nextbutton" value="Continue" alt="Next" title="Next" /> -->
+			</div>
+		</div><?php //slide-d ?>
+		<?php //review and confirm ?>
+		<div class="slide-d">
+				<?php echo $this->getChildHtml('review') ?>
+				<?php echo $this->getChildHtml('shipping.method') ?>
+				<div id="checkout-coupon-discount-load">
+					<?php echo $this->getChildHtml('coupon') ?>
+				</div>
+				<input type='submit' id='opc_submit_form' style='visibility:hidden;' />
+			</form><?php // onepagecheckout_orderform ?>
+		</div><?php //slide-d ?>
+	</div><?php // div.slides ?>
+</div><?php // div.flexslider ?>
+
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var checkout = new OPC('onepagecheckout_orderform', {
+	save : '<?php echo $this->getUrl('onepagecheckout/index/saveOrder', array('_secure'=>$seq_http)) ?>',
+	update : '<?php echo $this->getUrl('onepagecheckout/index/updateCheckout', array('_secure'=>$seq_http)) ?>',
+	success : '<?php echo $this->getUrl('onepagecheckout/index/success', array('_secure'=>$seq_http)) ?>',
+	failure : '<?php echo $this->getUrl('checkout/cart') ?>',
+	persistent : '<?php echo $is_persistent?$this->getUrl('persistent/index/saveMethod', array('_secure'=>$seq_http)):'';?>'
+	}, "<?php echo $this->__('Please agree to all the terms and conditions.') ?>");
+
+<?php if(Mage::helper('onepagecheckout')->isAddressVerificationEnabled()):?>
+	function show_verifications_error(){
+		var w = $('address-verification-results').getWidth();
+		var hh = document.body.getHeight();
+		var view = document.viewport.getDimensions();
+		var ww = view.width;
+		var d = (ww - w)/2;
+		<?php if (!preg_match('/MSIE 8/i', $browser) && !preg_match('/MSIE 7/i', $browser)):?>
+		var y = window.pageYOffset+70;
+		$('address-verification-results').setStyle({
+			left: d+'px',
+			top: y+'px'
+		});
+
+		<?php else:?>
+		$('address-verification-results').setStyle({
+			left: d+'px'
+		});
+		<?php endif;?>
+
+		$('address-verification-results').show();
+		<?php $is_mobile  = Mage::helper('onepagecheckout')->isMobile(); ?>
+		<?php if(!$is_mobile): ?>
+		var el = $('iwdavPopupOverlay');
+		el.setStyle({
+			width: ww+'px',
+			height: hh+'px'
+		});
+		el.show();
+		<?php else:?>
+		$('onepagecheckout_orderform').hide(); // hide form for mobile devices 
+		<?php endif;?>
+	}
+
+	function close_verification(){
+		<?php $is_mobile  = Mage::helper('onepagecheckout')->isMobile(); ?>
+		<?php if(!$is_mobile): ?>
+		$("iwdavPopupOverlay").hide();
+		<?php else:?>
+		$('onepagecheckout_orderform').show(); // show form for mobile devices
+		<?php endif;?>
+		$('address-verification-results').hide();
+	}
+<?php endif; ?>
+
+document.observe("dom:loaded", function() {
+	var win_triggers  = Array();
+	$$('.checkout-agreements .agree a').each(function(item){
+		var obj = {
+			el: $$('.' + item.className),
+			event: 'click',
+			window: $(item.className + '-window')
+		};
+		win_triggers.push(obj);
+	});
+	opc_window  = new OPC.Window({triggers: win_triggers});
+});
+
+// custom jquery for flexslider and interaction
+jQuery(window).load(function() {
+	<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+	var loggedIn = false;
+	<?php else: ?>
+	var loggedIn = true;
+	<?php endif; ?>
+	var progressPercent = 0;
+	if (loggedIn == false){ progressPercent = '3.15%'; }
+	else { progressPercent = '35.35%'; }
+	jQuery('.flexslider').flexslider({
+		selector: ".slides > .slide-d",
+		animation: "slide",
+		animationLoop: false,
+		itemWidth: 1000,
+		slideshow: false,
+		controlNav: false,
+		directionNav: false,
+		keyboard: true,
+		start: function(){ jQuery('div.progress').animate({'width': progressPercent}, 1000); },
+		after: function(){
+			if (loggedIn == false){
+				switch (jQuery('.flexslider').data('flexslider').currentSlide) {
+					case 0:
+						progressPercent = '3.25%';
+						break;
+					case 1:
+						progressPercent = '35.25%';
+						break;
+					case 2:
+						progressPercent = '67%';
+						break;
+				}
+			}
+			else {
+				switch (jQuery('.flexslider').data('flexslider').currentSlide) {
+					case 0:
+						progressPercent = '35.25%';
+						break;
+					case 1:
+						progressPercent = '67%';
+						break;
+				}
+			}
+			jQuery('div.progress').animate({'width': progressPercent}, 1000);
+		}
+	});
+	// login to forgot password and back
+	jQuery('.onepagecheckout_forgotlink').on('click', function(){
+		jQuery('#login-form').fadeOut(300, function(){
+			jQuery('#onepagecheckout_forgotbox').fadeIn();
+		});
+	});
+	jQuery('.onepagecheckout_loginlink').on('click', function(){
+		jQuery('#onepagecheckout_forgotbox').fadeOut(300, function(){
+			jQuery('#login-form').fadeIn();
+		});
+	});
+	// tabs for info slide
+	jQuery('.info-group1 ul li').on('click', function(){
+		if( jQuery(this).attr('id') == 'billing-tab' ){
+			jQuery(this).removeClass().addClass('active');
+			jQuery('#shipping-tab').removeClass().addClass('inactive');
+			jQuery('.shipping-info').fadeOut(300, function(){
+					jQuery('.billing-info').fadeIn(300);
+			});
+		}
+		else {
+			jQuery(this).removeClass().addClass('active');
+			jQuery('#billing-tab').removeClass().addClass('inactive');
+			jQuery('.billing-info').fadeOut(300, function(){
+					jQuery('.shipping-info').fadeIn(300);
+			});
+		}
+	});
+	// radio button select on login
+	jQuery('.login-options input').on('change', function(){
+		if( jQuery(this).attr('id') == 'radio2'){
+			jQuery('#register-customer-password').show();
+			jQuery('.flexslider').flexslider(1);
+			//jQuery('.login-options li:nth-child(2)').remove();
+			jQuery('.login-options input').removeAttr('checked');
+		}
+		if( jQuery(this).attr('id') == 'radio3'){
+			jQuery('.flexslider').flexslider(1);
+			jQuery('.login-options input').removeAttr('checked');
+			jQuery('#radio1').prop('checked', true);
+		}
+	});
+});
+//]]>
+</script>
+
+<?php if(Mage::helper('onepagecheckout')->isAddressVerificationEnabled()): ?>
+	<?php $is_mobile  = Mage::helper('onepagecheckout')->isMobile();?>
+	<div style='display:none;left:0;' class="iwdav_modal <?php if($is_mobile){echo ' iwdav_modal_mobile';}?>" id="address-verification-results">
+		<div id="checkout-address-candidates-load"></div>
+	</div>
+	<?php if(!$is_mobile):?>
+		<div id='iwdavPopupOverlay' class='iwdavPopupOverlay' style='display:none;'>&nbsp;</div>
+	<?php endif;?>
+<?php endif; ?>
+

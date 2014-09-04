@@ -1,0 +1,176 @@
+<?php  
+$mage_ver = Mage::helper('onepagecheckout')->getMagentoVersion();
+$logged		= $this->isCustomerLoggedIn();
+$has_addr	= $this->customerHasAddresses();
+
+if (!$this->getQuote()->isVirtual() && Mage::helper('onepagecheckout')->isShippingAddressAllowed()) 
+{ 
+?>
+    
+<div id="ship_address_block" class="onepagecheckout_block">
+    <div class="form_fields">
+    <?php if ($has_addr){ ?>
+		<div class="full">
+			<label>
+				<?php echo $this->__('Select a shipping address from your address book or enter a new address.') ?>
+			</label>
+			<div class="data_area">
+				<?php echo $this->getCustomerShipAddr() ?>
+			</div>
+		</div>
+    <?php } ?>
+        <div id="ship_form"<?php if ($has_addr){ echo ' style="display:none;" ';}?>>
+			<input type="hidden" name="shipping[address_id]" id="shipping:address_id" value="<?php echo $this->getShipAddress()->getId() ?>" />
+			<div class="two_fields">
+				<?php echo $this->getLayout()->createBlock('onepagecheckout/widget_name')->setObject($this->getShipAddress())->setFieldIdFormat('shipping:%s')->setFieldNameFormat('shipping[%s]')->setFieldParams('onchange="shipping.setSameAsBilling(false)"')->toHtml() ?>
+			</div>
+			<div class='clear'></div>
+			
+			<?php // address line 1 and 2 ?>
+			<?php $ar	= Mage::getStoreConfig('onepagecheckout/address_form/address');
+			if ($ar !== 'hidden') : 
+			?>
+			<div class="address-wrapper">
+				<div class="address">
+					<label>
+						<?php echo $this->__('Address') ?>
+					</label>
+					<div class="data_area">
+						<input type="text" title="<?php echo $this->__('Street Address') ?>" name="shipping[street][]" id="shipping:street1" value="<?php echo $this->htmlEscape($this->getShipAddress()->getStreet(1)) ?>" class="t1<?php if($ar === 'required'){echo ' required-entry';}?>" onchange="shipping.setSameAsBilling(false);" />
+					</div>
+				</div>
+
+				<?php 
+				$csl	= $this->helper('customer/address')->getStreetLines();
+				for ($i = 2; $i <= $csl; $i++){ 
+				?>
+				<div class="suite">
+					<div class="data_area">
+						<input type="text" name="shipping[street][]" id="shipping:street<?php echo $i?>" title="<?php echo $this->__('Street Address %s', $i) ?>" value="<?php echo $this->htmlEscape($this->getShipAddress()->getStreet($i)) ?>" class="t1" onchange="shipping.setSameAsBilling(false);" placeholder="Apt. / Suite" />
+					</div>
+				</div>
+			</div>
+				<?php 
+				} 
+
+			endif; ?>
+
+			<div class="clear"></div>
+
+			<div class="two_fields">	
+				<?php // country ?>
+				<?php $country_r = Mage::getStoreConfig('onepagecheckout/address_form/country'); ?>
+		        <div class="field1"<?php if($country_r === 'hidden'){ echo ' style="display:none" ';}?>>
+		        	<label class="valign-correct" >
+		        		<?php echo $this->__('Country') ?>
+		        	</label>
+					<div class="input-box-select">
+						<?php echo $this->getShippingCountriesSelectBox() ?>
+					</div>
+				</div>
+				<?php // zip code ?>
+				<?php $zip_r	= Mage::getStoreConfig('onepagecheckout/address_form/zip'); if ($zip_r !== 'hidden'): ?>
+				<div class="field2">
+					<label>
+						<?php echo $this->__('Zip Code') ?>
+					</label>
+					<input type="text" name="shipping[postcode]" id="shipping:postcode" title="<?php echo $this->__('Zip Code') ?>" value="<?php echo $this->htmlEscape($this->getShipAddress()->getPostcode()) ?>" class="t1 validate-zip-international<?php if($zip_r === 'required'){echo ' required-entry ';}?>" onchange="shipping.setSameAsBilling(false);" />
+				</div>
+				<?php endif; ?>
+			</div>
+			<div class="clear"></div>
+
+			<div class="two_fields">
+				<?php // city ?>
+				<?php $city_r = Mage::getStoreConfig('onepagecheckout/address_form/city'); if ($city_r !== 'hidden') : ?>
+				<div class="field1"<?php if($city_r === 'hidden'){echo ' style="display:none"';}?>>
+						<label>
+							<?php echo $this->__('City') ?>
+						</label>
+						<input type="text" name="shipping[city]" id="shipping:city" title="<?php echo $this->__('City') ?>" value="<?php echo $this->htmlEscape($this->getShipAddress()->getCity()) ?>" class="t1<?php if ($city_r === 'required'){ echo ' required-entry ';}?>" onchange="shipping.setSameAsBilling(false);" />
+				</div>
+				<?php endif; ?>
+				<?php // state province ?>
+				<?php $state_r= Mage::getStoreConfig('onepagecheckout/address_form/state'); if ($state_r === 'hidden'): ?>
+				<div class="field2"<?php if($state_r === 'hidden'){echo ' style="display:none"';}?>>
+					<label class="valign-correct" >
+						<?php echo $this->__('State / Province') ?>
+					</label>
+					<div class="input-box-select">
+						<select id="shipping:region_id" name="shipping[region_id]" title="<?php echo $this->__('State / Province') ?>" class="validate-select<?php if($state_r === 'required') { echo ' required-entry';}?>">
+							<option value=""><?php echo $this->__('Select One') ?></option>
+						</select>
+					</div>
+					<script type="text/javascript">
+					//<![CDATA[
+						$('shipping:region_id').setAttribute('defaultValue',  "<?php echo $this->getShipAddress()->getRegionId() ?>");
+					//]]>
+					</script>
+					<input type="text" id="shipping:region" name="shipping[region]" value="<?php echo $this->htmlEscape($this->getShipAddress()->getRegion()) ?>"  title="<?php echo $this->__('State / Province') ?>" class="t1<?php if($state_r === 'required'){ echo ' required-entry';}?>" style="display:none;" />				
+				</div>
+				<?php endif; ?>
+			</div>
+
+			<div class='clear'></div>
+
+
+
+				
+
+			<?php $phone_r= Mage::getStoreConfig('onepagecheckout/address_form/phone');
+			if ($phone_r !== 'hidden') : 
+			?>
+				<div class="two_fields">
+				<?php if ($phone_r !== 'hidden') : ?>
+					<div class="field1">
+						<label>
+							<?php echo $this->__('Telephone') ?>
+						</label>
+							<input type="tel" pattern="[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}" name="shipping[telephone]" id="shipping:telephone" value="<?php echo $this->htmlEscape($this->getShipAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="t1<?php if($phone_r === 'required') { echo ' required-entry ';}?>" onchange="shipping.setSameAsBilling(false);" />
+					</div>
+				<?php endif; ?>
+				</div>
+				<div class='clear'></div>
+			<?php endif ?>
+
+	        
+			
+
+			<div>
+			<?php
+			if ($logged && $has_addr){
+			?>
+				<div class="options">
+					<input type="checkbox" class="checkbox" name="shipping[save_in_address_book]" id="shipping:save_in_address_book" value="1" title="<?php echo $this->__('Save in address book') ?>" <?php if ($this->getShipAddress()->getSaveInAddressBook()){ echo ' checked="checked" ';}?> />
+					<label>
+						<?php echo $this->__('Save in address book') ?>
+					</label>
+				</div>
+			<?php 
+			}
+			else
+			{
+			?>
+				<div class="no-display">
+					<input type="hidden" name="shipping[save_in_address_book]" value="1" />
+				</div>
+			<?php
+			}
+			?>
+			</div>
+        </div>
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+	var shipping = new ShippingAddress('onepagecheckout_orderform');
+<?php if($mage_ver == '1.7.0.0' || $mage_ver == '1.7.0.2' || $mage_ver == '1.8.0.0' || $mage_ver == '1.12.0.2'):?>
+	var shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'shipping:postcode');
+<?php else:?>
+	var shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', countryRegions, undefined, 'shipping:postcode');
+<?php endif;?>
+//]]>
+</script>
+<?php 
+} 
+?>

@@ -1,0 +1,59 @@
+<?php
+/**
+ *
+ * This file is part of the GPMD Magento Responsive Theme.
+ *
+ * The GPMD Magento Responsive Theme is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * The GPMD Magento Responsive Theme is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with the GPMD Magento Responsive Theme. If not, see
+ * http://www.gnu.org/licenses/.
+ *
+ * @category    GPMD
+ * @package     GPMD_Responsive_Theme
+ * @copyright   Copyright (c) 2012 GPMD.
+ * @author      Matt Bailey @GPMD LTD
+ */
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php
+$_product = $this->getProduct(); 
+//Zend_Debug::dump($_product->getCategory());
+?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="product-data-block container">
+    <div class="product-view">
+        <div class="product-essential">
+                <div class="product-col-left">
+                    <div class="pr-image-block">
+                        <img src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(450,450) ?>" alt="<?php echo $this->htmlEscape($this->getImageLabel()); ?>" title="<?php echo $this->htmlEscape($this->getImageLabel());?>"/>
+                        <?php //echo $this->getChildHtml('media') ?>
+                    </div><!-- /pr-image-block -->
+                </div><!-- /product-col-left -->
+                <?php echo $this->getLayout()->createBlock('review/form')->setTemplate('review/form.phtml')->toHtml(); ?>
+        </div>
+
+        <div class="product-collateral">
+            <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html):?>
+            <div class="box-collateral <?php echo "box-{$alias}"?>">
+                <?php if ($title = $this->getChildData($alias, 'title')):?>
+                <h2><?php echo $this->escapeHtml($title); ?></h2>
+                <?php endif;?>
+                <?php echo $html; ?>
+            </div>
+            <?php endforeach;?>
+            <?php //Zend_Debug::dump($this->getChildGroup('detailed_info', 'getChildHtml')); ?>
+        </div>
+    </div>
+</div>

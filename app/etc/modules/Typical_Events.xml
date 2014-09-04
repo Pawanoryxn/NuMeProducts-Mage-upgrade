@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Typical_Events>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Typical_Events>
+    </modules>
+</config>

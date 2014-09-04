@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Oro_Checkout>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Atypicalbrands_Couponerror />
+            </depends>
+        </Oro_Checkout>
+    </modules>
+</config>

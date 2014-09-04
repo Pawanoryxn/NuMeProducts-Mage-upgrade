@@ -1,0 +1,72 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php $_items = $this->getReviewsCollection()->getItems();?>
+<div class="box-collateral box-reviews">
+    <?php if (count($_items)):?>
+        <h2 class="review"><?php echo $this->__('Customer Reviews') ?></h2>
+        <div class="reviewcontainer" xmlns:v="http://rdf.data-vocabulary.org/#" typeof="v:Review">
+            <?php foreach ($_items as $_review): ?>
+            <div class="review_box">
+                <div class="review_user">
+                     <h4 class="review" property="v:reviewer"><?php echo $this->__('%s', $this->escapeHtml($_review->getNickname())) ?></h4>
+                     <?php $_votes = $_review->getRatingVotes(); ?>
+                    <?php if (count($_votes)): ?>
+                    <table class="ratings-table" style="margin: 0 auto;">
+                            <?php foreach ($_votes as $_vote): ?>
+                            <tr>
+                                <td>
+                                    <div class="ratings">
+                                        <div class="rating-box">
+                                            <div class="rating" style="width:<?php echo $_vote->getPercent() ?>%;"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                    </table>
+                    <?php endif; ?>
+                    <small class="date" property="v:dtreviewed"><?php echo $this->__('%s', $this->formatDate($_review->getCreatedAt()), 'long') ?></small>
+                </div>
+                <div class="review_review">
+                   
+                    <a href="<?php echo $this->getReviewUrl($_review->getId()) ?>"><h2 property="v:itemreviewed"><?php echo $this->escapeHtml($_review->getTitle()) ?></h2></a>
+                     
+                    <p property="v:description" style="margin-bottom: 0 !important;"><?php echo nl2br($this->escapeHtml($_review->getDetail())) ?></p>
+                 
+                </div>  
+            </div>
+            <?php endforeach; ?>
+
+        </div>
+
+
+        
+        <?php echo $this->getChildHtml('toolbar') ?>
+    <?php endif;?>
+    <?php /*<?php echo $this->getChildHtml('review_form') ?> */?>
+</div>

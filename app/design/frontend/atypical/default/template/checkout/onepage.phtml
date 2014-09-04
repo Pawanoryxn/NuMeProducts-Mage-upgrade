@@ -1,0 +1,399 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Checkout') ?></h1>
+</div>
+<script type="text/javascript" src="<?php echo $this->getJsUrl('varien/accordion.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/opcheckout.js') ?>"></script>
+<ol class="opc" id="checkoutSteps">
+<?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
+<?php if (!$this->getChild($_stepId) || !$this->getChild($_stepId)->isShow()): continue; endif; $i++ ?>
+    <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
+        <div class="step-title">
+            <span class="number"><?php echo $i ?></span>
+            <h2><?php echo $_stepInfo['label'] ?></h2>
+            <a href="#"><?php echo $this->__('Edit') ?></a>
+        </div>
+        <div id="checkout-step-<?php echo $_stepId ?>" class="step a-item" style="display:none;">
+            <?php echo $this->getChildHtml($_stepId) ?>
+        </div>
+    </li>
+<?php endforeach ?>
+</ol>
+<script type="text/javascript">
+//<![CDATA[
+	var validateFields = [
+			     "billing\\:company",
+			     "billing\\:street1",
+			     "billing\\:city",
+			     "billing\\:postcode",
+			];
+
+	var validateFieldShipping = [
+			     "shipping\\:company",
+			     "shipping\\:street1",
+			     "shipping\\:city",
+			     "shipping\\:postcode",
+			];
+
+    (function() {
+	
+        var magentoFields = [
+                {
+                    Company: "billing:company",
+                    Line1: "billing:street1",
+                    Line2: "billing:street2",
+                    City: "billing:city",
+                    State: "billing:region",
+                    StateSelect: "billing:region_id",
+                    Postcode: "billing:postcode",
+                    CountrySelect: "billing:country_id" 
+                },
+                {
+                    Company: "shipping:company",
+                    Line1: "shipping:street1",
+                    Line2: "shipping:street2",
+                    City: "shipping:city",
+                    State: "shipping:region",
+                    StateSelect: "shipping:region_id",
+                    Postcode: "shipping:postcode",
+                    CountrySelect: "shipping:country_id"
+                },
+                {
+                    Company: "company",
+                    Line1: "street_1",
+                    Line2: "street_2",
+                    City: "city",
+                    State: "region",
+                    StateSelect: "region_id",
+                    Postcode: "zip",
+                    CountrySelect: "country"
+                }
+            ],
+            key = 'XA37-BD49-UF22-ZN66';
+           // countryByIP = !!<?php echo Mage::getStoreConfig('captureplus/settings/ip_country'); ?>;
+	
+	//key = '<?php echo Mage::getStoreConfig('captureplus/settings/website_key'); ?>',
+
+        function load(xyz) {
+		if(xyz=="US"){
+			validate_usps();
+		}
+		else{
+		    function createAddressControl(addressFields) {
+			var countryField = pca.getElement(addressFields.CountrySelect); 
+			    magentoCountries = [];	
+			
+			for (var c = 0; c < countryField.options.length; c++)
+			    magentoCountries.push(countryField.options[c].value);
+		    
+			var fields = [
+			    { element: addressFields.Company, field: "Company", mode: pca.fieldMode.DEFAULT | pca.fieldMode.PRESERVE },
+			    { element: addressFields.Line1, field: "Line1" },
+			    { element: addressFields.Line2, field: "Line2", mode: pca.fieldMode.POPULATE },
+			    { element: addressFields.City, field: "City", mode: pca.fieldMode.POPULATE },
+			    { element: addressFields.State, field: "ProvinceName", mode: pca.fieldMode.POPULATE },
+			    { element: addressFields.StateSelect, field: "ProvinceName", mode: pca.fieldMode.POPULATE },
+			    { element: addressFields.Postcode, field: "PostalCode" },
+			    { element: addressFields.CountrySelect, field: "CountryIso2", mode: pca.fieldMode.COUNTRY }
+			],
+			options = { 
+			    key: key,
+			    suppressAutocomplete: true,
+			    countries: { 
+				codesList: magentoCountries.join(","), 
+				valueType: pca.countryNameType.ISO2 
+			    },
+			    source: "magento"
+			},
+			control = new pca.Address(fields, options);
+		       
+			//perform IP country lookup if required
+			if (countryByIP)
+			    control.setCountryByIP();
+		    }
+	    
+		    for (var i = 0; i < magentoFields.length; i++) {
+			if (pca.getElement(magentoFields[i].Line1)){
+			    createAddressControl(magentoFields[i]);
+			    }
+		    }   
+		}
+        }
+        
+        
+        jQuery( document ).ready(function() {
+		
+		var country_code = jQuery( "#billing\\:country_id" ).val();
+		var country_code_ship = jQuery( "#shipping\\:country_id" ).val();
+		if(country_code == 'US'){
+			validate_usps();
+		}
+		
+		if(country_code_ship == 'US'){
+			validate_usps_shipping();
+		}
+
+	});
+	
+
+	jQuery( "#billing\\:country_id" ).change(function() {
+		var country_code = jQuery(this).val();
+		if(country_code == 'US'){
+			validate_usps();
+			jQuery(".pcafooter").remove();
+			
+		}
+		else{
+			//pca.fuzzyMatch = false;
+			//pca.ready(load);
+			jQuery('#usps_address').hide();
+			jQuery('#billingsavebutton').removeAttr('disabled');
+
+		}
+	});
+
+	jQuery( "#shipping\\:country_id" ).change(function() {
+		var country_code = jQuery(this).val();
+		if(country_code == 'US'){
+			validate_usps_shipping();
+			jQuery(".pcafooter").remove();
+		}
+		else{
+			//pca.fuzzyMatch = false;
+			//pca.ready(load);
+			jQuery('#usps_address_ship').hide();
+			jQuery('#shippingsavebutton').removeAttr('disabled');
+
+		}
+	});
+	//validate_usps();
+
+	jQuery( validateFields ).each(function( fld, element ) {
+		jQuery('#' + element).on('blur', function(){
+			validate_usps();
+		});
+	});
+		
+	jQuery( validateFieldShipping ).each(function( fld, element ) {
+		jQuery('#' + element).on('blur', function(){
+			validate_usps_shipping();
+		});
+	});
+
+
+	jQuery('#billing-buttons-container').before('<div id="usps_address"></div>');
+	jQuery('#shipping-buttons-container').before('<div id="usps_address_ship"></div>');
+
+    })();
+
+
+	function validate_usps(){
+	  //alert('out us');
+	  var national = jQuery( "#billing\\:country_id" ).val();
+	  if(national == 'US'){
+	  //alert('in us');	
+	  jQuery('#usps_address').show();
+	  jQuery('#usps_address').html('');
+	  if(validateField()){
+		   jQuery.ajax({
+			url : "<?php echo $this->getUrl('captureplus/processing/usps') ?>",
+			type: "POST",
+			dataType: 'json',
+			data :  {
+				firm_name	: jQuery('#billing\\:company').val(),
+				address1	: jQuery('#billing\\:street1').val(), 
+				address2	: jQuery('#billing\\:street2').val(), 
+				city		: jQuery('#billing\\:city').val(),  
+				state		: jQuery('#billing\\:region_id').find('option:selected').attr('title'), 
+				zip		: jQuery('#billing\\:postcode').val(),
+			},
+			success: function(data, textStatus, jqXHR){
+				var str = '';
+				if(data.Address.Error){
+					if(national == 'US'){
+						jQuery('#usps_address').html('<span style="color:red">'+data.Address.Error.Description+'</span>');
+					}else{
+						jQuery('#billingsavebutton').removeAttr('disabled');
+					}
+					jQuery('#billingsavebutton').attr('disabled', 'disabled');
+				}else if(data.Address){
+					jQuery('#billingsavebutton').removeAttr('disabled');
+					str = '<input type="radio" name="usps_address_check" id="usps_address_check">';
+					if(data.Address.FirmName)
+					str += 	data.Address.FirmName + ', ';
+					if(data.Address.Address1)
+					str += 	data.Address.Address1 + ', ';
+					if(data.Address.Address2)
+					str += 	data.Address.Address2 + ', ';
+					if(data.Address.City)
+					str += 	data.Address.City + ', ';
+					if(data.Address.State)
+					str += 	data.Address.State + ' ';
+					if(data.Address.Zip5)
+					str += 	data.Address.Zip5 + '-' + data.Address.Zip4;
+					jQuery('#usps_address').html(str);
+				}
+				jQuery('#usps_address_check').click(function(){
+					jQuery('#billing\\:company').val(data.Address.FirmName);
+					jQuery('#billing\\:street1').val(data.Address.Address2); 
+					jQuery('#billing\\:street2').val(data.Address.Address1); 
+					jQuery('#billing\\:city').val(data.Address.City);  
+					//jQuery('#billing\\:region_id').find('option:selected').attr('title'), 
+					jQuery('#billing\\:postcode').val(data.Address.Zip5+'-'+data.Address.Zip4);
+				});
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+
+			}
+			});
+		   }
+	   }else{
+		jQuery('#usps_address').hide();
+	   }
+	}
+	
+	function validate_usps_shipping(){
+	  //alert('out us');
+	  var national = jQuery( "#shipping\\:country_id" ).val();
+	  if(national == 'US'){
+	  //alert('in us');	
+	  jQuery('#usps_address_ship').show();
+	  jQuery('#usps_address_ship').html('');
+	  if(validateFieldShip()){
+		   jQuery.ajax({
+			url : "<?php echo $this->getUrl('captureplus/processing/usps') ?>",
+			type: "POST",
+			dataType: 'json',
+			data :  {
+				firm_name	: jQuery('#shipping\\:company').val(),
+				address1	: jQuery('#shipping\\:street1').val(), 
+				address2	: jQuery('#shipping\\:street2').val(), 
+				city		: jQuery('#shipping\\:city').val(),  
+				state		: jQuery('#shipping\\:region_id').find('option:selected').attr('title'), 
+				zip		: jQuery('#shipping\\:postcode').val(),
+			},
+			success: function(data, textStatus, jqXHR){
+				var str = '';
+				if(data.Address.Error){
+					if(national == 'US'){
+						jQuery('#usps_address_ship').html('<span style="color:red">'+data.Address.Error.Description+'</span>');
+					}else{
+						jQuery('#shippingsavebutton').removeAttr('disabled');
+					}
+					jQuery('#shippingsavebutton').attr('disabled', 'disabled');
+				}else if(data.Address){
+					jQuery('#shippingsavebutton').removeAttr('disabled');
+					str = '<input type="radio" name="usps_address_ship" id="usps_address_ship">';
+					if(data.Address.FirmName)
+					str += 	data.Address.FirmName + ', ';
+					if(data.Address.Address1)
+					str += 	data.Address.Address1 + ', ';
+					if(data.Address.Address2)
+					str += 	data.Address.Address2 + ', ';
+					if(data.Address.City)
+					str += 	data.Address.City + ', ';
+					if(data.Address.State)
+					str += 	data.Address.State + ' ';
+					if(data.Address.Zip5)
+					str += 	data.Address.Zip5 + '-' + data.Address.Zip4;
+					jQuery('#usps_address_ship').html(str);
+				}
+				jQuery('#usps_address_ship').click(function(){
+					jQuery('#shipping\\:company').val(data.Address.FirmName);
+					jQuery('#shipping\\:street1').val(data.Address.Address2); 
+					jQuery('#shipping\\:street2').val(data.Address.Address1); 
+					jQuery('#shipping\\:city').val(data.Address.City);  
+					//jQuery('#shipping\\:region_id').find('option:selected').attr('title'), 
+					jQuery('#shipping\\:postcode').val(data.Address.Zip5+'-'+data.Address.Zip4);
+				});
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+
+			}
+			});
+		   }
+	   }else{
+		jQuery('#usps_address').hide();
+	   }
+	}
+
+	function validateField(){
+		    validate = true;
+		    jQuery( validateFields ).each(function( fld, element ) {
+			if(jQuery('#' + element).val()==''){
+				validate = false;
+			}					
+		    });
+		    return validate ;
+		    //return true;
+	}
+
+	function validateFieldShip(){
+		    validate = true;
+		    jQuery( validateFieldShipping ).each(function( fld, element ) {
+			if(jQuery('#' + element).val()==''){
+				validate = false;
+			}					
+		    });
+		    return validate ;
+		    //return true;
+	}
+ 
+//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+    var accordion = new Accordion('checkoutSteps', '.step-title', true);
+    <?php if($this->getActiveStep()): ?>
+    accordion.openSection('opc-<?php echo $this->getActiveStep() ?>');
+    <?php endif ?>
+    var checkout = new Checkout(accordion,{
+        progress: '<?php echo $this->getUrl('checkout/onepage/progress') ?>',
+        review: '<?php echo $this->getUrl('checkout/onepage/review') ?>',
+        saveMethod: '<?php echo $this->getUrl('checkout/onepage/saveMethod') ?>',
+        failure: '<?php echo $this->getUrl('checkout/cart') ?>'}
+    );
+    Checkout.prototype.gotoSection = function (section, reloadProgressBlock) {
+    if (reloadProgressBlock) {
+        this.reloadProgressBlock(this.currentStep);
+    }
+    // Checkout abandonment rate - by Inchoo
+    try {
+        _gaq.push(['_trackPageview', 'https://numeproducts.com/checkout/onepage/' + section + '/']);
+    } catch (err) {
+    }
+    this.currentStep = section;
+    var sectionElement = $('opc-' + section);
+    sectionElement.addClassName('allow');
+    this.accordion.openSection('opc-' + section);
+    if (!reloadProgressBlock) {
+        this.resetPreviousSteps();
+    }
+    };
+//]]>
+</script>

@@ -1,0 +1,62 @@
+<?php
+/**
+ *
+ * This file is part of the GPMD Magento Responsive Theme.
+ *
+ * The GPMD Magento Responsive Theme is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * The GPMD Magento Responsive Theme is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with the GPMD Magento Responsive Theme. If not, see
+ * http://www.gnu.org/licenses/.
+ *
+ * @category    GPMD
+ * @package     GPMD_Responsive_Theme
+ * @copyright   Copyright (c) 2012 GPMD.
+ * @author      Matt Bailey @GPMD LTD
+ */
+?>
+<?php 
+$products = Mage::getModel('catalog/product')->getCollection()
+    ->addAttributeToSelect('*')
+    ->addAttributeToSelect('type')
+    ->addFieldToFilter('type_id', array('eq' => 'bundle'));
+
+
+?>
+<select id="bundle-option" name="bundle_option" class="bundle-option-select change-container-classname">
+<option value=""><?php echo $this->__('Choose Bundle') ?></option>
+<?php foreach($products as $key=>$product) { 
+if ($product->isAvailable() && $product->getStockItem()->getIsInStock()): ?>
+<option value="<?php echo $product->getId() ?>"><?php echo $product->getName(); ?></option>
+<?php endif; } ?>
+</select>
+<div class='coloroption'><div class='status_msg'>Loading....</div></div>
+<script>
+	jQuery(document).ready(function() {
+			jQuery('.status_msg').hide();
+			jQuery('#bundle-option').change(function(){	
+			var product_id = jQuery(this).val();
+			jQuery('.status_msg').show();
+			jQuery('.coloroption').html('<select id="bundle-colors" class="bundle-option-select change-container-classname" name="bundle-color"><option value="">Loading....</option></select>');
+			jQuery.ajax({
+				type	 : 'get',
+				url      : "/bundle_color/?product_id="+product_id,
+				datatype : 'html',
+				success : function(res){
+					var jqObj = jQuery(res);
+					newres=jqObj.find('#bundle-color').html();
+					jQuery('.coloroption').html(newres);	
+				}
+			});
+		
+		});	
+	});
+</script>

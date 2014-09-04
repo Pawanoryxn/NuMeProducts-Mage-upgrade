@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Oro_SalesRule>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Oro_SalesRule>
+    </modules>
+</config>

@@ -1,0 +1,21 @@
+<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+	<?php $login_url	= $this->getUrl('*/*/login', array('_secure'=>(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']==='on'))); ?>
+	<?php $http_mode	= (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']==='on'); ?>
+	<?php if($http_mode) $login_url = str_replace('http:', 'https:', $login_url); ?>
+	<form method="post" id="login-form" action="<?php echo $login_url ?>" autocomplete="on">
+		<input type="email" name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" id="email" class="input-text required-entry validate-email" title="<?php echo $this->__('Email Address') ?>" pattern="[^ @]*@[^ @]*" placeholder="E-mail" required />
+		<input type="password" name="login[password]" class="input-text required-entry validate-password" id="pass" title="<?php echo $this->__('Password') ?>" placeholder="Password" />
+			<div class="buttons-set">
+					<button type="submit" class="addcart" title="<?php echo $this->__('Login') ?>" name="send" id="send2"><span><span><?php echo $this->__('Login') ?></span></span></button>
+					<a href="javascript:void(0);" class="f-left onepagecheckout_forgotlink"><?php echo $this->__('Forgot Login / Password') ?></a>
+					<span class="please-wait" id="login-please-wait" style="display:none;">
+							<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" class="v-middle" alt=""/>
+					</span>
+			</div>
+	</form><!-- /login-form -->
+	<script type="text/javascript">
+	//<![CDATA[
+			var loginForm = new VarienForm('login-form', true);
+	//]]>
+	</script>
+<?php endif; ?>

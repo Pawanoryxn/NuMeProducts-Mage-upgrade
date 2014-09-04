@@ -1,0 +1,476 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<script type="text/javascript">
+//<![CDATA[
+    var quoteBaseGrandTotal = <?php echo (float)$this->getQuoteBaseGrandTotal(); ?>;
+    var checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
+    var payment = new Payment('co-payment-form', '<?php echo $this->getUrl('checkout/onepage/savePayment') ?>');
+    var lastPrice;
+//]]>
+</script>
+<form action="" id="co-payment-form">
+    <fieldset>
+        <?php echo $this->getChildHtml('methods') ?>
+    </fieldset>
+</form>
+<div class="tool-tip" id="payment-tool-tip" style="display:none;">
+    <div class="btn-close"><a href="#" id="payment-tool-tip-close" title="<?php echo $this->__('Close') ?>"><?php echo $this->__('Close') ?></a></div>
+    <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo $this->__('Card Verification Number Visual Reference') ?>" title="<?php echo $this->__('Card Verification Number Visual Reference') ?>" /></div>
+</div>
+<div class="buttons-set" id="payment-buttons-container">
+    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+    <p class="back-link"><a href="#" onclick="checkout.back(); return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    <button id="payment-information" type="button" class="button" onclick="paymentSave();return false;"><span><span><?php echo $this->__('Continue') ?></span></span></button>
+    <span class="please-wait" id="payment-please-wait" style="display:none;">
+        <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Loading next step...') ?>" title="<?php echo $this->__('Loading next step...') ?>" class="v-middle" /> <?php echo $this->__('Loading next step...') ?>
+    </span>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    function toggleToolTip(event){
+        if($('payment-tool-tip')){
+            $('payment-tool-tip').setStyle({
+                top: (Event.pointerY(event)-560)+'px'//,
+                //left: (Event.pointerX(event)+100)+'px'
+            })
+            $('payment-tool-tip').toggle();
+        }
+        Event.stop(event);
+    }
+    if($('payment-tool-tip-close')){
+        Event.observe($('payment-tool-tip-close'), 'click', toggleToolTip);
+    }
+//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+    payment.currentMethod = "<?php echo $this->getChild('methods')->getSelectedMethodCode() ?>";
+//]]>
+
+function paymentSave(){
+	jQuery("#payment-buttons-container").addClass("disabled").css("opacity", "0.5");
+	jQuery("#payment-information").prop("disabled",true);
+	var country_code = jQuery( "#billing\\:country_id" ).val();
+	var country_code_ship = jQuery( "#shipping\\:country_id" ).val();
+	if(country_code == "US" && country_code_ship == "US"){
+		paymentSaveAfter();
+	}
+	else{
+		jQuery("#payment-please-wait").show();
+		jQuery.ajax({
+			url : "<?php echo $this->getUrl('postcode/') ?>",
+			type: "POST",
+			dataType: 'json',
+			data :  {
+				country_type : 'NONUS'
+			},
+			success : function(result){
+				jQuery("#payment-buttons-container").css("opacity", "1");
+				jQuery("#payment-information").removeProp("disabled");
+				jQuery("#payment-please-wait").hide();
+				if(result.Billing != "National" || result.Shipping != "National"){
+					if(result.Billing == "Invalid Addess"){
+						alert("Invalid Billing Address");
+						return false;
+					}
+					else if(result.Shipping == "Invalid Addess"){
+						alert("Invalid Billing Address");
+						return false;
+					}
+					else{
+						var billing_confirm = "";
+						if(result.Billing != "National"){
+							billing_confirm = "\n\nBilling Address:\n"+result.Billing;
+
+							jQuery("#company").val(jQuery('#billing\\:company').val());
+							jQuery("#street1").val(jQuery('#billing\\:street1').val());
+							jQuery("#street2").val(jQuery('#billing\\:street2').val());
+							jQuery("#city").val(jQuery('#billing\\:city').val());
+							jQuery("#region").val(jQuery('#billing\\:region_id').val());
+							jQuery("#postcode").val(jQuery('#billing\\:postcode').val());
+							jQuery("#country_id").val(jQuery('#billing\\:country_id').val());
+
+							jQuery('.bill_add').html(result.Billing);
+							jQuery('.bill_radio').show();
+							jQuery('.bill_form').show();
+						}
+						else{
+							jQuery('.bill_radio').hide();
+						}
+						var shipping_confirm = "";
+						if(result.Shipping != "National"){
+							shipping_confirm = "\n\nShipping Address:\n"+result.Shipping;
+							jQuery('.ship_add').html(result.Shipping);
+							
+							jQuery("#s_company").val(jQuery('#shipping\\:company').val());
+							jQuery("#s_street1").val(jQuery('#shipping\\:street1').val());
+							jQuery("#s_street2").val(jQuery('#shipping\\:street2').val());
+							jQuery("#s_city").val(jQuery('#shipping\\:city').val());
+							jQuery("#s_region").val(jQuery('#shipping\\:region_id').val());
+							jQuery("#s_postcode").val(jQuery('#shipping\\:postcode').val());
+							jQuery("#s_country_id").val(jQuery('#shipping\\:country_id').val());
+
+							jQuery('.ship_radio').show();
+							jQuery('.ship_form').show();
+						}
+						else{
+							jQuery('.ship_radio').hide();
+						}
+						
+						var r = confirm("Is this you correct address ?"+billing_confirm+""+shipping_confirm);
+						if (r == true) {
+						    paymentSaveAfter();
+						} else {
+							jQuery(".bill_add").html(result.Billing);
+							jQuery(".ship_add").html(result.Shipping);
+							jQuery("#dialog").dialog("open");
+							return false;
+						}
+					}
+				}
+			}
+		});
+	}
+}
+
+function paymentSaveAfter(){
+	if (jQuery('#p_method_paypal_direct').is(':checked')) {
+	    jQuery('#express-agreement').hide();
+	    //console.log('Debit of Credit Card');
+	    payment.save();
+	} else{
+	    if (jQuery('#p_method_paypal_express').is(':checked') && jQuery('#agreement-2').is(':checked')) {
+		//console.log('PayPal Express');
+		payment.save();
+	    } else {
+		//alert('Please accept the Terms and Conditions to continue.');
+		payment.save();
+	    }
+	}
+}
+</script>
+
+<div id="dialog" title="Select Address to edit">
+	<span class="bill_radio" style="display:none;">
+		<input type="radio" name="billing" id="ajax_billing"><p class="bill_add">Update Billing Address</p>
+	</span>
+	<div class="bill_form" style="display:none;">
+		<ul class="form-list">
+			<li id="billing-new-address-form">
+			<ul>
+				<li class="fields">
+					<div class="field">
+						<label for="billing:company">Company</label>
+					<div class="input-box">
+					    <input type="text" class="input-text validation-passed" title="Company" value="" name="company" id="company">
+					</div>
+					</div>
+				</li>
+
+				<li class="wide">
+				    <label class="required" for="billing:street1"><em>*</em>Street Address</label>
+				    <div class="input-box">
+					<input type="text" class="input-text  required-entry validation-passed" value="" id="street1" name="street1" title="Street Address">
+				    </div>
+				</li>
+
+				<li class="wide">
+					<label class="required" for="billing:street1"><em style="display: none;">*</em>Street Address 2</label>
+					<div class="input-box">
+					<input type="text" class="input-text validation-passed" value="" id="street2" name="street" title="Street Address 2">
+					</div>
+				</li>
+
+				<li class="fields">
+				    <div class="field">
+					<label class="required" for="billing:city"><em>*</em>City</label>
+					<div class="input-box">
+					    <input type="text" id="city" class="input-text  required-entry validation-passed" value="" name="city" title="City">
+					</div>
+				    </div>
+				    <div class="field">
+					<label class="" for="billing:region_id"><em style="display: none;">*</em>State/Province</label>
+					<div class="input-box">
+					    <input type="text" style="" class="input-text validation-passed" title="State/Province" value="" name="region" id="region">
+					</div>
+				    </div>
+				</li>
+
+				<li class="fields">
+				    <div class="field">
+					<label class="required" for="billing:postcode"><em>*</em>Zip/Postal Code</label>
+					<div class="input-box">
+					    <input type="text" class="input-text validate-zip-international  required-entry validation-passed" value="" id="postcode" name="postcode" title="Zip/Postal Code">
+					</div>
+				    </div>
+				    <div class="field">
+					<label class="required" for="billing:country_id"><em>*</em>Country</label>
+					<div class="input-box">
+					    <select title="Country" class="validate-select validation-passed" id="country_id" name="country_id"><option value=""> </option><option value="AU">Australia</option><option value="AT">Austria</option><option value="BH">Bahrain</option><option value="BE">Belgium</option><option value="CA">Canada</option><option value="DK">Denmark</option><option value="FI">Finland</option><option value="FR">France</option><option value="DE">Germany</option><option value="HK">Hong Kong SAR China</option><option value="IS">Iceland</option><option value="ID">Indonesia</option><option value="IE">Ireland</option><option value="IT">Italy</option><option value="JP">Japan</option><option value="KW">Kuwait</option><option value="LU">Luxembourg</option><option value="MT">Malta</option><option value="MX">Mexico</option><option value="NL">Netherlands</option><option value="NZ">New Zealand</option><option value="NO">Norway</option><option value="PR">Puerto Rico</option><option value="SA">Saudi Arabia</option><option value="SG">Singapore</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="TH">Thailand</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option></select>                        </div>
+				    </div>
+				</li>
+				<li class="billButton">
+					<button name="saveBillAddress" id="saveBillAddress">Save Billing Address</button>
+				</li>
+			</ul>
+			</li>
+		</ul>
+	</div>
+	<!-- <option selected="selected" value="US">United States</option> -->
+	<span class="ship_radio" style="display:none;">
+		<input type="radio" name="shipping" id="ajax_shipping"><p class="ship_add">Update Shipping Address</p>
+	</span>
+
+	<div class="ship_form" style="display:none;">
+		<ul class="form-list">
+			<li id="shipping-new-address-form">
+			<ul>
+				<li class="fields">
+					<div class="field">
+						<label for="shipping:company">Company</label>
+					<div class="input-box">
+					    <input type="text" class="input-text validation-passed" title="Company" value="" name="s_company" id="s_company">
+					</div>
+					</div>
+				</li>
+
+				<li class="wide">
+				    <label class="required" for="shipping:street1"><em>*</em>Street Address</label>
+				    <div class="input-box">
+					<input type="text" class="input-text  required-entry validation-passed" value="" id="s_street1" name="s_street1" title="Street Address">
+				    </div>
+				</li>
+
+				<li class="wide">
+					<label class="required" for="shipping:street1"><em style="display: none;">*</em>Street Address 2</label>
+					<div class="input-box">
+					<input type="text" class="input-text validation-passed" value="" id="s_street2" name="s_street" title="Street Address 2">
+					</div>
+				</li>
+
+				<li class="fields">
+				    <div class="field">
+					<label class="required" for="shipping:city"><em>*</em>City</label>
+					<div class="input-box">
+					    <input type="text" id="s_city" class="input-text  required-entry validation-passed" value="" name="s_city" title="City">
+					</div>
+				    </div>
+				    <div class="field">
+					<label class="" for="shipping:region_id"><em style="display: none;">*</em>State/Province</label>
+					<div class="input-box">
+					    <input type="text" style="" class="input-text validation-passed" title="State/Province" value="" name="s_region" id="s_region">
+					</div>
+				    </div>
+				</li>
+
+				<li class="fields">
+				    <div class="field">
+					<label class="required" for="shipping:postcode"><em>*</em>Zip/Postal Code</label>
+					<div class="input-box">
+					    <input type="text" class="input-text validate-zip-international  required-entry validation-passed" value="" id="s_postcode" name="s_postcode" title="Zip/Postal Code">
+					</div>
+				    </div>
+				    <div class="field">
+					<label class="required" for="shipping:country_id"><em>*</em>Country</label>
+					<div class="input-box">
+					    <select title="Country" class="validate-select validation-passed" id="s_country_id" name="s_country_id"><option value=""> </option><option value="AU">Australia</option><option value="AT">Austria</option><option value="BH">Bahrain</option><option value="BE">Belgium</option><option value="CA">Canada</option><option value="DK">Denmark</option><option value="FI">Finland</option><option value="FR">France</option><option value="DE">Germany</option><option value="HK">Hong Kong SAR China</option><option value="IS">Iceland</option><option value="ID">Indonesia</option><option value="IE">Ireland</option><option value="IT">Italy</option><option value="JP">Japan</option><option value="KW">Kuwait</option><option value="LU">Luxembourg</option><option value="MT">Malta</option><option value="MX">Mexico</option><option value="NL">Netherlands</option><option value="NZ">New Zealand</option><option value="NO">Norway</option><option value="PR">Puerto Rico</option><option value="SA">Saudi Arabia</option><option value="SG">Singapore</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="TH">Thailand</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option></select>                        </div>
+				    </div>
+				</li>
+				<li class="shipButton"><button name="saveShipAddress" id="saveShipAddress">Save Shipping Address</button></li>
+			</ul>
+			</li>
+		</ul>
+	</div>
+	
+	<script>
+		//var countryIDB = '<?= Mage::getSingleton("checkout/session")->getQuote()->getBillingAddress()->getData("country_id") ?>';
+
+		//var countryID = '<?= Mage::getSingleton("checkout/session")->getQuote()->getShippingAddress()->getData("country_id") ?>';
+		//jQuery('.bill_radio')[countryIDB == 'US' ? 'hide' : 'show']();
+		jQuery("#ajax_billing").click(function() {
+			var postcodeAddress = jQuery(".bill_add").html();
+			var res = postcodeAddress.split(", ");
+			jQuery("#company").val(res[0]);
+			jQuery("#street1").val(res[1]);
+			jQuery("#street2").val(res[2]);
+			jQuery("#city").val(res[3]);
+			jQuery("#postcode").val(res[4]);
+		});
+
+		jQuery("#saveBillAddress").click(function() {
+			jQuery(this).html("Please wait...");
+			if(jQuery("#company").val()== ""){
+				jQuery("#company").focus();
+				return false;
+			}
+			if(jQuery("#street1").val() == "" ){
+				jQuery("#street1").focus();
+				return false;
+			}
+			if(jQuery("#street2").val() == "" ){
+				jQuery("#street2").focus();
+				return false;
+			}
+			if(jQuery("#city").val() == "" ){
+				jQuery("#city").focus()
+				return false;
+			}
+			if(jQuery("#postcode").val() == "" ){
+				jQuery("#postcode").focus()
+				return false;
+			}
+			if(jQuery("#country_id").val() == "" ){
+				jQuery("#country_id").focus()
+				return false;
+			}
+			jQuery.ajax({
+				url : "<?php echo $this->getUrl('postcode/index/popup_bill') ?>",
+				type: "POST",
+				dataType: 'json',
+				data :  {
+					'firstname'	: jQuery("#billing\\:firstname").val(),
+					'lastname'	: jQuery("#billing\\:lastname").val(),
+					'company'	: jQuery("#company").val(),
+					'email'		: jQuery("#billing\\:email").val(),
+					'street1'	: jQuery("#street1").val(),
+					'street2'	: jQuery("#street2").val(),
+					'city'		: jQuery("#city").val(),
+					'region_id'	: '',
+					'region'	: jQuery("#region").val(),
+					'postcode'	: jQuery("#postcode").val(),
+					'country_id'	: jQuery("#country_id").val(),
+					'telephone'	: jQuery("#billing\\:telephone").val(),
+				},
+				success : function(result){
+					jQuery(this).html("Save Billing Address");
+					if(result=="saved"){
+						jQuery(".billButton").html("Address Updated");
+						jQuery("#dialog").dialog( "close" );
+					}
+				}
+			});
+		});
+
+		jQuery("#ajax_shipping").click(function() {
+			var postcodeAddress = jQuery(".ship_add").html();
+			var res = postcodeAddress.split(", ");
+			jQuery("#s_company").val(res[0]);
+			jQuery("#s_street1").val(res[1]);
+			jQuery("#s_street2").val(res[2]);
+			jQuery("#s_city").val(res[3]);
+			jQuery("#s_postcode").val(res[4]);
+		});
+
+		jQuery("#saveShipAddress").click(function() {
+			jQuery(this).html("Please wait...");
+			if(jQuery("#s_company").val()== ""){
+				jQuery("#s_company").focus();
+				return false;
+			}
+			if(jQuery("#s_street1").val() == "" ){
+				jQuery("#s_street1").focus();
+				return false;
+			}
+			if(jQuery("#s_street2").val() == "" ){
+				jQuery("#s_street2").focus();
+				return false;
+			}
+			if(jQuery("#s_city").val() == "" ){
+				jQuery("#s_city").focus()
+				return false;
+			}
+			if(jQuery("#s_postcode").val() == "" ){
+				jQuery("#s_postcode").focus()
+				return false;
+			}
+			if(jQuery("#s_country_id").val() == "" ){
+				jQuery("#s_country_id").focus()
+				return false;
+			}
+			jQuery.ajax({
+				url : "<?php echo $this->getUrl('postcode/index/popup_ship') ?>",
+				type: "POST",
+				dataType: 'json',
+				data :  {
+					'firstname'	: jQuery("#shipping\\:firstname").val(),
+					'lastname'	: jQuery("#shipping\\:lastname").val(),
+					'company'	: jQuery("#s_company").val(),
+					'street1'	: jQuery("#s_street1").val(),
+					'street2'	: jQuery("#s_street2").val(),
+					'city'		: jQuery("#s_city").val(),
+					'region_id'	: '',
+					'region'	: jQuery("#region").val(),
+					'postcode'	: jQuery("#s_postcode").val(),
+					'country_id'	: jQuery("#s_country_id").val(),
+					'telephone'	: jQuery("#shipping\\:telephone").val(),
+				},
+				success : function(result){
+					jQuery(this).html("Save Shipping Address");
+					if(result=="saved"){
+						jQuery(".shipButton").html("Address Updated");
+						jQuery("#dialog").dialog( "close" );
+					}
+				}
+			});
+		});
+
+	</script>
+</div> 
+
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+	    jQuery(function () {
+		jQuery("#dialog").dialog({
+		    autoOpen: false,
+		    modal: true,
+		    height: 500,
+		    width: 550,
+		    show: {
+			effect: "blind",
+			duration: 1000
+		    },
+		    hide: {
+			effect: "explode",
+			duration: 1000
+		    },
+		    buttons: {
+			//"Update Address": function() {
+				// do add address function
+			//	alert('Address update function');
+			//},
+			"No Thanks": function() {
+				jQuery( this ).dialog( "close" );
+				paymentSaveAfter();
+			}
+		     }
+		});
+	    });
+	});
+</script>
+
+
+

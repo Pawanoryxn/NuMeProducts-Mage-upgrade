@@ -1,0 +1,119 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+$counter_related = 1;
+?>
+<?php if($this->getItems()->getSize() > 5): ?>
+<?php $_product = $this->getProduct(); ?>
+
+<div class="related-product-block container">
+<?php foreach($this->getItems()->setPositionOrder() as $_item): ?>
+	<?php $positionss[] = $_item->getPosition(); ?>
+<?php endforeach; 
+$countdata = array_count_values($positionss);
+?>
+	<h3><?php echo $this->__('Related Products') ?></h3>
+	<?php foreach($this->getItems() as $_item): ?>
+		<?php //Zend_Debug::dump($_item); ?>
+		<?php //Zend_Debug::dump($counter_related); ?>
+		<?php if ((string)$_item->getPosition() == "1" && $counter_related > 0 && $counter_related < 3): ?>
+			<?php if ($counter_related == 1): ?>
+				<div class="rel-box1 ">
+					<h4><?php if ($_product->getrelated_group_1_title() == NULL){ echo "for ULTIMATE STYLE"; } else { echo $_product->getrelated_group_1_title(); } ?></h4>
+			<?php endif; ?>
+					<div class="rel-pr1">
+						<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_item->getName()) ?>">
+							<img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(150) ?>" alt="<?php echo $this->escapeHtml($_item->getName()) ?>" />
+						</a>
+						<p><a href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->escapeHtml($_item->getName()) ?></a></p>
+						<?php if ($_item['special_price'] != NULL): ?>
+							<span class="special-price">$<?php echo number_format($_item['special_price'], 2, '.', ','); ?></span>
+						<?php else: ?>
+							<span class="price"><?php echo $this->getPriceHtml($_item, true, '-related') ?></span>
+						<?php endif; ?>
+					</div>
+			<?php if ($counter_related == 2): ?>
+				</div>
+			<?php endif; ?>
+            <?php if ($countdata[1] < 2): ?>
+            </div>
+            <?php $counter_related++; ?>
+            <?php endif; ?>
+			<?php $counter_related++; ?>
+		<?php endif; ?>
+		<?php if ((string)$_item->getPosition() == "2" && $counter_related > 2 && $counter_related < 5): ?>
+			<?php if ($counter_related == 3): ?>
+				<div class="rel-box1">
+					<h4><?php if ($_product->getrelated_group_2_title() == NULL){ echo "must HAVE CHOICES"; } else { echo $_product->getrelated_group_2_title(); } ?></h4>
+			<?php endif; ?>
+					<div class="rel-pr1">
+						<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_item->getName()) ?>">
+							<img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(150) ?>" alt="<?php echo $this->escapeHtml($_item->getName()) ?>" />
+						</a>
+						<p><a href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->escapeHtml($_item->getName()) ?></a></p>
+						<?php if ($_item['special_price'] != NULL): ?>
+							<span class="special-price">$<?php echo number_format($_item['special_price'], 2, '.', ','); ?></span>
+						<?php else: ?>
+							<span class="price"><?php echo $this->getPriceHtml($_item, true, '-related') ?></span>
+						<?php endif; ?>
+					</div>
+			<?php if ($counter_related == 4): ?>
+				</div>
+			<?php endif; ?>
+            <?php if ($countdata[2] < 2): ?>
+            </div>
+            <?php $counter_related++; ?>
+            <?php endif; ?>
+			<?php $counter_related++; ?>
+		<?php endif; ?>
+		<?php if ((string)$_item->getPosition() == "3" && $counter_related > 4 && $counter_related < 7): ?>
+			<?php if ($counter_related == 5): ?>
+				<div class="rel-box1">
+					<h4><?php if ($_product->getrelated_group_3_title() == NULL){ echo "for EXTRA LOVE"; } else { echo $_product->getrelated_group_3_title(); } ?></h4>
+			<?php endif; ?>
+						<div class="rel-pr1">
+							<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_item->getName()) ?>">
+								<img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(150) ?>" alt="<?php echo $this->escapeHtml($_item->getName()) ?>" />
+							</a>
+							<p><a href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->escapeHtml($_item->getName()) ?></a></p>
+							<?php if ($_item['special_price'] != NULL): ?>
+							<span class="special-price">$<?php echo number_format($_item['special_price'], 2, '.', ','); ?></span>
+						<?php else: ?>
+							<span class="price"><?php echo $this->getPriceHtml($_item, true, '-related') ?></span>
+						<?php endif; ?>
+						</div>
+			<?php if ($counter_related == 6):?>
+				</div>
+			<?php endif; ?>
+            <?php if ($countdata[3] < 2): ?>
+            </div>
+            <?php $counter_related++; ?>
+            <?php endif; ?>
+			<?php $counter_related++; ?>
+		<?php endif; ?>
+	<?php endforeach ?>
+	<script type="text/javascript">decorateList('block-related', 'none-recursive')</script>
+</div>
+<?php endif ?>

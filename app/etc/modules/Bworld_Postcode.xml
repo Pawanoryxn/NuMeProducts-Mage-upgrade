@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Bworld_Postcode>
+      <active>true</active>
+      <codePool>local</codePool>
+      <version>0.1.0</version>
+    </Bworld_Postcode>
+  </modules>
+</config>

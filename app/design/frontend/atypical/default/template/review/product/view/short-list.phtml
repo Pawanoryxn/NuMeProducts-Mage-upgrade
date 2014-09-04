@@ -1,0 +1,165 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php $_items = $this->getReviewsCollection()->getItems();?>
+<?php $_product = $this->getProduct(); ?>
+<?php $counter = 0; ?>
+<?php $_description = $this->getProduct()->getDescription(); ?>
+<?php if (count($_items)): ?>
+<div class="box-collateral box-reviews" id="customer-reviews">
+	<div id="customer-reviews-inner">
+		<ul class="nav">
+			<li class="nav-one"><h2><a href="#reviews" class="current"><?php echo $this->__('Reviews') ?></a><span>/</span></h2></li>
+			<li class="nav-two"><h2><a href="#about"><?php echo $this->__('About') ?></a><span>/</span></h2></li>
+			<li class="nav-three"><h2><a href="#specs"><?php echo $this->__('Specs') ?></a></h2></li>
+		</ul>
+		<?php //echo $this->getChildHtml('toolbar') ?>
+		<div class="list-wrap">
+			<ul id="reviews" class="collapsible">
+				<li>
+					<?php echo $this->getChildHtml('review_summary'); ?>
+					<div class="review-carousel flexsliders">
+					<ul class="slides">
+					<?php foreach ($_items as $_review):?>
+
+						<div class="review">
+							<span class="nickname"><?php echo $this->escapeHtml($_review->getNickname()); ?></span>
+							<?php $_votes = $_review->getRatingVotes(); ?>
+							<?php if (count($_votes)): ?>
+								<?php foreach ($_votes as $_vote): ?>
+									<div class="ratings">
+										<div class="rating-box">
+											<div class="rating" style="width:<?php echo $_vote->getPercent() ?>%;"></div>
+										</div>
+									</div>
+								<?php endforeach; ?>
+							<?php endif; ?>
+							<div class="review-title"><?php echo $this->escapeHtml($_review->getTitle()) ?></div>
+							<span class="date"><?php echo Mage::helper('core')->formatDate($_review->getCreatedAt(), 'long', false); ?></span>
+							<p data="">
+								<?php $review = nl2br($this->escapeHtml($_review->getDetail())); echo $review; ?>
+							</p>  
+						</div>
+					<?php endforeach; ?>
+					</ul>
+					</div>
+					<?php //echo $this->getChildHtml('toolbar') ?>
+					<span id="review-buttons">
+						<div>
+							<a href="<?php echo $this->getBaseUrl(); ?>review/product/list/id/<?php echo $_product->getId(); ?>/category/<?php echo $_product->getCategoryId(); ?>">Write a review</a>
+						</div> 
+					</span>
+					<div id="review-success-msg" style="display: none;"></div>
+					<?php echo $this->getChildHtml('review_form') ?>
+				</li>
+			</ul>
+			<ul id="about" class="collapsible hide">
+				<li>
+					<div id="product-description"><?php echo $this->getChildHtml('description'); ?></div>
+				</li>
+			</ul>
+			<ul id="specs" class="collapsible hide">
+				<li>
+					<div id="product-specs"><?php echo $this->getChildHtml('additional'); ?></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script>
+(function($){
+	$(document).ready(function(){
+		$('#customer-reviews-inner ul.nav a').on('click', function(){  
+			var id = $(this).attr('href');
+			$('#customer-reviews-inner ul.nav a').not(this).removeClass('current');
+			$(this).addClass('current');
+			$('.list-wrap ul.collapsible').each(function(){
+				if (!$(this).hasClass('hide')){
+					$('.list-wrap ul.collapsible').slideUp();
+					//$(this).addClass('hide');
+				}
+			});
+			$('.list-wrap ul' + id).slideDown();
+			$('.list-wrap ul' + id).removeClass('hide');
+			return false;
+		});
+		var revs = 4, winwidth = $(window).width();
+
+		if (winwidth < 1456 && winwidth > 985){ revs = 3; }
+		if (winwidth < 986 && winwidth > 675){ revs = 2; }
+		if (winwidth < 676){ revs = 1; }
+		function revformat(revcount){
+			// format the review text for read more if applicable
+			$('.review p').each(function(){
+				if ( $(this).height() > 150 ){
+					$(this).attr('data',$(this).height()).addClass('read-more').after('<a class="read-more-rev" href="#"><span class="more">Read More</span></a>');
+				}
+			});
+			// for flexslider; based on width how many slides will be on one line
+			var children = $('div.review');
+			for(var i = 0, l = children.length; i < l; i += revcount) {
+			    children.slice(i, i+revcount).wrapAll('<li class="review-slide"></li>');
+			}
+		}
+		revformat(revs);
+		$('a.read-more-rev').on('click', function(){
+			var pheight = $(this).prev('p').attr('data');
+			if ( $(this).children('span').hasClass('more') ){
+				$(this).html('<span class="less">Read Less</span>');
+				$(this).prev('p').animate({height: pheight});
+			} else {
+				$(this).html('<span class="more">Read More</span>');
+				$(this).prev('p').animate({ height: 150 });
+			}
+			return false;
+		});
+		$('#review-buttons a').toggle(function(){
+				$('div.form-add').slideDown(1000);
+				$(this).text('Close');
+				return false;
+			}, function(){
+				$('div.form-add').slideUp(1000);
+				$(this).text('Write a Review');
+				return false;
+		});
+		jQuery(window).load(function(){
+			jQuery('.review-carousel').flexslider({
+        		animation: "slide",
+				controlNav: true,
+				directionNav: true,
+				controlsContainer: '.review-carousel',
+				before: function(){
+					jQuery('p.read-more').animate({height:150});
+					jQuery('.less').text('Read More').removeClass('less').addClass('more');
+				}
+			});
+		});
+	});
+})(jQuery);
+
+</script>
+<?php endif; ?>

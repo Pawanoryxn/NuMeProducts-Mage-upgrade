@@ -1,0 +1,194 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Cart cross sell items template
+ *
+ * @see Mage_Checkout_Block_Cart_Crosssell
+ */
+?>
+
+<?php if($this->getItemCount()): ?>
+    <div class="related-product-block container">
+        <div class="crosssell-title">
+            <div class="linel"></div>
+            <h3>Get the <span class="brand-color">total</span> experience</h3>
+            <div class="liner"></div>
+        </div>
+
+        <?php $counter_related = 1; $brdr = 0; ?>
+
+        <?php foreach ($this->getItems() as $_product): ?>
+
+<?php // $products = Mage::getModel('catalog/product')->getCollection();//addAttributeToFilter('visibility', 1); ?>
+<?php // foreach($products as $product): ?>
+<?php  ?>
+
+<? //CrossSell column 1 ?>
+
+            <?php if ($counter_related > 0 && $counter_related < 3): ?>
+                <?php if ($counter_related == 1): ?>
+                <div class="rel-box1 ">
+                <?php endif; ?>
+                    <div class="rel-pr1">
+                        <form action="<?php echo $this->getUrl('checkout/cart/add'); ?>" method="post">
+
+                            <div class="prodinfo">
+                            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(150) ?>" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+                            <p><?php echo $this->escapeHtml($_product->getName()) ?></p>
+
+                            <?php $productiidd = Mage::getModel('catalog/product')->load($_product->getid()); ?>
+                            <?php if (is_numeric($productiidd->getcrosssell_prices()) AND $productiidd->getcrosssell_status() == "1" AND $productiidd->getcrosssell_prices() != '0'): ?>
+                            <span class="price">$<?php echo number_format($productiidd->getcrosssell_prices(),2); ?></span>
+                            <span class="reg-price">$<?php echo number_format($productiidd->getPrice(),2); ?> MSRP</span>
+                            <?php else: ?>
+                            <span class="price">$<?php echo number_format($productiidd->getPrice(),2); ?></span>
+                            <?php endif; ?>
+
+                                <div class="crosssell-options">
+                                <?php //echo "[".$productiidd->gettype_id().']'; ?>
+                                <?php if ($productiidd->getData('type_id') == "configurable"): ?>
+                                    <?php //get the configurable data from the product ?>
+                                    <?php $config = $productiidd->getTypeInstance(true); ?>
+                                    <?php //loop through the attributes ?>
+                                    <?php foreach ($config->getConfigurableAttributesAsArray($productiidd) as $attributes): ?>
+                                        <!-- <label class="required"><em>*</em><?php //echo $attributes["label"]; ?></label> -->
+                                        <div class="input-box-select">
+                                            <select name="super_attribute[<?php echo $attributes['attribute_id'] ?>]" id="attribute<?php echo $attributes['attribute_id'] ?>">
+                                                <?php foreach($attributes["values"] as $values) : ?>
+                                                    <?php echo "<option value='$values[value_index]'>".$values["label"]."</option>"; ?>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                <div class="input-block"></div>
+                                <?php endif; ?>
+                                </div>
+
+                            <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+                            <input type="hidden" name="product" value="<?php echo $_product->getid(); ?>" />
+                            <input type="hidden" name="crosssell" value="1" />
+                            <input name="qty" type="hidden" class="input-text qty" id="qty" value="1"></span>
+                            </div>
+
+                            <div class="button-box1">
+                                <button class="addcart" onclick="productAddToCartForm.submit()">
+                                    <span><span>Add to Cart<span class="arrow"></span></span></span></button>
+                                </div>
+                            <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                <!-- <a href="<?php echo $this->getAddToWishlistUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a> -->
+                            <?php endif; ?>
+                            <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                                <span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+
+                <?php if ($counter_related == 2): ?>
+                </div>
+                <?php endif; ?>
+                <?php //$counter_related++; ?>
+            <?php endif; ?>
+
+<? //CrossSell column 2 ?>
+
+            <?php if ($counter_related > 2 && $counter_related < 5): ?>
+                <?php if ($counter_related == 3): ?>
+                <div class="rel-box1 ">
+                <?php endif; ?>
+
+                    <div class="rel-pr1">
+                        <form action="<?php echo $this->getUrl('checkout/cart/add'); ?>" method="post">
+
+                            <div class="prodinfo <?php if($brdr == 1){echo 'last';}; $brdr++; ?>">
+                            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(150) ?>" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+                            <p><?php echo $this->escapeHtml($_product->getName()) ?></p>
+
+                            <?php $productiidd = Mage::getModel('catalog/product')->load($_product->getid()); ?>
+                            <?php if (is_numeric($productiidd->getcrosssell_prices()) AND $productiidd->getcrosssell_status() == "1" AND $productiidd->getcrosssell_prices() != '0'): ?>
+                            <span class="price">$<?php echo number_format($productiidd->getcrosssell_prices(),2); ?></span>
+                            <span class="reg-price">$<?php echo number_format($productiidd->getPrice(),2); ?> MSRP</span>
+                            <?php else: ?>
+                            <span class="price">$<?php echo number_format($productiidd->getPrice(),2); ?></span>
+                            <?php endif; ?>
+
+                                <div class="crosssell-options">
+                                <?php //echo "[".$productiidd->gettype_id().']'; ?>
+                                <?php if ($productiidd->getData('type_id') == "configurable"): ?>
+                                    <?php //get the configurable data from the product ?>
+                                    <?php $config = $productiidd->getTypeInstance(true); ?>
+                                    <?php //loop through the attributes ?>
+                                    <?php foreach ($config->getConfigurableAttributesAsArray($productiidd) as $attributes): ?>
+                                        <!-- <label class="required"><em>*</em><?php //echo $attributes["label"]; ?></label> -->
+                                        <div class="input-box-select">
+                                            <select name="super_attribute[<?php echo $attributes['attribute_id'] ?>]" id="attribute<?php echo $attributes['attribute_id'] ?>">
+                                                <?php foreach($attributes["values"] as $values) : ?>
+                                                    <?php echo "<option value='$values[value_index]'>".$values["label"]."</option>"; ?>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                <div class="input-block"></div>
+                                <?php endif; ?>
+                                </div>
+
+                            <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+                            <input type="hidden" name="product" value="<?php echo $_product->getid(); ?>" />
+                            <input type="hidden" name="crosssell" value="1" />
+                            <input name="qty" type="hidden" class="input-text qty" id="qty" value="1"></span>
+                            </div>
+
+                            <div class="button-box1">
+                                <button class="addcart" onclick="productAddToCartForm.submit()">
+                                    <span><span>Add to Cart<span class="arrow"></span></span></span></button>
+                                </div>
+                            <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                <!-- <a href="<?php echo $this->getAddToWishlistUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a> -->
+                            <?php endif; ?>
+                            <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                                <span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+
+                <?php if ($counter_related == 4): ?>
+                </div>
+                <?php endif; ?>
+                <?php //$counter_related++; ?>
+            <?php endif; ?>
+
+            <?php $counter_related++; ?>
+            <?php // endif; ?>
+        <?php endforeach; //as $_product ?>
+    </div>
+<?php endif; ?>
+
+
+<script type="text/javascript">decorateList('crosssell-products-list', 'none-recursive')</script>
+<?php //endif; //$this->getItemCount() ?>

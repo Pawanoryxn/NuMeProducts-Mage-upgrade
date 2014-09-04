@@ -1,0 +1,104 @@
+<div class="newsletter-form-nume">
+	<img src="<?php echo $this->getSkinUrl('images/assets/newsletter_3.jpg') ?>" alt="" />
+	<div class="offer">
+		<h2><span class="pink">Sign up</span> for our newsletter and get<br/><span class="pink">$50 of free</span> hair care and accessories</h2>
+		<h2 class="mobile"><span class="pink">$50 of free</span> hair care and accessories</h2>
+		<!-- Begin AbleForm Embed Code -->
+		<script>
+		jQuery(document).ready(function() {
+		  jQuery("form#ableform-embed-form").submit(function(e){
+		  //jQuery(".btn-submit.display").css("visibility", "hidden");
+		    var $this = jQuery(this);
+		    jQuery("h2").html('<span class="pink">Please wait</span>');
+		    jQuery.ajax({
+		      url: "http://ableform.chimpchamp.com/forms/submit/19/34?callback=?",
+		      dataType: "jsonp",
+		      type: 'GET',
+		      //jsonpCallback: 'callback',
+		      processData: true,
+		      crossDomain: true,
+		      data: $this.serialize(),
+		      success: function(response){
+		        if (response == 'http://localhost/subscribe/success/index.php') {
+		          jQuery(".offer h2").html('Coupon code: <span class="pink">NUMELOVE</span>');
+		          //$this[0].reset();
+		          //jQuery('html, body').animate({ scrollTop: 0 }, 0);
+		        }
+		        else if (response == false) {
+		          jQuery("#show_warning").html("<div class = 'alert alert-warning'>This user account is currently not active. Please visit ChimpChamp.com/ableform for more information.</br><a href='http://ChimpChamp.com/ableform'>Please visit ChimpChamp.com/ableform</a> </div>")
+		          //$this[0].reset();
+		          //jQuery('html, body').animate({ scrollTop: 0 }, 0);
+
+		        }
+		        else if (response.indexOf("https://") > -1 || response.indexOf("http://") > -1) {
+		          //alert(response);
+		          //window.location.href = response;
+		        }
+		        else {
+		          response = response.replace("MailChimp API Error:", "");
+		          jQuery("#show_warning").html("<div class = 'alert alert-error'>" + response + "</br><a href='http://ChimpChamp.com/ableform'>Please visit http://ChimpChamp.com/ableform</a> </div>")
+
+		          //$this[0].reset();
+		          //jQuery('html, body').animate({ scrollTop: 0 }, 0);
+
+		        }  
+		      },
+		      error: function(xhr, status, error) {
+		        alert("An AJAX error occured: " + status + "\nError: " + error + " = " + JSON.stringify(xhr));
+		      }
+		    });
+		    e.preventDefault();
+		    return false;
+		    jQuery("a[href='#top']").click(function() {
+			  jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+			  return false;
+			});
+		  });
+		});
+		</script>
+		<div class="container">
+			<div id="show_warning"></div> 
+			<form action="http://ableform.chimpchamp.com/forms/submit/19/34" method="post" id='ableform-embed-form' name='ableform-embed-form'>
+				<div class="ableform-field-group">
+					<input type="email" value="" name="EMAIL"   required="required" placeholder="Enter your e-mail here"  />
+				</div>
+				<div class="ableform-field-group" style="margin-bottom: 10px;">
+					<div class="clear"></div>
+					<div class="btn-submit display" style="visibility: visible">
+						<input  type="submit" name="subscribe" class="btn btn-success form-button" />
+					</div>
+				</div>
+			</form>
+		</div>
+	<!-- End AbleForm Embed Code -->
+	</div>
+</div>
+<div class="newsletter-content-nume">
+	<div class="heading">
+		<h1><span class="line-l"></span>The N<span class="l">u</span>m<span class="l">e</span> Communiqu&Eacute;<span class="line-r"></span></h1>
+		<div class="subtitle">The top styling info on your radar and at your fingertips</div>
+	</div>
+	<div class="blurbs">
+		<div class="blurb">
+			<h2>The latest tips</h2>
+			<p>Everything from 30 second updos to getting the hottest looks is here for the taking. Soak up the knowledge that will keep you on top of your style game.</p>
+		</div>
+		<div class="blurb">
+			<h2>Biggest discounts</h2>
+			<p>Get your secret codes tht ONLY our loyal NuMe Communique subscribers know about. We're talking major discounts of up to 80% off, product giveaways and straight up NuMe love that goes right to your purse.</p>
+		</div>
+		<div class="blurb">
+			<h2>Must have products</h2>
+			<p>NuMe communique keeps you in the loop with the trending new products every one is using. Get it here first and always be in the know.</p>
+		</div>
+		<div class="blurb">
+			<h2>Daily Hairoscope</h2>
+			<p>Not sure what to do with your hair today? The answer is written in the style stars. Your daily beauty forecast is here to lead you head over heels in the right direction.</p>
+		</div>
+	</div>
+	<div class="heading">
+		<h2><span class="line-l"></span>Give <span class="pink">in</span> to your <span class="pink">hair</span><span class="line-r"></span></h2>
+		<div class="subtitle">All it wants is to look good. <span class="pink">Signup</span> then head over to our website to get your style on</div>
+	</div>
+	<a href="#top" class="sign-up-button"></a>
+</div>

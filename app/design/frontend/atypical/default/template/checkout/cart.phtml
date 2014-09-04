@@ -1,0 +1,198 @@
+<?php
+/**
+ *
+ * This file is part of the GPMD Magento Responsive Theme.
+ *
+ * The GPMD Magento Responsive Theme is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * The GPMD Magento Responsive Theme is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with the GPMD Magento Responsive Theme. If not, see
+ * http://www.gnu.org/licenses/.
+ *
+ * @category    GPMD
+ * @package     GPMD_Responsive_Theme
+ * @copyright   Copyright (c) 2012 GPMD.
+ * @author      Matt Bailey @GPMD LTD
+ */
+
+// $cid = Mage::getSingleton('core/session')->setspecialdiscountPer('10');
+$discountPercentage  =  Mage::getSingleton('core/session')->getspecialdiscountPer();
+// $xfcouponcode = "NUMEFREE20PER"; 
+// Mage::getSingleton('core/session')->setxfcouponcode($xfcouponcode);
+$coupon_code = Mage::getSingleton('core/session')->getxfcouponcode();
+if($discountPercentage != '' AND $coupon_code != "")
+{
+if($coupon_code != '')
+{
+Mage::getSingleton('checkout/cart')->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+Mage::getSingleton('checkout/cart')->getQuote()->setCouponCode($coupon_code)->collectTotals()->save();
+}
+}else
+{
+    $countFollowUp = 0;
+    $countNoFollowUp = 0;
+        $appliedCoupons = $this->getQuote()->getAppliedCoupons();
+        $couponsize = sizeof($appliedCoupons);
+         if($couponsize >= 2)
+        {
+            $coupon_codes = '';
+            Mage::getSingleton('checkout/cart')->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+            Mage::getSingleton('checkout/cart')->getQuote()->setCouponCode($coupon_codes)->collectTotals()->save();
+            for($foll=0;$foll< $couponsize;$foll++)
+            {
+                // echo $appliedCoupons[$foll];
+                $oCoupons = Mage::getModel('salesrule/coupon')->load($appliedCoupons[$foll], 'code');
+                $oRule = Mage::getModel('salesrule/rule')->load($oCoupons->getRuleId());
+                $xfdiscountCodeoCoupons = $oRule->getData();
+                    if($xfdiscountCodeoCoupons['coupon_type'] == "3" AND $countFollowUp<1)
+                    {
+                    // $couponsizeApply = $couponsize-1;
+                        $xfCouponCode = $appliedCoupons[ $foll ];  
+                        Mage::getSingleton('checkout/cart')->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+                        Mage::getSingleton('checkout/cart')->getQuote()->setCouponCode($xfCouponCode)->collectTotals()->save();
+                        $countFollowUp = $countFollowUp+1;
+                    }
+            }
+            for($foll=0;$foll< $couponsize;$foll++)
+            {
+                // echo "Appling".$appliedCoupons[$foll];
+                //echo $appliedCoupons[$foll]."----".$xfdiscountCodeoCoupons['coupon_type'] ."------".$countNoFollowUp."<br>";
+                $oCoupons = Mage::getModel('salesrule/coupon')->load($appliedCoupons[$foll], 'code');
+                $oRule = Mage::getModel('salesrule/rule')->load($oCoupons->getRuleId());
+                $xfdiscountCodeoCoupons = $oRule->getData();
+                    if($xfdiscountCodeoCoupons['coupon_type'] != "3" AND $countNoFollowUp<1)
+                    { 
+                        $xfCouponCode = $appliedCoupons[ $foll ];  
+                        Mage::getSingleton('checkout/cart')->getQuote()->getShippingAddress()->setCollectShippingRates(true);
+                        Mage::getSingleton('checkout/cart')->getQuote()->setCouponCode($xfCouponCode)->collectTotals()->save();
+                        $countNoFollowUp = $countNoFollowUp+1;
+                    }
+                }
+
+        }
+        $cart = Mage::getSingleton('checkout/session')->getQuote(); 
+            foreach ($cart->getAllAddresses() as $address)
+        {
+           $cart->unsetData('cached_items_nonnominal');
+           $cart->unsetData('cached_items_nominal');
+        }
+        $cart->setTotalsCollectedFlag(false);
+        $cart->collectTotals();
+}
+    // my code
+// free items always one start
+                // $cart = Mage::getModel('checkout/cart');
+                // Mage::getSingleton('checkout/session')->setCartWasUpdated(true);
+                // $items = Mage::getSingleton('checkout/session')->getQuote()->getAllItems();
+                // foreach($items as $item) :
+                // $product = Mage::getModel('catalog/product')->load($item->getProductId());
+                // $productType = $product->getTypeID();
+                // if($productType == 'simple'):
+                // if($item->getSku() != $activeSKU):
+                // if($item->getPrice() == "0")
+                // $item->setQty("1");
+                // endif;
+                // endif;
+                // $activeSKU = $item->getSku();
+                // endforeach;
+                // $cart->save();
+// free items always one ends
+?>
+<div class="cart">
+    <div class="page-title title-buttons">
+        <h1><?php echo $this->__('Shopping Cart') ?></h1>
+        <?php if(!$this->hasError()): ?>
+        <ul class="checkout-types">
+        <?php foreach ($this->getMethods('top_methods') as $method): ?>
+            <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+            <li><?php echo $methodHtml; ?></li>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
+    </div>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <?php echo $this->getChildHtml('form_before') ?>
+    <div class="item-table">
+        <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
+            <table>
+            <?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
+                <thead>
+                    <tr class="cart-header">
+                        <td>&nbsp;</td>
+                        <td><?php echo $this->__('Qty') ?></td>
+                        <td><span class="nobr"><?php echo $this->__('Product Name') ?></span></td>
+                        <td class="product-options">&nbsp;</td>
+                        <td class="product-options">&nbsp;</td>
+                        <?php //if ($this->helper('wishlist')->isAllowInCart()) : ?>
+                        <!-- <td class="a-center"><span class="nobr"><?php //echo $this->__('Move to Wishlist') ?></span></td> -->
+                        <?php //endif ?>
+                        <td class="a-center"><span class="nobr"></span></td>
+                        <td class="a-center original-price"><?php echo $this->__('Original Price') ?></td>
+                        <!-- <td class="a-center">&nbsp;</td> -->
+                        <td class="a-center"><?php echo $this->__('Subtotal') ?></td>
+                        <td class="a-center">&nbsp;</td>
+                    </tr>
+                    <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+                    <tr>
+                        <td class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></td>
+                        <th><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></td>
+                        <td class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></td>
+                        <td><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></td>
+                    </tr>
+                    <?php endif; ?>
+                </thead>
+
+                <tbody>
+                <?php foreach($this->getItems() as $_item): ?>
+                    <?php echo $this->getItemHtml($_item) ?>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+            <script type="text/javascript">decorateTable('shopping-cart-table')</script>
+    </div>
+
+    <div class="cart-container">
+        <button type="submit" title="<?php echo $this->__('Update Cart') ?>" class="addcart update">
+            <span><span><?php echo $this->__('Update Cart') ?><span class="arrow"></span></span></span>
+        </button>
+        <div class="underline"></div>
+    </div>
+</form>
+
+    <div class="item-table">
+        <div class="cart-container">
+            <?php if (!$this->getIsVirtual()): echo $this->getChildHtml('shipping'); endif; ?>
+            <?php echo $this->getChildHtml('coupon') ?>
+            <?php echo $this->getChildHtml('totals'); ?>
+            <?php if(!$this->hasError()): ?>
+                    <ul class="checkout-types" style="">
+                    <?php foreach ($this->getMethods('methods') as $method): ?>
+                        <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+                        <li><?php echo $methodHtml; ?></li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    </ul>
+                    <?php endif; ?>
+        </div>
+    </div>
+</div>
+<div class="crosssalecontent">
+<?php echo $this->getChildHtml('crosssell') ?>
+</div>
+<script type="text/javascript">
+    $$('.update-item').each(function(element) {
+        Event.observe(element, 'click', function () {
+                element.up('form').submit();
+            }
+        )
+    })
+</script>

@@ -1,0 +1,191 @@
+<?php
+$_product    = $this->getProduct();
+$_item       = $this->getItem();
+$_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
+?>
+<?php $attcount = 0; ?>
+<?php $attcounts = count($_attributes)-1; 
+
+	$rand = rand(0,222); ?>
+<?php if ($_product->isSaleable() && count($_attributes)):?>
+    <?php foreach($_attributes as $_attribute): 
+	?>
+    <td class="product-options <?php if(($attcounts == 0 && $attcount == 0) || ($attcounts == 1 && $attcount == 1)){ echo "lastSelect"; }; ?>">
+    <div class="input-box-select-cart"> 
+        <select name="cart[<?php echo $_item->getId().'_'.$rand;?>][super_attribute][<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select_<?php echo $_product->getId().'_'.$rand; ?>">
+            <option><?php echo $this->__('Choose an Option...') ?></option>
+        </select>
+      </div>
+    </td>
+    <?php
+	if($attcount == $attcounts)
+	{
+	?>
+    <script type="text/javascript">
+
+if(typeof Oro =='undefined') {
+    var Oro  = {};
+}
+
+/**************************** CONFIGURABLE PRODUCT **************************/
+Oro.ProductConfig = Class.create(Product.Config, {
+    initialize: function(config){
+        this.config     = config;
+        this.taxConfig  = this.config.taxConfig;
+        this.settings   = $$('.super-attribute-select_' + this.config.productId + '_' + <?php echo $rand; ?>);
+        this.state      = new Hash();
+        this.priceTemplate = new Template(this.config.template);
+        this.prices     = config.prices;
+        this.cartConfig = config.cart_config;
+
+        // Set default values from config
+        if (config.defaultValues) {
+            this.values = config.defaultValues;
+        }
+
+        // Overwrite defaults by url
+        var separatorIndex = window.location.href.indexOf('#');
+        if (separatorIndex != -1) {
+            var paramsStr = window.location.href.substr(separatorIndex+1);
+            var urlValues = paramsStr.toQueryParams();
+            if (!this.values) {
+                this.values = {};
+            }
+            for (var i in urlValues) {
+                this.values[i] = urlValues[i];
+            }
+        }
+
+        // Overwrite defaults by inputs values if needed
+        if (config.inputsInitialized) {
+            this.values = {};
+            this.settings.each(function(element) {
+                if (element.value) {
+                    var attributeId = element.id.replace(/[a-z]*/, '');
+                    this.values[attributeId] = element.value;
+                }
+            }.bind(this));
+        }
+
+        // Put events to check select reloads
+        this.settings.each(function(element){
+            Event.observe(element, 'change', this.configure.bind(this))
+        }.bind(this));
+
+        // fill state
+        this.settings.each(function(element){
+            var attributeId = element.id.replace(/[a-z]*/, '');
+            if(attributeId && this.config.attributes[attributeId]) {
+                element.config = this.config.attributes[attributeId];
+                element.attributeId = attributeId;
+                this.state[attributeId] = false;
+            }
+        }.bind(this))
+
+        // Init settings dropdown
+        var childSettings = [];
+        for(var i=this.settings.length-1;i>=0;i--){
+            var prevSetting = this.settings[i-1] ? this.settings[i-1] : false;
+            var nextSetting = this.settings[i+1] ? this.settings[i+1] : false;
+            if (i == 0){
+                this.fillSelect(this.settings[i])
+            } else {
+                this.settings[i].disabled = true;
+            }
+            $(this.settings[i]).childSettings = childSettings.clone();
+            $(this.settings[i]).prevSetting   = prevSetting;
+            $(this.settings[i]).nextSetting   = nextSetting;
+            childSettings.push(this.settings[i]);
+        }
+
+        // Set values to inputs
+        this.configureForValues();
+        document.observe("dom:loaded", this.configureForValues.bind(this));
+    },
+
+    configureElement : function(element) {
+        this.reloadOptionLabels(element);
+        if(element.value){
+            this.state[element.config.id] = element.value;
+            var color;
+            if (element.selectedIndex !== -1 && (color = element.options[element.selectedIndex].style.color)) {
+                element.setAttribute('style', 'color:' + color);
+            }
+            if(element.nextSetting){
+                element.nextSetting.disabled = false;
+                this.fillSelect(element.nextSetting);
+                this.resetChildren(element.nextSetting);
+            }
+        }
+        else {
+            this.resetChildren(element);
+        }
+        //this.reloadPrice();
+//      Calculator.updatePrice();
+    },
+
+    fillSelect: function(element){
+        var attributeId = element.id.replace(/[a-z]*/, '');
+        var options = this.getAttributeOptions(attributeId);
+        this.clearSelect(element);
+        element.options[0] = new Option('', '');
+        element.options[0].innerHTML = this.config.chooseText;
+
+        var prevConfig = false;
+        if(element.prevSetting){
+            prevConfig = element.prevSetting.options[element.prevSetting.selectedIndex];
+        }
+
+        if(options) {
+            var index = 1;
+            for(var i=0;i<options.length;i++){
+                if (this.cartConfig[options[i].id]) {
+                    if (this.cartConfig[options[i].id].label) {
+                        options[i].label = this.cartConfig[options[i].id].label;
+                    }
+                    if (this.cartConfig[options[i].id].hex_color) {
+                        options[i].color = this.cartConfig[options[i].id].hex_color;
+                    }
+                }
+                var allowedProducts = [];
+                if(prevConfig) {
+                    for(var j=0;j<options[i].products.length;j++){
+                        if(prevConfig.config.allowedProducts
+                            && prevConfig.config.allowedProducts.indexOf(options[i].products[j])>-1){
+                            allowedProducts.push(options[i].products[j]);
+                        }
+                    }
+                } else {
+                    allowedProducts = options[i].products.clone();
+                }
+
+                if(allowedProducts.size()>0){
+                    options[i].allowedProducts = allowedProducts;
+                    element.options[index] = new Option(this.getOptionLabel(options[i], options[i].price), options[i].id);
+                    if (typeof options[i].price != 'undefined') {
+                        element.options[index].setAttribute('price', options[i].price);
+                    }
+                    element.options[index].config = options[i];
+                    if (options[i].color) {
+                        element.options[index].style.color = options[i].color;
+                    }
+                    index++;
+                }
+            }
+        }
+    }
+});
+    var spConfig_<?php echo $_product->getId().'_'.$rand; ?> = new Oro.ProductConfig(<?php echo $this->getJsonConfig() ?>);
+
+
+
+
+</script>
+    <?php
+	}
+	$attcount = $attcount +1;
+	?>
+    <?php endforeach; ?>
+
+<?php if(count($_attributes) == 1){ echo '<td></td>'; } ?>
+<?php endif;?>

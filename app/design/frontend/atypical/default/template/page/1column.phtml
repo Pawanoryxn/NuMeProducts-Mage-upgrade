@@ -1,0 +1,119 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+
+<?php
+$categoryPage = Mage::registry('current_category');
+$productPage  = Mage::registry('product');
+$homePage = Mage::getSingleton('cms/page')->getIdentifier() == 'home';
+$cmsPage = Mage::getSingleton('cms/page')->getIdentifier();
+//$showModal = Mage::getModel('core/session')->getShowModal();
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+<?php echo $this->getChildHtml('head') ?>
+</head>
+	<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+		
+		<?php echo $this->getChildHtml('after_body_start') ?>
+		<div class="wrapper">
+			<?php echo $this->getChildHtml('header') ?>
+			<?php //echo $this->getChildHtml('global_notices') ?>
+			<?php //echo $this->getChildHtml('breadcrumbs') ?>
+			<?php //echo $this->getChildHtml('global_messages') ?>
+			<div class="content">
+				<?php echo $this->getChildHtml('content') ?>
+				<?php echo $this->getChildHtml('reviews'); ?>
+			</div>
+			<?php echo $this->getChildHtml('products_push'); ?>
+			<div class="push"></div><?php // for sticky footer ?>
+		</div>
+
+		<?php echo $this->getChildHtml('footer') ?>
+		<?php //if (!$showModal ): ?>
+		<!--<div class="nume-lightbox-group">
+			<div class="nume-lightbox-bg"></div>
+			<div class="lightbox-container">
+				<div class="nume-lightbox">
+					<div class="close" style="float:right;"><a href="#">CLOSE X</a></div>
+					<h2>Sign Up To Receive Exclusive Deals!</h2>
+					<p class="modal-message">Become part of the NuMe Communique and receive early bird notices on exclusive deals on our products via email.</p>
+					<div class="lightbox-email-form">
+							<div id="feedback" style="display:none" class="mini-newsletter">
+							    <p>Thank you for subscribing.</p>
+							</div>
+							<form name="newsletter-form" id="newsletter-form" onsubmit="new Ajax.Updater({success:'newsletter-form'}, '<?php //echo $this->getUrl('newsletter/subscriber/new') ?>', {asynchronous:true, evalScripts:false, onComplete:function(request, json){Element.hide('newsletter-form');Element.show('feedback');}, onLoading:function(request, json){}, parameters:Form.serialize(this)}); return false;" action="<?php //echo $this->getUrl('newsletter/subscriber/new') ?>" method="post">
+							<input type="email" value="" name="email"   required="required" placeholder="Enter your e-mail here"  />
+							<input  type="submit" name="subscribe" class="btn btn-success form-button" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>-->
+		<?php //Mage::getModel('core/session')->setShowModal(TRUE); ?>
+		<?php //endif; ?>
+		<?php if($homePage) : ?>
+		<?php echo $this->getChildHtml('jsfooter-home') ?>
+		<?php elseif ($categoryPage AND !$productPage): ?>
+		<?php echo $this->getChildHtml('jsfooter-category') ?>
+            <?php elseif ($productPage): ?>
+            <?php echo $this->getChildHtml('jsfooter-product') ?>
+            <?php elseif ($cmsPage): ?>
+            <?php echo $this->getChildHtml('jsfooter-cms') ?>
+            <?php else: ?>
+            <?php echo $this->getChildHtml('jsfooter') ?>
+		<?php endif; ?>
+		<?php echo $this->getAbsoluteFooter() ?>
+		<?php echo $this->getChildHtml('before_body_end') ?>
+
+		<?php if (
+			$_SERVER['REQUEST_URI'] == 'lustrum-black' ||
+			$_SERVER['REQUEST_URI'] == 'styling-tools/curling-wands'
+		) : ?>
+		<script type="text/javascript">
+		setTimeout(function(){var a=document.createElement("script");
+		var b=document.getElementsByTagName("script")[0];
+		a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0022/7715.js?"+Math.floor(new Date().getTime()/3600000);
+		a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+		</script>
+		<?php endif; ?>
+		<script>
+			jQuery(".close").click(function() {
+			  jQuery('.nume-lightbox-group').hide();
+			});
+			jQuery(".nume-lightbox-bg").click(function() {
+			  jQuery('.nume-lightbox-group').hide();
+			});
+		</script>
+	</body>
+</html>

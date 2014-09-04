@@ -1,0 +1,28 @@
+<div id="checkout-progress-bar">
+	<div class="progress-box">
+		<ul>
+			<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+			<li><a href="#" onclick="jQuery('.flexslider').flexslider(0);">Login</a></li>
+			<li><a href="#" onclick="jQuery('.flexslider').flexslider(1);">Info</a></li>
+			<li><a href="#" onclick="jQuery('.flexslider').flexslider(2);">Review and Confirm</a></li>
+			<li><a href="#">Take Me Home!</a></li>
+			<?php else: ?>
+			<li><a href="#">Login</a></li>
+			<li><a href="#" onclick="jQuery('.flexslider').flexslider(0);">Info</a></li>
+			<li><a href="#" onclick="jQuery('.flexslider').flexslider(1);">Review and Confirm</a></li>
+			<li><a href="#">Take Me Home!</a></li>
+			<?php endif; ?>
+		</ul>
+		<div class="nodes">
+			<span class="start-node"></span>
+			<span class="divider-node"></span>
+			<span class="connect-node"></span>
+			<span class="divider-node"></span>
+			<span class="connect-node"></span>
+			<span class="divider-node"></span>
+			<span class="end-node"></span>
+		</div>
+		<div class="progress" style="width=0%;"></div>
+		<div class="gray-bg"></div>
+	</div>
+</div>
