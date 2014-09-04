@@ -1,0 +1,509 @@
+/**
+ *
+ * This file is part of the GPMD Magento Responsive Theme. 
+ *
+ * The GPMD Magento Responsive Theme is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * The GPMD Magento Responsive Theme is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with the GPMD Magento Responsive Theme. If not, see
+ * http://www.gnu.org/licenses/.
+ *
+ * @category    GPMD
+ * @package     GPMD_Responsive_Theme
+ * @copyright   Copyright (c) 2012 GPMD.
+ * @author      Matt Bailey @GPMD LTD
+ */
+
+/*
+ * Gridless version 2.0
+ * Credit is left inline and big thanks to Nicolas Gallagher and Jonathan Neal
+ * Across this document we use safe CSS hacks: http://mathiasbynens.be/notes/safe-css-hacks
+ * Selectors beggining with an underscore (_selector: property) target only IE6
+ * Selectors begining with an asterisk (*selector: property) target only IE6 and IE7
+ * Modified for GPMD Magento Responsive
+ * Version 1.0.0
+ * Free to use under the UNLICENSED license
+ * http://unlicense.org/
+ */ 
+
+/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
+
+/*
+*
+* CSS Reset 
+*
+*/
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	// vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, label, main, menu, nav, section, summary {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/** {
+  margin: 0;
+  padding: 0;
+}*/
+
+/**
+ * Set consistent quote types.
+ */
+
+q {
+    quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* #HTML5 display definitions
+================================================== */
+
+/* Corrects inline-block not defined in IE6/7/8 and FF3 */
+audio, canvas, video {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+}
+
+audio:not([controls]) {
+	display: none;
+	height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9.
+ * Hide the `template` element in IE, Safari, and Firefox < 22.
+ */
+[hidden], template {
+	display: none;
+	visibility: hidden;
+}
+
+
+/* #Base structure
+================================================== */
+
+/*
+ * The body will work like a 'div#wrapper' (for this to work, the 'body' needs to have a set width)
+ * To add a background to the PAGE, set it in the 'html' element
+ * To add a background to the WRAPPER, set it in the 'body' element
+ */
+html {
+	height: 100%;
+	overflow-y: scroll; /* Force a scrollbar in non-IE */
+	font-family: sans-serif;
+	-webkit-text-size-adjust: 100%; /* Prevent iOS text size adjust on orientation change without disabling user zoom */
+	-ms-text-size-adjust: 100%;
+}
+
+body {
+	font-size: 100%;
+	min-height: 100%;
+}
+
+
+/* #Preformatted text and code
+================================================== */
+
+/* Allows line wrapping of 'pre' */
+pre {
+	white-space: pre;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+
+/* #Tables
+================================================== */
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+th {
+	text-align: left;
+}
+
+tr, th, td {
+	padding: 0;
+}
+
+
+/* #Forms
+================================================== */
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+fieldset {
+    //border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}
+
+textarea {
+	overflow: auto;
+	vertical-align: top;
+}
+
+legend {
+	*margin-left: -7px;
+}
+
+button, input, select, textarea {
+	line-height: normal !important;
+	vertical-align: baseline;
+	*vertical-align: middle;
+}
+
+button, input {
+	//line-height: normal !important;
+	*overflow: visible;
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled],
+html input[disabled] {
+    cursor: default;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+
+button,
+select {
+    text-transform: none;
+}
+
+button, 
+html input[type="button"], 
+input[type="reset"], 
+input[type="submit"] {
+	cursor: pointer;
+	cursor: hand;
+	-webkit-appearance: button;
+}
+
+/**
+ * Remove outline after selecting anchor or button in firefox.
+**/
+a:focus, a:active, 
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+select::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+    border: 0;
+    outline : 0;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+	margin: 0;
+}
+
+input[type="checkbox"], 
+input[type="radio"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+input[type="search"] {
+	-webkit-appearance: textfield;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+
+/* Fix for odd Mozilla border & padding issues */
+button::-moz-focus-inner, input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+
+/* Reintroduce inner spacing in 'table' to avoid overlap and whitespace issues in IE6/7 */
+table button, table input {
+	*overflow: auto;
+}
+
+
+/* #Quotes
+================================================== */
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote, q, cite {
+	font-style: italic;
+}
+
+blockquote {
+	padding-left: 1.625em;
+	border-left: 1px solid #ddd;
+}
+
+blockquote > p {
+	padding: 0;
+}
+
+
+/* #Lists
+================================================== */
+
+ul, ol {
+	list-style-position: inside;
+	list-style-type: none;
+	padding: 0;
+}
+
+li ul, li ol {
+	margin: 0 1.625em;
+}
+
+dl dd {
+	margin-left: 1.625em;
+}
+
+
+/* #Links
+================================================== */
+a {
+	background: transparent;
+}
+
+a:focus {
+	outline: thin dotted;
+}
+
+/* Better CSS outline suppression: people.opera.com/patrickl/experiments/keyboard/test */
+a:hover, a:active {
+	outline: none;
+}
+
+
+
+/* #Embedded content
+================================================== */
+
+img, embed, object, video {
+	// Fluid images
+	max-width: 100%;
+	/* IE6 doesn't support max-width, so we just use width. If the image is larger than the container, just uncomment this. If it is smaller than the container, uncomment and change the 100% value to an absolute one */
+	/*_width: 100%;*/
+}
+
+img {
+	border: 0;
+	-ms-interpolation-mode: bicubic; /* Improve IE's resizing of images: css-tricks.com/ie-fix-bicubic-scaling-for-images */
+}
+
+/* Corrects overflow displayed oddly in IE9 */
+svg:not(:root) {
+	overflow: hidden;
+}
+
+
+/* #Abbreviations
+================================================== */
+
+abbr[title], dfn[title] {
+	border-bottom: 1px dotted;
+	cursor: help;
+}
+
+
+/* #Marked/inserted/deleted text
+================================================== */
+
+mark {
+	background: #ff0;
+	color: #000;
+}
+
+ins {
+	text-decoration: none;
+	background: #ff9;
+}
+
+del {
+	text-decoration: line-through;
+}
+
+
+/* #Others
+================================================== */
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari 5, and Chrome.
+ */
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+/**
+ * Correct font family set oddly in Safari 5 and Chrome.
+ */
+ 
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, serif;
+    font-size: 1em;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+small {
+    font-size: 80%;
+}
+
+hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-bottom: 1px solid #ddd;
+	-moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+strong, b, dt {
+	font-weight: bold;
+}
+
+em, i, dfn {
+	font-style: italic;
+}
+
+var, address {
+	font-style: normal;
+}
+
+/* Position 'sub' and 'sup' without affecting line-height: gist.github.com/413930 */
+sub, sup {
+	font-size: 0.625em;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+sup {
+	top: -0.5em;
+}
+
+sub {
+	bottom: -0.25em;
+}
+
+
+/* #Helper classes
+================================================== */
+
+/*
+	* Micro clearfix hack, more semantically titled with 'group'
+	* Source: nicolasgallagher.com/micro-clearfix-hack/
+*/
+.group:before, .group:after {
+	content: "";
+	display: table;
+}
+
+.group:after {
+	clear: both;
+}
+
+.group {
+	*zoom: 1;
+}
+
+.clearfix, .clear, .clr {
+	zoom : 1;
+
+	&:before, &:after {
+		content : "\0020"; 
+		display : block; 
+		height : 0; 
+		overflow : hidden;
+	}
+
+	&:after {
+		clear : both;
+	}
+}

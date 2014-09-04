@@ -1,0 +1,612 @@
+ 
+
+.pathwayfont {
+	font-family: 'Pathway Gothic One', sans-serif;
+}
+
+.col-main {
+	width: 74%;
+	.block-affiliate-menu {
+		.block-content {
+			#affiliateplus-navigation-mobile-account_navigator_mobile li {						
+				@media only screen and (max-width: 600px) {
+					display: block;		
+					font-family: 'Pathway Gothic One', sans-serif;
+					font-size: 18px;
+					text-transform: uppercase;
+					border-bottom: 1px solid #fff;
+					a {
+						background: #F5F5F5;
+						font-weight: lighter;
+						display: block;
+						width: 100%;
+						height: 100%;		
+						border-bottom: none;
+						padding: 7px 0;								
+						&:hover {
+							background: #fff;
+						}
+					}
+				}
+
+				&.current {	
+					@media only screen and (max-width: 600px) {
+						background: #fff !important;
+						padding: 7px 0;		
+						font-weight: lighter;
+					}
+				}
+			}
+		}
+	} 
+	.aff-content {
+		@media only screen and (max-width: 320px) {
+			padding: 0 15px;
+		}
+	}
+	.affiliate-get-link {
+		@media only screen and (max-width: 320px) {
+			padding: 0 15px !important;
+		}
+	}
+
+	.aff-banner {
+		padding: 0 15px;
+		.banner-filter {
+			h3 {
+				@media only screen and (max-width: 480px) {
+					float: none;
+					margin-bottom: 15px;
+				}	
+			}
+			span.ban-filter {
+				@media only screen and (max-width: 480px) {
+					display: block;
+					float: none;
+					padding: 4px 15px 15px;
+					margin: -8px 0px 0px;					
+				}
+			}
+		}
+	}
+
+
+	.affiliateplus-search-button {
+		@media only screen and (max-width: 320px) {
+			padding: 0 15px;
+		}
+	}
+
+	.pager {
+		@media only screen and (max-width: 320px) {	
+			padding: 0 15px;
+		}
+	}
+
+	.wrap-table {
+		#list-program-table {
+			thead {
+				tr {
+					th.prog-head {
+						background: #393738;
+						color: #fff;
+						font-family: 'Pathway Gothic One', sans-serif;
+						text-transform: uppercase;
+						font-size: 18px;
+					}
+				}
+			}
+			tbody {				
+				td {
+					padding: 10px;
+					border-bottom: 1px dotted #bfbfbf;
+				}
+				td.prog-name {
+					font-family: 'Pathway Gothic One', sans-serif;
+						text-transform: uppercase;
+						font-size: 16px;
+				}
+			}
+		}
+	}
+
+	#affiliateplus-sidebar, .referfriends {
+		@media only screen and (max-width: 320px) {
+			padding: 0 15px;
+		}
+	}
+
+	#affiliate-coupon-codes {
+		td {
+			line-height: 22px;
+			.tweeter{
+				margin-top: 10px;
+				float: none;
+				position: static;
+			}
+		}
+	}
+
+
+	.wrap-table-grid {
+
+		.data-table {
+			.affiliateplus-grid-search-item {
+				.range-container {
+					.data-range {
+						.label {
+							margin-right: 7px;
+						}
+					}
+				}
+			}
+		}
+
+		a {
+			border-bottom: none;
+		}
+
+		table {
+			line-height: 20px;
+		}
+
+		tr.affiliateplus-grid-title th, tr.affiliateplus-grid-search th {
+			background: #393738;
+			color: #fff;
+			.pathwayfont;
+			font-size: 16px;
+			text-transform: uppercase;
+			border-bottom: 1px dotted #555;
+		}
+
+		tr.affiliate-grid-tr:nth-of-type(odd) td {
+			background: #F5F5F5;
+			border-bottom: 1px dotted #ccc;
+		}
+
+		tr.affiliate-grid-tr td {
+			border-bottom: 1px dotted #555;
+		}
+
+		table#sales_grid {	
+			tbody, thead, th, td, tr {
+				@media only screen and (max-width: 600px) {
+					display: block;
+					overflow: hidden;
+				}
+			}
+
+			thead tr.affiliateplus-grid-title {
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 25%;
+					th:nth-child(2), th:nth-child(3),
+					th:nth-child(4),
+					th:nth-child(6) {
+						height: 69px;
+					}
+				}
+			}
+
+			thead tr.affiliateplus-grid-search {
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 75%;
+					th:first-child, th:nth-child(5) {
+						height: 45px;
+					}
+					th:nth-child(2), th:nth-child(3),
+					th:nth-child(4),
+					th:nth-child(6) {
+						height: 69px;
+					}
+
+				}
+			}
+
+			td:before { 
+				@media only screen and (max-width: 600px) {
+					position: absolute;
+					/* Top/left values mimic padding */
+					top: 12px;
+					left: 15px;
+					width: 45%; 
+					padding-right: 10px; 
+					white-space: nowrap;
+					.pathwayfont;
+					font-size: 16px;
+					text-transform: uppercase;
+				}
+			}
+
+			td { 
+				@media only screen and (max-width: 600px) {
+					border: none;
+					border-bottom: 1px solid #eee;
+					position: relative;
+					padding-left: 50%;
+				}
+			}
+
+
+			@media only screen and (max-width: 600px) {
+				td:nth-of-type(1):before { 
+					content: "No"; 
+				}
+				td:nth-of-type(2):before { 
+					content: "Date"; 
+				}
+				td:nth-of-type(3):before { 
+					content: "Product Name"; 
+				}
+				td:nth-of-type(4):before { 
+					content: "Total"; 
+				}
+				td:nth-of-type(5):before { 
+					content: "Commission"; 
+				}
+				td:nth-of-type(6):before { 
+					content: "Status"; 
+				}
+			}
+
+
+		} //end table#sales_grid
+
+		table#tiertransactions_grid {	
+			tbody, thead, th, td, tr {
+				@media only screen and (max-width: 600px) {
+					display: block;
+					overflow: hidden;
+				}
+			}
+
+			thead tr.affiliateplus-grid-title {
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 25%;
+					th:nth-child(1){
+						height: 69px;
+					}
+					th:nth-child(7){
+						height: 62px;
+					}
+
+				}
+			}
+
+			thead tr.affiliateplus-grid-search {
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 75%;
+					th:nth-child(2), th:nth-child(3),
+					th:nth-child(5), th:nth-child(6) {
+						height: 39px;
+					}
+					th:nth-child(4) {
+						height: 53px;
+					}
+					
+
+				}
+			}
+		} //end table#tiertransactions_grid 
+
+
+		table#programs_grid {	
+			tbody, thead, th, td, tr {
+				@media only screen and (max-width: 600px) {
+					display: block;
+					overflow: hidden;
+				}
+			}
+
+			thead tr.affiliateplus-grid-title {
+				background: #393738;
+				color: #fff;
+				.pathwayfont;
+				font-size: 16px;
+				text-transform: uppercase;
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 35%;
+					th {
+						height: 59px;
+					}
+				}
+				th {
+					border-bottom: 1px dotted #555;
+				}
+			}
+
+			thead tr.affiliateplus-grid-search {
+				background: #393738;
+				color: #fff;
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 65%;
+					th {
+						height: 59px;
+					}
+
+				}
+				th {
+					border-bottom: 1px dotted #555;
+				}
+			}
+
+
+			td { 
+				@media only screen and (max-width: 600px) {
+					border: none;
+					border-bottom: 1px solid #eee;
+					position: relative;
+					padding-left: 50%;
+					// &:first-child {
+					// 	padding-left: 15px;
+					// 	font-family: 'Pathway Gothic One', sans-serif;
+					// 	text-transform: uppercase;
+					// 	font-size: 18px;
+					// }
+				}
+			}
+
+			td:before { 
+				@media only screen and (max-width: 600px) {
+					position: absolute;
+					/* Top/left values mimic padding */
+					top: 12px;
+					left: 15px;
+					width: 45%; 
+					padding-right: 10px; 
+					white-space: nowrap;
+					.pathwayfont;
+					font-size: 16px;
+					text-transform: uppercase;
+				}
+			}
+
+			@media only screen and (max-width: 600px) {
+				td:nth-of-type(1):before { 
+					content: "No"; 
+				}
+				td:nth-of-type(2):before { 
+					content: "Program Name"; 
+				}
+				td:nth-of-type(3):before { 
+					content: "Information"; 
+				}
+				td:nth-of-type(4):before { 
+					content: "Joined On"; 
+				}
+				td:nth-of-type(5):before { 
+					content: "Action"; 
+				}
+
+				tr.affiliate-grid-tr:nth-of-type(odd) td {
+					background: #F5F5F5;
+					border-bottom: 1px solid #fff
+				}
+			}
+
+		} //end table#programs_grid
+
+		table#traffics-report {
+			tbody, thead, th, td, tr {
+				@media only screen and (max-width: 480px) {
+					display: block;
+				}
+			}
+
+			thead tr { 
+				@media only screen and (max-width: 480px) {
+					position: absolute;
+					top: -9999px;
+					left: -9999px;
+				}
+			}
+
+			thead tr.affiliateplus-grid-title {
+				background: #393738;
+				color: #fff;
+				.pathwayfont;
+				font-size: 16px;
+				text-transform: uppercase;
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 30%;
+					th:nth-child(2),
+					th:nth-child(4){
+						height: 59px;
+					}
+				}
+				th {
+					border-bottom: 1px dotted #555;
+				}
+			}
+
+			thead tr.affiliateplus-grid-search {
+				background: #393738;
+				color: #fff;
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 70%;
+					th:first-child, th:nth-child(3),
+					th:nth-child(5){
+						height: 39px;
+					}
+					th:nth-child(2),
+					th:nth-child(3) {
+						height: 45px;
+					}
+
+				}
+				th {
+					border-bottom: 1px dotted #555;
+				}
+			}
+
+
+
+			td { 
+				@media only screen and (max-width: 480px) {
+					border: none;
+					border-bottom: 1px solid #eee;
+					position: relative;
+					padding-left: 50%;
+					&:first-child {
+						padding-left: 15px;
+						font-family: 'Pathway Gothic One', sans-serif;
+						text-transform: uppercase;
+						font-size: 18px;
+					}
+				}
+			}
+
+			td:before { 
+				@media only screen and (max-width: 480px) {
+					position: absolute;
+					/* Top/left values mimic padding */
+					top: 12px;
+					left: 15px;
+					width: 45%; 
+					padding-right: 10px; 
+					white-space: nowrap;
+				}
+			}
+			@media only screen and (max-width: 480px) {
+				td:nth-of-type(2):before { 
+					content: "Today"; 
+					font-weight: bold;
+				}
+				td:nth-of-type(3):before { 
+					content: "This Week"; 
+					font-weight: bold;
+				}
+				td:nth-of-type(4):before { 
+					content: "This Month"; 
+					font-weight: bold;
+				}
+				td:nth-of-type(5):before { 
+					content: "This Year"; 
+					font-weight: bold;
+				}
+				td:nth-of-type(6):before { 
+					content: "All Time"; 
+					font-weight: bold;
+				}
+			}
+
+		} //end table#traffics-report
+
+		table#referer_grid {
+			tbody, thead, th, td, tr {
+				@media only screen and (max-width: 600px) {
+					display: block;
+					overflow: hidden;
+				}
+			}
+
+			thead tr.affiliateplus-grid-title {
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 35%;
+					th:first-child, th:nth-child(5) {
+						height: 52px;
+					}
+					th:nth-child(4) {
+						height: 62px;
+					}
+				}
+			}
+
+			thead tr.affiliateplus-grid-search {
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 65%;
+					th:nth-child(2), th:nth-child(3) {
+						height: 45px;
+					}
+
+				}
+			}
+
+			thead th a {
+				color: #fff;
+			}
+
+		} //end table#referer_grid
+
+		table#payments_grid {	
+			tbody, thead, th, td, tr {
+				@media only screen and (max-width: 600px) {
+					display: block;
+					overflow: hidden;
+				}
+			}
+
+			thead tr.affiliateplus-grid-title {
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 25%;
+					th:nth-child(2), th:nth-child(3),
+					th:nth-child(4), th:nth-child(5),
+					th:nth-child(6) {
+						height: 69px;
+					}
+				}
+			}
+
+			thead tr.affiliateplus-grid-search {
+				@media only screen and (max-width: 600px) {
+					float: left;
+					width: 75%;
+					th:first-child, th:nth-child(7) {
+						height: 45px;
+					}
+					th:nth-child(2), th:nth-child(3),
+					th:nth-child(4), th:nth-child(5),
+					th:nth-child(6) {
+						height: 69px;
+					}
+
+				}
+			}
+		} //end table#payments_grid
+
+	} //end .wrap-table-grid
+
+	.my-account {
+		form {
+			padding: 0;
+			label{
+				font-family: 'Pathway Gothic One', sans-serif;
+				text-transform: uppercase;
+				font-size: 16px;
+				font-weight: normal;
+				letter-spacing: 1px;
+			}
+			fieldset {
+				margin: 0;
+				padding: 0;
+			}
+		}
+	}
+
+}
+
+// Affiliate sidebar
+
+.col2-left-layout .main .col-left {
+	.block-affiliate-nav {
+		#affiliateplus-navigation-account_navigator {
+			li {
+				margin: 7px 0;
+			}
+
+		}
+	}
+
+}
+
+

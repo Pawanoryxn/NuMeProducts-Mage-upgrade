@@ -1,0 +1,6 @@
+.lavaLampBottomStyle li.back {
+	background:url(../images/arrow3.png) no-repeat center top;
+	width: 9px;
+	z-index: 8;
+	position: absolute;
+}

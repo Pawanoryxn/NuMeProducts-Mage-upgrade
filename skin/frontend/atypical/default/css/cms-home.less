@@ -1,0 +1,125 @@
+.bestsellers {
+	ul {
+		li {
+			position: relative;
+			float: left;
+			display: inline-block;
+			text-align: center;
+			width: 25%;
+			min-height: 440px;
+			background: url(../images/border2.png) no-repeat right top;
+			padding: 0;
+			margin: 0 0 35px 0;
+			@media only screen and (max-width: 767px) {
+				width: 50%;
+				background: none;
+			}
+			@media only screen and (max-width: 480px) {
+				width: 100%;
+			}
+			h3 {
+				font-size:22px;
+				font-family: 'Pathway Gothic One';
+				color:#3b3b3b;
+				background:url(../images/border1.png) no-repeat center bottom;
+				padding:0 0 14px 0;
+				text-transform: uppercase;
+				span {}
+			}
+			span {
+				&.pro-img {
+					display: block;
+					text-align: center;
+					width: 99%;
+					margin: 0 auto;
+				}
+			}
+			p {
+				a {
+					font-size: 24px;
+					font-family: 'Pathway Gothic One';
+					color: #3b3b3b;
+					padding: 0;
+					text-transform: uppercase;
+				}
+			}
+			span.price {
+				div.price-box {
+
+					span {
+						color: #a1a0a0;
+						font-family: 'Pathway Gothic One';
+						font-size: 18px;
+						display: block;
+						text-transform: uppercase;
+						padding: 0;
+						text-align: center;
+					}
+                  .special-price {
+                    color: #ff007a;
+                    font-family: 'Pathway Gothic One';
+                    font-size: 18px;
+                    display: block;
+                    text-transform: uppercase;
+                    padding: 0;
+                    text-align: center;
+                    margin-bottom: 2px;
+                    line-height: 18px;
+                  }
+                  .msrp {
+                    color: #3b3b3b;
+                    font-size: 10px;
+                    font-family: 'Conv_HelveticaNeue-Light';
+                    display: block;
+                    margin-bottom: 2px;
+                    line-height: 10px;
+                  }
+				}
+			}
+			span.special-price { 
+				color: @numepink; 
+				font-family: 'Pathway Gothic One';
+				font-size: 18px;
+				display: block;
+				text-transform: uppercase;
+				padding: 0;
+				text-align: center;
+				margin-bottom: 2px;
+			}
+			span.msrp {
+				color: #3b3b3b;
+				font-size: 10px;
+				font-family: 'Conv_HelveticaNeue-Light';
+				display: block;
+				margin-bottom: 2px;
+			}
+			input.check-me-out-but, button.check-me-out-but {
+				.button-bg;
+				height: 32px;
+				width: 162px;
+				border: none;
+				font-family: 'Pathway Gothic One';
+				font-size: 16px;
+				letter-spacing: 2px;
+				text-transform: uppercase;
+				color: #e7e7e7;
+				border-radius: 0;
+				span.pink { color: @numepink; }
+			}
+			.ratings {
+				.rating-box {}
+				.amount { display: none; }
+			}
+			.line-accent {
+				height: 1px;
+				width: 50px;
+				display: block;
+				border-top: dotted 2px #e7e7e7;
+				margin: 10px auto 0 auto;
+			}
+		}
+		li:nth-child(4n){
+			background: none;
+		}
+	}
+}

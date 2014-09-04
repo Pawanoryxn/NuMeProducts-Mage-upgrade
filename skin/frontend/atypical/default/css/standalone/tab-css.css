@@ -1,0 +1,80 @@
+.list-container-1 ul li {
+    float: left;
+	padding:0;
+}
+.list-container-1 ul li a {
+	background:url(../images/but-bg4.png) no-repeat;
+	height:21px;
+	line-height:18px;
+	display:inline-block;
+	color:#fff;
+	font-size:17px;
+	letter-spacing:2px;
+	padding:0 5px;
+	min-width:102px;
+	margin:4px 0 0 0;
+	float:left;
+	text-align:center;
+	border-bottom:solid 1px #cbcbcb;
+	-webkit-transition: all 0.6s ease-in-out;
+    -moz-transition: all 0.6s ease-in-out;
+    -o-transition: all 0.6s ease-in-out;
+    transition: all 0.6s ease-in-out;
+}
+.list-container-1 ul li:hover a {
+	background:url(../images/but-bg4-hover.png) no-repeat;
+}
+.list-container-1 ul li.active a{
+	background:url(../images/button-bg1.jpg) repeat-x;
+	height:25px;
+	line-height:25px;
+	display:inline-block;
+	color:#fff;
+	font-size:17px;
+	letter-spacing:2px;
+	padding:0 25px;
+	float:left;
+	border-bottom:solid 1px #000;
+	margin:0;
+}
+
+
+.list-container-2 ul li {
+    float: left;
+	padding:0;
+}
+.list-container-2 ul li a {
+	background:url(../images/but-bg4.png) no-repeat;
+	height:21px;
+	line-height:18px;
+	display:inline-block;
+	color:#fff;
+	font-size:17px;
+	letter-spacing:2px;
+	padding:0 10px;
+	min-width:102px;
+	margin:4px 0 0 0;
+	float:left;
+	text-align:center;
+	border-bottom:solid 1px #cbcbcb;
+	-webkit-transition: all 0.6s ease-in-out;
+    -moz-transition: all 0.6s ease-in-out;
+    -o-transition: all 0.6s ease-in-out;
+    transition: all 0.6s ease-in-out;
+}
+.list-container-2 ul li:hover a {
+	background:url(../images/but-bg4-hover.png) no-repeat;
+}
+.list-container-2 ul li.active a{
+	background:url(../images/button-bg1.jpg) repeat-x;
+	height:25px;
+	line-height:25px;
+	display:inline-block;
+	color:#fff;
+	font-size:17px;
+	letter-spacing:2px;
+	padding:0 25px;
+	float:left;
+	border-bottom:solid 1px #000;
+	margin:0;
+}

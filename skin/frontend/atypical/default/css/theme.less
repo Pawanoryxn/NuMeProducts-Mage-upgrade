@@ -1,0 +1,272 @@
+/**
+ *
+ * This file is part of the GPMD Magento Responsive Theme.
+ *
+ * The GPMD Magento Responsive Theme is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * The GPMD Magento Responsive Theme is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with the GPMD Magento Responsive Theme. If not, see
+ * http://www.gnu.org/licenses/.
+ *
+ * @category    GPMD
+ * @package     GPMD_Responsive_Theme
+ * @copyright   Copyright (c) 2012 GPMD.
+ * @author      Matt Bailey @GPMD LTD
+ */
+
+/* #Imports
+================================================== */
+ 
+@import "lesshat.less"; 
+@import "style-mixins.less";
+@import "font-awesome.less";  
+
+
+/* ==========================================================================
+   NuMe Lightbox
+   ========================================================================== */
+
+.nume-lightbox-group {
+	.nume-lightbox-bg {
+		background: #000;
+		opacity: 0.23;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		top: 0;
+		z-index: 99999;
+	}
+	.lightbox-container {
+		width: 100%;
+		min-height: 150px;
+		display: block;
+		position: absolute;
+		top: 30%;
+		z-index: 100000;
+		.nume-lightbox {
+			max-width: 600px;
+			min-height: 200px;
+			width: 100%;
+			.box-shadow(0 0 30px #000);
+			display: block;
+			background: #fff;
+			margin: 0 auto;
+            .close {
+                font-weight: normal;
+                font-size: 16px;
+                font-family: 'Pathway Gothic One';
+                opacity: 1;
+                a {
+                  color: black;
+                }
+            }
+		}
+	}
+}
+
+
+/* ==========================================================================
+   CSS Select Box
+   ========================================================================== */
+.input-box-select {
+	overflow: hidden;
+	background: url('../images/dropdownarrow.png') right center no-repeat;
+	width: 105%;
+	max-width: 250px; 
+	border: 1px solid #d9d9d9;
+	padding: 0;
+	margin-top:10px;
+	select {
+		background: transparent;
+		line-height: 1;
+		border: 0;
+		border-radius: 0;
+		height: 25px;
+		width: 115%;
+		max-width: 300px;
+		padding: 0 5px;
+		font-size: 10px;
+		font-weight: lighter;
+		-webkit-appearance: none;
+		color: #b5b5b5;
+        outline-color: #3b3b3b;
+	}
+} 
+@-moz-document url-prefix() { 
+	.input-box-select select {
+		padding: 6px 5px 0 5px;
+	}
+}
+
+input {
+	border: 1px solid #d9d9d9;;
+	box-shadow: none!important;
+}
+
+.input-box-select-cart {
+	overflow: hidden;
+	background: url('../images/dropdownarrow.png') right center no-repeat;
+	//width: 105%;
+	max-width: 250px; 
+	border: 1px solid #d9d9d9;
+	padding: 0;
+	select {
+		background: transparent;
+		line-height: 1;
+		border: 0;
+		border-radius: 0;
+		height: 25px;
+		width: 115%;
+		max-width: 300px;
+		padding: 0 5px;
+		font-size: 10px;
+		font-weight: lighter;
+		-webkit-appearance: none;
+		color: #6b6b6b;
+	}
+} 
+@-moz-document url-prefix() { 
+	.input-box-select-cart select {
+		padding: 6px 5px 0 5px;
+	}
+}
+
+input[type="text"], input[type="email"], input[type="tel"], input[type="password"] {
+	border: 1px solid #d9d9d9;
+	-webkit-box-shadow: 0px 0px 5px #d9d9d9;
+	-moz-box-shadow: 0px 0px 5px #d9d9d9;
+	box-shadow: 0px 0px 5px #d9d9d9;
+	font-size: 10px;
+	padding: 4px 5px;
+	height: 25px;
+	color: #6b6b6b!important;
+	margin: 0;
+}
+
+// for SHOP drop down in header menu
+#glow {
+	background: url(../images/arrow3.png) center top no-repeat;
+    position: absolute;
+	left: -5000px;
+    z-index: 1;
+    height: 35px!important;
+}
+
+.page-title {
+	h1 { text-transform: uppercase; }
+}
+
+
+
+
+// .container {
+// 	max-width: 1280px;
+// 	margin: 0 auto;
+// 	@media only screen and (min-wdth:560px){ max-width: 300px; }
+// 	@media only screen and (min-wdth:780px){ max-width: 540px; }
+// 	@media only screen and (min-wdth:980px){ max-width: 760px; }
+// 	@media only screen and (min-wdth:1100px){ max-width: 960px; }
+// }
+
+
+/* ==========================================================================
+   Special Price
+   ========================================================================== */
+.special-price-block {
+	max-width: 215px;
+	height: 50px;
+	clear: both;
+	.special-price {
+		width: 85px;
+		display: block;
+		float: left;
+		padding-right: 13px;
+		.price {
+			color: @numepink;
+			text-align: left;
+			font-size: 28px!important;
+		}
+		.regprice {
+			color: #3b3b3b;
+			font-size: 10px;
+			font-family: 'Conv_HelveticaNeue-Light';
+			display: block;
+			text-align: right;
+			position: relative;
+			top: -7px;
+		}
+	}
+	.special-price-box {
+		width: 128px;
+		height: 37px;
+		display: block;
+		padding: 2px;
+		float: right;
+		font-family: 'Conv_HelveticaNeue-Light';
+		background: url('../images/assets/button-swatch.jpg') center center no-repeat;
+		position: relative;
+		top: 6px;
+		h5 {
+			text-transform: uppercase;
+			color: #fff;
+			text-align: center;
+			margin: 0;
+			font-family: 'Conv_HelveticaNeue-Light';
+			font-size: 11px;
+		}
+		#priceTimer {
+			color: @numepink;
+			font-size: 14px;
+			text-align: center;
+			position: relative;
+			top: -4px;
+		}
+	}
+}
+
+
+
+
+
+.brand-color { color: @numepink!important; }
+
+
+
+
+
+/* ==========================================================================
+   Imported from standalone/style.css
+   ========================================================================== */
+
+
+
+
+img{
+	border: 0px;
+	max-width: 100%;
+	z-index: 999;
+}
+body{
+	font-family: 'Pathway Gothic One';
+}
+
+.checkout-bar .top-bar2 .nav{
+	display: block;
+}
+.nav-block{
+	display: block;
+}
+.page-banner{
+	text-align: center;
+	box-shadow: 0 2px 2px #999;
+}
+
+
