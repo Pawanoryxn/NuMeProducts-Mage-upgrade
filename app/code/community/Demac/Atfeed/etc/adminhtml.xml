@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <catalog>
+                        <children>
+                            <atfeed translate="title" module="atfeed">
+                                <title>AffiliateTraction Feed Manager</title>
+                                <sort_order>20</sort_order>
+                            </atfeed>
+                        </children>
+                    </catalog>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <menu>
+        <catalog>
+            <children>
+                <atfeed translate="title" module="atfeed">
+                    <title>AffiliateTraction Feed Manager</title>
+                    <action>adminhtml/feed</action>
+                    <sort_order>0</sort_order>
+                </atfeed>
+            </children>
+        </catalog>
+    </menu>
+</config>

@@ -1,0 +1,58 @@
+<config>
+    <tabs>
+        <demactab translate="label" module="atfeed">
+            <label>Demac</label>
+            <sort_order>1</sort_order>
+        </demactab>
+    </tabs>
+    <sections>
+        <atfeed translate="label" module="sales">'
+            <tab>demactab</tab>
+            <label>AffiliateTraction Feed</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>200</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <groups>
+                <settings translate="label">
+                    <label>Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enabled translate="label comment">
+                            <label>Enabled</label>
+                            <sort_order>100</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <simple_mode translate="label comment">
+                            <label>List Simple Products</label>
+                            <comment>List simple products on a separate line</comment>
+                            <sort_order>100</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </simple_mode>
+                        <id translate="label comment">
+                            <label>ID</label>
+                            <sort_order>200</sort_order>
+                            <comment>Your ID on affiliatetechnology.com.  E.g [yourid].affiliatetechnology.com</comment>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </id>
+                    </fields>
+                </settings>
+            </groups>
+        </atfeed>
+    </sections>
+</config>

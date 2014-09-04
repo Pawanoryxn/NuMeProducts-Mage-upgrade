@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Demac_Atpixel>
+            <version>0.1.0</version>
+        </Demac_Atpixel>
+    </modules>
+    <global>
+        <blocks>
+            <Demac_Atpixel>
+                <class>Demac_Atpixel_Block</class>
+            </Demac_Atpixel>
+        </blocks>
+        <helpers>
+            <Demac_Atpixel>
+                <class>Demac_Atpixel_Helper</class>
+            </Demac_Atpixel>
+        </helpers>
+        <models>
+            <demac_atpixel>
+                <class>Demac_Atpixel_Model</class>
+            </demac_atpixel>
+        </models>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <Demac_Atpixel>
+                    <file>atpixel.xml</file>
+                </Demac_Atpixel>
+            </updates>
+        </layout>
+    </frontend>
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <atpixel>
+                                            <title>AffiliateTraction Pixel</title>
+                                        </atpixel>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+
+    <default>
+        <sales>
+            <affiliatetraction>
+                <enabled>0</enabled>
+                <devmode>1</devmode>
+            </affiliatetraction>
+        </sales>
+    </default>
+</config>

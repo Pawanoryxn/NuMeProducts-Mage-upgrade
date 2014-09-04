@@ -1,0 +1,68 @@
+<config>
+    <tabs>
+        <demactab translate="label" module="Demac_Atpixel">
+            <label>Demac</label>
+            <sort_order>1</sort_order>
+        </demactab>
+    </tabs>
+    <sections>
+        <atpixel translate="label" module="Demac_Atpixel">
+            <tab>demactab</tab>
+            <label>AffiliateTraction Pixel</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>200</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+
+            <groups>
+                <settings translate="label">
+                    <label>Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enabled translate="label comment">
+                            <label>Enabled</label>
+                            <sort_order>100</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <id translate="label comment">
+                            <label>ID</label>
+                            <sort_order>200</sort_order>
+                            <comment>Your ID on affiliatetechnology.com.  E.g [yourid].affiliatetechnology.com</comment>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </id>
+                        <devmode translate="label comment">
+                            <label>Development Mode</label>
+                            <sort_order>300</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </devmode>
+                        <currency translate="label comment">
+                            <label>Currency</label>
+                            <sort_order>300</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>demac_atpixel/adminhtml_system_config_source_locale_currency</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </currency>
+                    </fields>
+                </settings>
+            </groups>
+        </atpixel>
+    </sections>
+</config>
