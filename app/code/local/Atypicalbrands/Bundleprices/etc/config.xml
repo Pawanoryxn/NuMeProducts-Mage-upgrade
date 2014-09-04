@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Atypicalbrands_Bundleprices>
+            <version>1.0.0</version>
+        </Atypicalbrands_Bundleprices>
+    </modules>
+    <global>
+		<blocks>
+			<bundle>
+				<rewrite>
+					<catalog_product_view_type_bundle_option>Atypicalbrands_Bundleprices_Block_Catalog_Product_View_Type_Bundle_Option</catalog_product_view_type_bundle_option>
+					<catalog_product_view_type_bundle_option_checkbox>Atypicalbrands_Bundleprices_Block_Catalog_Product_View_Type_Bundle_Option_Checkbox</catalog_product_view_type_bundle_option_checkbox>
+					<catalog_product_view_type_bundle_option_multi>Atypicalbrands_Bundleprices_Block_Catalog_Product_View_Type_Bundle_Option_Multi</catalog_product_view_type_bundle_option_multi>
+					<catalog_product_view_type_bundle_option_radio>Atypicalbrands_Bundleprices_Block_Catalog_Product_View_Type_Bundle_Option_Radio</catalog_product_view_type_bundle_option_radio>
+					<catalog_product_view_type_bundle_option_select>Atypicalbrands_Bundleprices_Block_Catalog_Product_View_Type_Bundle_Option_Select</catalog_product_view_type_bundle_option_select>
+				</rewrite>
+			</bundle>
+		</blocks>
+	</global>
+</config>

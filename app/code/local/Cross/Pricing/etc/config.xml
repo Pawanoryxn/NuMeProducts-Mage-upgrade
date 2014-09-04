@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Cross_Pricing>
+            <version>0.0.1</version>
+        </Cross_Pricing>
+    </modules>
+    <global>
+        <models>
+            <Cross_Pricing>
+                <class>Cross_Pricing_Model</class>
+            </Cross_Pricing>
+        </models>
+        <events>
+            <checkout_cart_product_add_after>
+                <observers>
+                    <Cross_Pricing>
+                        <class>Cross_Pricing/observer</class>
+                        <method>cPrice</method>
+                        <type>singleton</type>
+                    </Cross_Pricing>
+                </observers>
+            </checkout_cart_product_add_after>
+        </events>
+    </global>
+</config>

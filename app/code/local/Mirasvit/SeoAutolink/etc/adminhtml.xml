@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config>
+	 <menu>
+        <seo>
+            <children>
+                <seoautolink module="seo">
+                    <title>Auto Links</title>
+                    <sort_order>40</sort_order>
+                    <action>seoautolink/adminhtml_link/index</action>
+                    <children>
+                       <seoautolinkmanage module="seo">
+                            <title>Management</title>
+                            <sort_order>10</sort_order>
+                            <action>seoautolink/adminhtml_link/index</action>
+                        </seoautolinkmanage>                    
+                        <seoautolinkimport module="seo">
+                            <title>Import</title>
+                            <sort_order>20</sort_order>
+                            <action>seoautolink/adminhtml_import/index</action>
+                        </seoautolinkimport>
+                    </children>                    
+                </seoautolink>
+            </children>
+        </seo>    
+	</menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <seo translate="title" module="seo">
+                        <children>
+                            <seoautolink translate="title">
+                                <title>Auto Links</title>
+                                <sort_order>20</sort_order>
+                                <children>
+                                    <seoautolinkmanage translate="title">
+                                        <title>Management</title>
+                                        <sort_order>10</sort_order>
+                                    </seoautolinkmanage>
+                                    <seoautolinkimport translate="title">
+                                        <title>Import</title>
+                                        <sort_order>20</sort_order>
+                                    </seoautolinkimport>                                    
+                                </children>                                
+                            </seoautolink>                           
+                        </children>
+                   </seo>
+               </children>
+           </admin>
+       </resources>
+    </acl>
+</config>

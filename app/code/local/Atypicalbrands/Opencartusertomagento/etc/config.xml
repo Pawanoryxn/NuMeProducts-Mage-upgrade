@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<config>     
+    <modules> 
+        <Atypicalbrands_Opencartusertomagento> 
+            <version>0.1.0</version> 
+        </Atypicalbrands_Opencartusertomagento> 
+    </modules> 
+     <!-- This node contains parameters, available on frontend --> 
+    <frontend> 
+        <!-- Module aliases are located in this block --> 
+        <routers> 
+            <!-- This node's name should be the same as our alias --> 
+            <opencartusertomagento> 
+                <!-- use parameter specifies which of basic routers needs to be used. 
+                This can be "standard" for frontend or "admin" for backend --> 
+                <use>standard</use> 
+                <!-- router arguments block --> 
+                <args> 
+                    <!-- This parameter specifies the full name of out module --> 
+                    <module>Atypicalbrands_Opencartusertomagento</module> 
+                    <!-- This parameter sets module alias --> 
+                    <frontName>opencartusertomagento</frontName> 
+                </args> 
+            </opencartusertomagento> 
+        </routers> 
+ 		<layout> 
+            <updates>                
+                <helloworld>                     
+                    <file>opencartusertomagento.xml</file> 
+                </helloworld> 
+            </updates> 
+        </layout> 
+    </frontend> 
+</config> 

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ *
+ * This file is part of the GPMD Magento Responsive Theme.
+ *
+ * The GPMD Magento Responsive Theme is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * The GPMD Magento Responsive Theme is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with the GPMD Magento Responsive Theme. If not, see
+ * http://www.gnu.org/licenses/.
+ *
+ * @category    GPMD
+ * @package     GPMD_Responsive_Theme
+ * @copyright   Copyright (c) 2012 GPMD.
+ * @author      Matt Bailey @GPMD LTD
+ */
+-->
+<layout version="0.1.0">
+
+
+	<!-- Default view -->
+	<default>
+
+		<reference name="root">
+
+			<!-- <block type="page/template_links" name="top.links" as="topLinks" /> -->
+
+			<block type="core/text_list" name="reviews" as="reviews" translate="label">
+				<label>Reviews</label>
+			</block>
+
+			<block type="core/text_list" name="products_push" as="products_push" translate="label">
+				<label>Products Push</label>
+			</block>
+
+			<reference name="head">
+
+				<!-- Microsoft rendering fixes -->
+				<block type="core/text" name="ie_rendering_fixes">
+					<action method="setText">
+						<text><![CDATA[
+							<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+							<meta http-equiv="cleartype" content="on">
+						]]></text>
+					</action>
+				</block>
+
+				<!-- Removed to adjust css hierarchy -->
+				<!-- <action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action> -->
+				<action method="removeItem"><type>skin_css</type><name>css/print.css</name></action>
+
+				<!-- Re-added below -->
+ 				<action method="addCss"><stylesheet>css/base.css</stylesheet></action>
+				<action method="addCss"><stylesheet>css/font-awesome.css</stylesheet></action>  
+				<action method="addCss"><stylesheet>css/layout.css</stylesheet></action>
+				<action method="addCss"><stylesheet>css/module.css</stylesheet></action> 
+				<action method="addCss"><stylesheet>css/print.css</stylesheet></action>
+				<action method="addCss"><stylesheet>css/theme.css</stylesheet></action>
+				<action method="addCss"><stylesheet>css/responsive-tables.css</stylesheet></action>
+				<action method="addCss"><stylesheet>css/flexslider.css</stylesheet></action>
+				<action method="addCss"><stylesheet>css/jquery-ui/jquery-ui.css </stylesheet><params>media="all"</params></action>
+
+				<!-- <action method="addCss"><stylesheet>css/state.css</stylesheet></action> --> 
+				<action method="addItem"><type>skin_js</type><name>css/font-awesome-ie7.css</name><params/><if>IE 7</if></action>  
+				<!-- javascript -->
+				<action method="addItem"><type>skin_js</type><name>js/modernizr.custom.99577.js</name></action>
+				<action method="addItem"><type>skin_js</type><name>js/atypical.js</name></action>
+
+				<!-- standalone assets -->
+				<action method="addItem"><type>skin_js</type><name>js/modernizr.custom.79639.js</name></action>
+				<action method="addItem"><type>skin_js</type><name>js/jquery-ui/jquery-ui.js</name></action>
+				<!-- <action method="addItem"><type>skin_js</type><name>js/jquery-1.11.0.min.js</name></action> conflicts with nav-->
+				<action method="addItem"><type>skin_js</type><name>js/no-conflict.js</name></action>
+				<!-- <action method="addItem"><type>skin_js</type><name>js/jquery.js</name></action> -->
+				<action method="addItem"><type>skin_js</type><name>js/jquery.ba-cond.min.js</name></action>
+				<!-- <action method="addItem"><type>skin_js</type><name>js/jquery.slitslider.js</name></action> -->
+				<action method="addItem"><type>skin_js</type><name>js/jquery.selectbox-0.2.js</name></action>
+				<action method="addItem"><type>skin_js</type><name>js/function.js</name></action>
+				<action method="addItem"><type>skin_js</type><name>js/responsive-tables.js</name></action>
+
+				<!-- /standalone assets -->
+				<action method="addItem"><type>skin_js</type><name>js/atypical.js</name></action>
+
+				<action method="addItem"><type>skin_js</type><name>js/easing.js</name></action>	
+				<action method="addItem"><type>skin_js</type><name>js/jquery-migrate.min.js</name></action>
+				<action method="addItem"><type>skin_css</type><name>js/selectivizr-min.js</name><params/><if>lt IE 9</if></action>
+				<action method="addItem"><type>skin_js</type><name>js/jquery.flexslider-2.2.2.js</name></action>
+				<action method="addItem"><type>skin_js</type><name>js/jquery.validate.js</name></action>
+
+				<action method="addItem"><type>skin_js</type><name>js/countdown.min.js</name></action>
+
+				<!-- <action method="addItem"><type>skin_js</type><name>js/init.js</name></action> -->
+				<block type="static/assets_includes" name="assets_includes_load" template="static/assets.includes.load.phtml">
+					<!-- Load jQuery and set version -->
+					<action method="setJQueryVersion" module="static"><version>1.7.1</version></action>
+					<!-- Set jQuery noConflict -->
+					<action method="setNoConflict" module="static"><bool>true</bool></action>
+					<!-- Load global js -->
+					
+					<action method="setJsInclude"><js>respond.min.js</js></action>
+					<action method="setJsInclude"><js>plugins-min.js</js></action>
+					<action method="setJsInclude"><js>scripts-min.js</js></action>
+					<action method="setJsInclude"><js>helper.js</js></action>
+				</block>
+
+				<!-- Load IE specific javascript -->
+				<block type="core/text" name="ie_js">
+					<action method="setText">
+						<text><![CDATA[
+							<!--[if lt IE 9]>
+							<script type="text/javascript" src="/skin/frontend/atypical/default/js/scripts-ie-min.js"></script>
+							<![endif]-->
+							<!--[if (gte IE 6)&(lte IE 8)]>
+							<script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+							<script type="text/javascript" src="https://numeproducts.com/skin/frontend/atypical/default/js/selectivizr-min.js"></script>
+							<![endif]-->
+						]]></text>
+					</action>
+				</block>
+
+				<!-- Mobile rendering fixes -->
+				<block type="core/text" name="mobile_rendering_fixes">
+					<action method="setText">
+						<text><![CDATA[
+							<script type="text/javascript">
+							// iOS scale bug fix
+							//MBP.scaleFix();
+							</script>
+							<!-- http://t.co/dKP3o1e -->
+							<meta name="HandheldFriendly" content="True">
+							<meta name="MobileOptimized" content="320">
+							<meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0">
+						]]></text>
+					</action>
+				</block>
+
+			</reference>
+
+			<reference name="header">
+				<remove name="top.menu"/>
+				<!-- jumpToMenu added -->
+				<block type="core/template" name="jumpToMenu" template="page/html/jumptomenu.phtml" />
+			</reference>
+
+			<!-- Add clearfix to body -->
+			<action method="addBodyClass">
+				<className>clearfix</className>
+			</action>
+
+		</reference>
+
+		<remove name="store_switcher" />
+		<remove name="footer_links" />
+		<remove name="breadcrumbs" />
+		<remove name="left.permanent.callout" />
+		<remove name="right.permanent.callout" />
+		<remove name="checkout.cart.shipping" />
+		<remove name="product.info.addtocart.paypal" />
+		<remove name="paypal.partner.right.logo" />
+		<remove name="checkout.cart.methods.paypal_express.bottom" />
+		<remove name="checkout.cart.methods.paypal_express.top" />
+		<remove name="review.product.info.addtocart.paypal.wrapper" />
+		<remove name="catalog.compare.list" />
+		<remove name="catalog.compare.sidebar" />
+		<remove name="checkout.progress.wrapper" />
+
+		<reference name="top.links">
+			<block type="checkout/links" name="checkout_cart_link">
+				<action method="addCartLink"></action>
+			</block>
+		</reference>
+
+		<!-- Set single column template -->
+		<reference name="root">
+			<action method="setTemplate">
+				<template>page/1column.phtml</template>
+			</action>
+		</reference>
+
+		<reference name="content">
+			<remove name="product_list_toolbar" />
+		</reference>
+
+	</default>
+
+	<catalog_category_default> 
+		<remove name="product_list_toolbar"/> 
+		<reference name="root">
+			<action method="setTemplate"><template>page/1column.phtml</template></action>
+		</reference>
+	</catalog_category_default>
+
+	<catalog_category_layered>
+		<reference name="content">
+			<remove name="product_list_toolbar" />
+		</reference>
+	</catalog_category_layered>
+
+	<catalog_product_view>
+		<!-- Remove left and right columns -->
+		<remove name="left"/>
+		<remove name="right"/>
+		<remove name="product.clone_prices" />
+
+		<!-- Set single column template -->
+		<reference name="root">
+			<action method="setTemplate">
+				<template>page/1column.phtml</template>
+			</action>
+		</reference>
+
+		<!--
+		changed in catalog.xml line 205 need to fix
+		update: uncommented upsells in catalog.xml
+		<reference name="content">
+			<action method="setItemLimit"><type>upsell</type><limit>6</limit></action>
+		</reference>
+		-->
+
+		<reference name="head">
+			<!-- <action method="addItem"><type>skin_js</type><name>js/jquery.jqzoom-core.js</name></action> -->
+			<!-- <action method="addItem"><type>skin_js</type><name>js/jquery.jqzoom-core.js</name><params/></action> -->
+    		<action method="addItem"><type>skin_js</type><name>js/swipejs/swipe.js</name></action>
+			<action method="addCss"><stylesheet>js/swipejs/style.css</stylesheet></action>
+			<action method="addItem"><type>skin_js</type><name>js/jquery.elevatezoom.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/jquery.zoom.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/jquery.carouFredSel.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/jquery.touchSwipe.min.js</name></action>
+		</reference>
+
+		<reference name="content">
+			<remove name="product.info.upsell" />
+		</reference>
+
+		<reference name="reviews">
+			<block type="core/template" name="product_review_list" as="review_summary" template="review/helper/summary.phtml" /> 
+			<block type="review/product_view_list" name="product.info.product_additional_data" as="product_additional_data" template="review/product/view/short-list.phtml">
+				<block type="catalog/product_view_description" name="product.description" as="description" template="catalog/product/view/description-custom.phtml">
+					<action method="addToParentGroup"><group>detailed_info</group></action>
+				</block>
+				<block type="catalog/product_view_attributes" name="product.attributes" as="additional" template="catalog/product/view/attributes-custom.phtml">
+					<action method="addToParentGroup"><group>detailed_info</group></action>
+				</block>
+				<block type="review/form" name="product.review.form" as="review_form">
+                    <block type="page/html_wrapper" name="product.review.form.fields.before" as="form_fields_before" translate="label">
+                        <label>Review Form Fields Before</label>
+                        <action method="setMayBeInvisible"><value>1</value></action>
+                    </block>
+                </block>
+			</block>
+		</reference>
+
+		<reference name="products_push">
+			<block type="catalog/product_list_related" name="catalog.product.related" as="related_products" template="catalog/product/list/related-custom.phtml"/>
+		</reference>
+
+	</catalog_product_view>
+
+	<checkout_cart_index>
+		<remove name="checkout.cart.top_methods" />
+		<reference name="before_body_end">
+	        <block type="core/text" name="crazy_egg1" as="crazy_egg1">
+	            <action method="setText">
+	                <text><![CDATA[<script type="text/javascript">
+		setTimeout(function(){var a=document.createElement("script");
+		var b=document.getElementsByTagName("script")[0];
+		a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0022/7715.js?"+Math.floor(new Date().getTime()/3600000);
+		a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+		</script>]]></text>
+	            </action>
+	        </block>
+	    </reference>
+	</checkout_cart_index>
+
+	<cms_index_index>
+		<reference name="before_body_end">
+	        <block type="core/text" name="crazy_egg2" as="crazy_egg2">
+	            <action method="setText">
+	                <text><![CDATA[<script type="text/javascript">
+		setTimeout(function(){var a=document.createElement("script");
+		var b=document.getElementsByTagName("script")[0];
+		a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0022/7715.js?"+Math.floor(new Date().getTime()/3600000);
+		a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+		</script>]]></text>
+	            </action>
+	        </block>
+	    </reference>
+	</cms_index_index>
+
+	<checkout_onepage_index>
+		<reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="before_body_end">
+	        <block type="core/text" name="crazy_egg3" as="crazy_egg3">
+	            <action method="setText">
+	                <text><![CDATA[<script type="text/javascript">
+		setTimeout(function(){var a=document.createElement("script");
+		var b=document.getElementsByTagName("script")[0];
+		a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0022/7715.js?"+Math.floor(new Date().getTime()/3600000);
+		a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+		</script>]]></text>
+	            </action>
+	        </block>
+	    </reference>
+    </checkout_onepage_index>
+
+	<!-- Product additional images gallery popup -->
+	<catalog_product_gallery>
+		<!-- Remove main nav -->
+		<remove name="catalog.topnav"/>
+	</catalog_product_gallery>
+	
+	<review_product_list>
+		<reference name="content">
+			<remove name="product.info.addtocart"/>   		
+		</reference>
+		<reference name="product.info">
+			<action method="unsetChild"><name>addto</name></action>
+			<action method="setTemplate"><template>catalog/product/view_review.phtml</template></action>
+		</reference>
+		<reference name="root">
+			<action method="setTemplate">
+				<template>page/1column.phtml</template>
+			</action>
+		</reference>
+	</review_product_list>
+
+
+	<!-- Compare products popup -->
+	<catalog_product_compare_index>
+		<!-- Remove main nav -->
+		<remove name="catalog.topnav"/>
+	</catalog_product_compare_index>
+
+	<onepagecheckout_index_index>
+		<reference name="head">
+			
+			<action method="addCss"><stylesheet>css/flexslider.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/tooltipster.css</stylesheet></action>
+			<!-- <action method="addCss"><stylesheet>css/cc-form.css</stylesheet></action> -->
+			<action method="addItem"><type>skin_js</type><name>js/jquery.flexslider-min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/validate-checkout.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/jquery.tooltipster.js</name></action>
+			<!-- <action method="addItem"><type>skin_js</type><name>js/mailcheck.js</name></action> -->
+			<!-- <action method="addItem"><type>skin_js</type><name>js/jquery.creditCardValidator.js</name></action> -->
+			<!-- <action method="addItem"><type>skin_js</type><name>js/cc-form.js</name></action> -->
+		</reference>
+		<reference name="before_body_end">
+			<block type="cms/block" name="freshchat"><action method="setBlockId"><block_id>freshchat</block_id></action></block>
+		</reference>
+	</onepagecheckout_index_index>
+	
+	<checkout_cart_index>
+		<reference name="before_body_end">
+			<block type="cms/block" name="freshchat"><action method="setBlockId"><block_id>freshchat</block_id></action></block>
+		</reference>
+	</checkout_cart_index>
+
+	<customer_account>
+		<reference name="customer_account_navigation">
+			<action method="removeLinkByName"><name>recurring_profiles</name></action>
+			<action method="removeLinkByName"><name>billing_agreements</name></action>
+			<action method="removeLinkByName"><name>OAuth Customer Tokens</name></action>
+            <action method="removeLinkByName"><name>advancednewsletter</name></action>
+		</reference>
+		<remove name="cart_sidebar" />
+		<remove name="sale.reorder.sidebar" />
+	</customer_account>
+
+
+</layout>

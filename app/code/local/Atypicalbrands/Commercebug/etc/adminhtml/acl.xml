@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<config><acl><resources><resource id="Atypicalbrands_Commercebug::admin"><resource id="Atypicalbrands_Commercebug::system"><resource id="Atypicalbrands_Commercebug::config"><resource id="Atypicalbrands_Commercebug::commercebug" title="Configuration for Advanced Debugger"/></resource></resource></resource></resources></acl></config>

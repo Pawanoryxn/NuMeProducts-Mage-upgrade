@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    
+    <!--
+     - 
+    -->
+    <checkout_onepage_success>
+        <reference name="head">
+            <action method="addCss"><path>betterthankyoupage/styles.css</path></action>
+        </reference>
+        <reference name="checkout.success">
+            <block type="betterthankyoupage/sectionOrderinformation" name="section_order_information" as="section_order_information" template="betterthankyoupage/section_order_information.phtml" />
+            <block type="betterthankyoupage/sectionSocialsharingbar" name="section_social_sharing_bar" as="section_social_sharing_bar" template="betterthankyoupage/section_social_sharing_bar.phtml" />
+            <block type="betterthankyoupage/sectionCmsblock" name="section_cms_block" as="section_cms_block" template="betterthankyoupage/section_cms_block.phtml" />
+            <block type="betterthankyoupage/sectionCrosssells" name="section_cross_sells" as="section_cross_sells" template="betterthankyoupage/section_cross_sells.phtml" />
+            <block type="betterthankyoupage/sectionNewslettersubscription" name="section_newsletter_subscription" as="section_newsletter_subscription" template="betterthankyoupage/section_newsletter_subscription.phtml" />
+            
+            <action method="addSectionBlock"><blockAlias>section_order_information</blockAlias></action>
+            <action method="addSectionBlock"><blockAlias>section_social_sharing_bar</blockAlias></action>
+            <action method="addSectionBlock"><blockAlias>section_cms_block</blockAlias></action>
+            <action method="addSectionBlock"><blockAlias>section_cross_sells</blockAlias></action>
+            <action method="addSectionBlock"><blockAlias>section_newsletter_subscription</blockAlias></action>
+        </reference>
+    </checkout_onepage_success>
+    
+    <!--
+     - 
+    -->
+    <checkout_multishipping_success>
+        <reference name="head">
+            <action method="addCss"><path>betterthankyoupage/styles.css</path></action>
+        </reference>
+        <reference name="checkout_success">
+            <block type="betterthankyoupage/sectionOrderinformation" name="section_order_information" as="section_order_information" template="betterthankyoupage/section_order_information.phtml" />
+            <block type="betterthankyoupage/sectionSocialsharingbar" name="section_social_sharing_bar" as="section_social_sharing_bar" template="betterthankyoupage/section_social_sharing_bar.phtml" />
+            <block type="betterthankyoupage/sectionCmsblock" name="section_cms_block" as="section_cms_block" template="betterthankyoupage/section_cms_block.phtml" />
+            <block type="betterthankyoupage/sectionCrosssells" name="section_cross_sells" as="section_cross_sells" template="betterthankyoupage/section_cross_sells.phtml" />
+            <block type="betterthankyoupage/sectionNewslettersubscription" name="section_newsletter_subscription" as="section_newsletter_subscription" template="betterthankyoupage/section_newsletter_subscription.phtml" />
+            
+            <action method="addSectionBlock"><blockAlias>section_order_information</blockAlias></action>
+            <action method="addSectionBlock"><blockAlias>section_social_sharing_bar</blockAlias></action>
+            <action method="addSectionBlock"><blockAlias>section_cms_block</blockAlias></action>
+            <action method="addSectionBlock"><blockAlias>section_cross_sells</blockAlias></action>
+            <action method="addSectionBlock"><blockAlias>section_newsletter_subscription</blockAlias></action>
+        </reference>
+    </checkout_multishipping_success>
+</layout>

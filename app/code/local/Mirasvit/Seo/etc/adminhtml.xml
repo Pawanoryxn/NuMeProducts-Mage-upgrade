@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <menu>
+	 	<seo module="seo">
+	        <title>SEO</title>
+	        <sort_order>71</sort_order>               
+	        <children>          
+                <seorewrites module="seo">
+                    <title>Rewrites Management</title>
+                    <sort_order>10</sort_order>
+                    <action>seo/adminhtml_rewrite/index</action>
+                </seorewrites>                                           
+	        </children>
+	    </seo>        
+    </menu> 
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>            
+            <admin>
+                <children>
+					<seo translate="title" module="seo">
+                        <title>SEO</title>
+                        <sort_order>60</sort_order>
+                        <children>
+                            <seorewrites>
+                                <title>Rewrites Management</title>
+                                <sort_order>10</sort_order>
+                            </seorewrites>                        
+                        </children>
+                   	</seo>                    
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <seo translate="title" module="seo">
+                                        <title>SEO</title>
+                                    </seo>
+                                </children>
+                            </config>
+                        </children>
+                    </system>                        
+                </children>
+            </admin>
+        </resources>
+    </acl>       
+</config>

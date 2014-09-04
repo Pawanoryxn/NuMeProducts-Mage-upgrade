@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <system>
+            <children>
+                <convert>
+                    <children>
+                        <moogento_shipments translate="title" module="moogento_shipeasy">
+                            <title>Import Shipments</title>
+                            <action>adminhtml/system_convert_shipments</action>
+                            <sort_order>50</sort_order>
+                        </moogento_shipments>
+                    </children>
+                </convert>
+            </children>
+        </system>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <order>
+                                <children>
+                                    <actions>
+                                        <children>
+                                            <edit_shipping_cost translate="title" module="moogento_shipeasy">
+                                                <title>shipEasy : Edit Shipping Cost</title>
+                                            </edit_shipping_cost>
+                                        </children>
+                                    </actions>
+                                </children>
+                            </order>
+                        </children>
+                    </sales>
+                    <system>
+                        <children>
+                            <convert>
+                                <children>
+                                    <moogento_shipments translate="title" module="moogento_shipeasy">
+                                        <title>shipEasy : Import Shipments</title>
+                                    </moogento_shipments>
+                                </children>
+                            </convert>
+                            <config>
+                                <children>
+                                    <moogento_shipeasy translate="title" module="moogento_shipeasy">
+                                        <title>Moogento shipEasy</title>
+                                        <sort_order>302</sort_order>
+                                    </moogento_shipeasy>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

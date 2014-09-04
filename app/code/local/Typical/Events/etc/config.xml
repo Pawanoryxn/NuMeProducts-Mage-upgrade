@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Typical_Events>
+            <version>0.0.1</version>
+        </Typical_Events>
+    </modules>
+    <global>
+        <models>
+            <Typical_Events>
+                <class>Typical_Events_Model</class>
+            </Typical_Events>
+        </models>
+        <events>
+            <sales_order_save_after>
+                <observers>
+                    <Typical_Events>
+                        <class>Typical_Events/observer</class>
+                        <method>shipStationUpdate</method>
+                        <type>singleton</type>
+                    </Typical_Events>
+                </observers>
+            </sales_order_save_after> 
+        </events>
+    </global>
+</config>

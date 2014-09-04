@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+    <checkout_cart_index>
+       <reference name="checkout.cart">
+            <action method="addItemRender"><type>configurable</type><block>oro_checkout/checkout_cart_item_renderer_configurable</block><template>oro/checkout/cart/item/configurable.phtml</template></action>
+        </reference>
+    </checkout_cart_index>
+</layout>

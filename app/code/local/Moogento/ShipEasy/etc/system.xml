@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <moogento translate="label" module="moogento_shipeasy">
+            <label>Moogento</label>
+            <sort_order>300</sort_order>
+        </moogento>
+    </tabs>
+
+    <sections>
+        <moogento_shipeasy translate="label" module="moogento_shipeasy">
+            <label>shipEasy</label>
+            <tab>moogento</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <frontend_model>moogento_shipeasy/adminhtml_system_config_grid_column_form_order</frontend_model>
+            <groups>
+                <grid translate="label" module="moogento_shipeasy">
+                    <label>Grid Columns Config</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                </grid>
+                <colors translate="label" module="moogento_shipeasy">
+                    <label>Grid Rows Color</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                </colors>
+                
+                <import translate="label" module="moogento_shipeasy">
+                    <label>Import Shipments - Fields Mapping</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <order_increment_id translate="label,comment" module="moogento_shipeasy">
+                            <label>Order Increment Id</label>
+                            <comment><![CDATA[Column Name in Import File]]></comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </order_increment_id>
+                        <shipping_cost translate="label,comment" module="moogento_shipeasy">
+                            <label>Shipping Cost</label>
+                            <comment><![CDATA[Column Name in Import File]]></comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </shipping_cost>
+                        <tracking_info translate="label,comment" module="moogento_shipeasy">
+                            <label>Tracking Info</label>
+                            <comment><![CDATA[Column Name in Import File]]></comment>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </tracking_info>
+                    </fields>
+                </import>
+            
+                <country_groups translate="label" module="moogento_shipeasy">
+                    <label>Country Groupings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <label_usa translate="label" module="moogento_shipeasy">
+                            <label>Group 1 : Label</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>0</can_be_empty>
+                        </label_usa>
+                        <countries_usa translate="label" module="moogento_shipeasy">
+                            <label>Group 1 : Countries in Region</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>2</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </countries_usa>
+                        <label_eu translate="label" module="moogento_shipeasy">
+                            <label>Group 2 : Label</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>0</can_be_empty>
+                        </label_eu>
+                        <countries_eu translate="label" module="moogento_shipeasy">
+                            <label>Group 2 : Countries in Region</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>4</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </countries_eu>
+                        <label_non_eu translate="label" module="moogento_shipeasy">
+                            <label>Group 3 : Label</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>0</can_be_empty>
+                        </label_non_eu>
+                        <countries_non_eu translate="label" module="moogento_shipeasy">
+                            <label>Group 3 : Countries in Region</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>6</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </countries_non_eu>
+                        <label_row translate="label" module="moogento_shipeasy">
+                            <label>Group 4 : Label</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>0</can_be_empty>
+                        </label_row>
+                        <countries_row translate="label" module="moogento_shipeasy">
+                            <label>Group 4 : Countries in Region</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>8</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </countries_row>
+                    </fields>
+                </country_groups>
+            
+                <weight translate="label" module="moogento_shipeasy">
+                    <label>Weight Bar Config</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enabled translate="label" module="moogento_shipeasy">
+                            <sort_order>1</sort_order>
+                            <label>Show Weight Bar</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <measure_unit translate="label" module="moogento_shipeasy">
+                            <label>Unit of Measure</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </measure_unit>
+                        <statuses translate="label" module="moogento_shipeasy">
+                            <label>Orders statues used in calculations</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>3</sort_order>
+                            <source_model>moogento_shipeasy/adminhtml_system_config_source_order_status</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>0</can_be_empty>
+                        </statuses>
+                        <show_single translate="label" module="moogento_shipeasy">
+                            <label>Show Single Qty's</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_single>
+                    </fields>
+                </weight>
+
+                <fonts translate="label" module="moogento_shipeasy">
+                    <label>Fonts Config</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>70</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>        
+                        <font translate="label" module="moogento_shipeasy">
+                            <label>Font</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>moogento_shipeasy/adminhtml_system_config_source_font</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </font>
+                        <size translate="label,comment" module="moogento_shipeasy">
+                            <label>Size (px)</label>
+                            <comment><![CDATA[Leave empty to use default.]]></comment>
+                            <frontend_class>validate-number</frontend_class>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </size>
+                    </fields>
+                </fonts>
+
+                <carriers translate="label" module="moogento_shipeasy">
+                    <label>Carriers Input Formats</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>80</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <base_format translate="label" module="moogento_shipeasy">
+                            <label>Format</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </base_format>
+                    </fields>
+                </carriers>
+
+                <charges translate="label" module="moogento_shipeasy">
+                    <label>Additional Payment Charges</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>90</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <fixed_amount translate="label" module="moogento_shipeasy">
+                            <label>Fixed Charge Amount</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_class>validate-number</frontend_class>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </fixed_amount>
+                        <percent_amount translate="label" module="moogento_shipeasy">
+                            <label>Percent Charge Amount</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_class>validate-number</frontend_class>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </percent_amount>
+                    </fields>
+                </charges>
+
+                <email_to>
+                    <label>Emails And Comments</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <default_subject translate="label" module="moogento_shipeasy">
+                            <label>Default Email Subject</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Use {customer-name} and {order-id} directives here.]]></comment>
+                        </default_subject>
+                        <default_body>
+                            <label>Default Email Body</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Use {customer-name},{order-id},{ordered-skus} and {ordered-product-names}.]]></comment>
+                        </default_body>
+                        <default_admin_message>
+                            <label>Default Admin Viewable Order Comment</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Use {customer-name},{order-id},{ordered-skus} and {ordered-product-names}.]]></comment>
+                        </default_admin_message>
+                        <default_customer_message>
+                            <label>Default Customer Visible Order Comment</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Use {customer-name},{order-id},{ordered-skus} and {ordered-product-names}.]]></comment>
+                        </default_customer_message>
+                    </fields>
+                </email_to>
+            </groups>
+        </moogento_shipeasy>
+    </sections>
+</config>

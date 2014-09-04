@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <bundlepro_bundlemod>
+        <reference name="head">
+			<action method="addJs"><script>/js/bundle.js</script></action>
+			<action method="addJs"><script>/js/giftmessage.js</script></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="carfilter" as="carfilter" template="page/html/head.phtml" />
+        </reference>
+    </bundlepro_bundlemod>
+
+    <carfilter_ajax_ajax>
+        <remove name="right"/>
+        <remove name="left"/>
+        <block type="core/template" name="carfilter_ajax" as="carfilter_ajax" template="carfilter/ajax.phtml" output="toHtml" />
+    </carfilter_ajax_ajax>
+	 <PRODUCT_TYPE_simple><!-- layout handle for simple products -->
+        <update handle="bundlepro_bundlemod" /> <!-- include the handle you declared above -->
+    </PRODUCT_TYPE_simple>
+    <PRODUCT_TYPE_grouped><!-- layout handle for grouped products -->
+        <update handle="bundlepro_bundlemod" /> <!-- include the handle you declared above -->
+    </PRODUCT_TYPE_grouped>
+
+</layout>

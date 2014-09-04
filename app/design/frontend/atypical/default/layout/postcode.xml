@@ -1,0 +1,21 @@
+<?xml version="1.0"?>   
+<layout version="0.1.0">   
+  <postcode_index_index>   
+	<reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">   
+      <block type="postcode/index" name="postcode_index" template="postcode/index.phtml"/>   
+    </reference>   
+  </postcode_index_index>
+  
+  <postcode_popup_popup>   
+	<reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">   
+      <block type="postcode/popup" name="postcode_popup" template="postcode/popup.phtml"/>   
+    </reference>   
+  </postcode_popup_popup>
+</layout>   
+	

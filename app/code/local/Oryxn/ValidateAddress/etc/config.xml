@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Oryxn_ValidateAddress>
+      <version>0.1.0</version>
+    </Oryxn_ValidateAddress>
+  </modules>
+  <frontend>
+    <routers>
+      <validateaddress>
+        <use>standard</use>
+          <args>
+            <module>Oryxn_ValidateAddress</module>
+            <frontName>validateaddress</frontName>
+          </args>
+      </validateaddress>
+    </routers>
+		<layout>
+		  <updates>
+			<validateaddress>
+			  <file>validateaddress.xml</file>
+			</validateaddress>
+		  </updates>
+		</layout>
+  </frontend>
+  <global>
+    <helpers>
+      <validateaddress>
+        <class>Oryxn_ValidateAddress_Helper</class>
+      </validateaddress>
+    </helpers>
+	<blocks>
+	  <validateaddress>
+		<class>Oryxn_ValidateAddress_Block</class>
+	  </validateaddress>
+	</blocks>
+	<models>
+	  <validateaddress>
+		<class>Oryxn_ValidateAddress_Model</class>
+		<resourceModel>validateaddress_mysql4</resourceModel>
+	  </validateaddress>
+	</models>
+    <!-- <events>
+    	  <sales_order_payment_place_start> identifier of the event we want to catch
+        <observers>
+          <sales_order_payment_place_start_handler> identifier of the event handler
+            <type>singleton</type> class method call type; valid are model, object and singleton
+            <class>validateaddress/observer</class> observers class alias
+            <method>PreValidateAddress</method>  observer's method to be called
+            <args></args> additional arguments passed to observer
+          </sales_order_payment_place_start_handler>
+        </observers>
+      </sales_order_payment_place_start>
+    </events> -->
+  </global>
+</config> 
+
+
+	<!-- <events>
+	  <sales_order_payment_place_start> identifier of the event we want to catch
+        <observers>
+          <sales_order_payment_place_start_handler> identifier of the event handler
+            <type>singleton</type> class method call type; valid are model, object and singleton
+            <class>validateaddress/observer</class> observers class alias
+            <method>PreValidateAddress</method>  observer's method to be called
+            <args></args> additional arguments passed to observer
+          </sales_order_payment_place_start_handler>
+        </observers>
+      </sales_order_payment_place_start>
+
+
+
+	  <controller_action_layout_load_before>
+        <observers>
+          <controller_action_layout_load_before_handler>
+            <type>singleton</type>
+            <class>validateaddress/observer</class>
+            <method>PreValidateAddress</method>
+            <args></args>
+          </controller_action_layout_load_before_handler>
+        </observers>
+      </controller_action_layout_load_before>
+
+
+
+
+    </events> -->

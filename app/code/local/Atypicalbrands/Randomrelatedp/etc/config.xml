@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Atypicalbrands_Randomrelatedp>
+            <version>1.0.0</version>
+        </Atypicalbrands_Randomrelatedp>
+    </modules>
+    <global>
+		<blocks>
+			<catalog>
+				<rewrite>
+					<product_list_related>Atypicalbrands_Randomrelatedp_Block_Catalog_Product_List_Related</product_list_related>
+				</rewrite>
+			</catalog>
+			<review>
+				<rewrite>
+					<product_view>Atypicalbrands_Randomrelatedp_Block_Review_Product_View</product_view>
+				</rewrite>
+			</review>
+		</blocks>
+    </global>
+</config>

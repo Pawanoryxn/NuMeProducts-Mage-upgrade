@@ -1,0 +1,166 @@
+<?php
+/**
+* @author Amasty Team
+* @copyright Amasty
+* @package Amasty_Conf
+*/
+$_product = $this->getProduct();
+$_helper = $this->helper('catalog/output');
+$imageWidth = (int)Mage::getStoreConfig('amconf/size/preview_width');
+$imageHeight = (int)Mage::getStoreConfig('amconf/size/preview_height');
+$smallImageSize = (int)Mage::getStoreConfig('amconf/size/thumb');
+$itemCount = (int)Mage::getStoreConfig('amconf/carousel/visible_items');
+?>
+<span class="plus-icon1"><img src="<?php echo $this->getSkinUrl('images/plus-icon1.jpg') ?>" alt="" /></span>
+<?php if ('true' == (string) Mage::getConfig()->getNode('modules/Amasty_Label/active')): ?>
+	<div class="amlabel-div">
+		<?php echo Mage::helper('amlabel')->getLabels($_product, 'product') ?>
+<?php endif; ?>
+	<?php if ($_product->getImage() != 'no_selection' && $_product->getImage()): ?>
+	<div class="clearfix" id="content">
+		<div class="product-image">
+			<span class="'zoom" id="main-image">
+				<img src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(1200,1200) ?>" id="amasty_zoom" alt="<?php echo $this->htmlEscape($this->getImageLabel()); ?>" title="<?php echo $this->htmlEscape($this->getImageLabel());?>"/>
+			</span>
+		</div>
+		<div id='touch' class='swipe' style="display:none;">
+			<div class='swipe-wrap'>
+				<?php if (count($this->getGalleryImages()) > 0): ?>
+					<?php foreach ($this->getGalleryImages() as $_image): ?>
+						<div><img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'base', $_image->getFile())->resize(1540,1540); ?>" /></div>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</div>
+		</div>
+		<?php if (count($this->getGalleryImages()) > 1): ?>
+		<div id="touch-index" style="display:none;">
+			<ul id="touch-position">
+				<?php $c = 1; ?>
+					<?php foreach ($this->getGalleryImages() as $_image): ?>
+						<li class="<?php if ($c == 1){ echo "on"; } ?>"></li>
+					<?php $c++; ?>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+		<?php endif; ?>
+	</div>
+	<?php else: ?>
+	<div class="clearfix" id="content">
+		<div class="product-image">
+			<span class="'zoom" id="main-image" style="float:right;">
+				<img src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(1200,1200) ?>" id="amasty_zoom" alt="<?php echo $this->htmlEscape($this->getImageLabel()); ?>" title="<?php echo $this->htmlEscape($this->getImageLabel());?>"/>
+			</span>
+		</div>
+	</div>
+	<?php endif; ?>
+	
+<?php if ('true' == (string)Mage::getConfig()->getNode('modules/Amasty_Label/active')): ?>
+</div>
+<?php endif; ?>
+<?php //if current product contains more then one image ?>
+<?php if (count($this->getGalleryImages()) > 1): ?>
+<div class="more-views">
+		<div id="carousel">
+			<?php if (count($this->getGalleryImages()) > $itemCount && Mage::getStoreConfig('amconf/carousel/enable')): ?>
+				<div id="prevGallery" style="" class="MagicScrollArrows MagicScrollArrowPrev"></div>
+			<?php endif; ?>
+			<div id="amasty_gallery">
+				<?php foreach ($this->getGalleryImages() as $_image): ?>
+					<a class="fancybox" href="<?php echo Mage::getStoreConfig('amconf/lightbox/thumbnail_lignhtbox')?$this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()):"#"; ?>" data-image="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize($imageWidth, $imageHeight); ?>" data-zoom-image="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(1200,1200); ?>">
+						<img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize($smallImageSize); ?>" width="<?php echo $smallImageSize;?>" height="<?php echo $smallImageSize;?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>"  title="<?php echo $this->htmlEscape($_image->getLabel()) ?>"/>
+					</a>
+				<?php endforeach; ?>
+			</div>
+			<?php if (count($this->getGalleryImages()) > $itemCount && Mage::getStoreConfig('amconf/carousel/enable')): ?>
+				<!-- <div id="prevGallery" style="" class="MagicScrollArrows MagicScrollArrowPrev"></div> -->
+				<div id="nextGallery" style="" class="MagicScrollArrows MagicScrollArrowNext"></div>
+				<?php if (Mage::getStoreConfig('amconf/carousel/pagination')): ?>
+					<div id="ampagination" style="margin-top: 10px;"></div>
+				<?php endif; ?>
+			<?php endif; ?>
+		</div>
+</div>
+<?php else: ?>
+<div class="more-views">
+		<div id="carousel">
+			<div id="amasty_gallery"></div>
+		</div>
+</div>
+<?php endif; ?>
+<script>
+	jQuery(document).ready(function(){
+		jQuery('#main-image').zoom();
+	});
+</script>
+
+<script type="text/javascript" >
+(function($){
+	$(document).ready(function(){
+		$('div.amconf-images-container:first').insertBefore($('button.buy-now1'));
+		$('select.super-attribute-select').on('change', function(){
+			$('div.amconf-images-container:first').insertBefore($('button.buy-now1'));
+		});
+		if ($(window).width() < 800 || Modernizr.touch){
+			AmZoomerObj = new AmZoomer({
+				"general":{
+					"zoom_enable":"0",
+					"lightbox_enable":"0",
+					"carousel_enable":"1",
+					"thumbnail_lignhtbox":"0"
+					},
+				"carousel":{
+					"items":6,
+					"circular":false,
+					"height":72,
+					"float":"left",
+						"prev":{
+							"button":"#prevGallery",
+							"key":"left"
+							},
+						"next":{
+							"button":"#nextGallery",
+							"key":"right"
+							},
+					"auto":false,
+					"swipe":{
+						"onTouch":true,
+							"onMouse":false
+							},
+						"responsive":true,
+						"infinite":false
+					}
+				});
+			AmZoomerObj.loadCarousel();
+			$('p.product_zoom').hide();
+			$('div.product-image').hide();
+			$('div.more-views').hide();
+			$('#bubble').remove();
+			$('#touch').show();
+			$('#touch-index').show();
+			var touch =
+				Swipe(document.getElementById('touch'), {
+					//auto: 3000,
+					//continuous: true,
+					callback: function(pos) {
+						var i = bullets.length;
+						while (i--) {
+							bullets[i].className = ' ';
+					}
+					bullets[pos].className = 'on';
+				}
+			});
+			var bullets = document.getElementById('touch-position').getElementsByTagName('li');
+			//window.mySwipe = Swipe(document.getElementById('touch'));
+		} else {
+			AmZoomerObj = new AmZoomer(<?php echo Mage::helper('amconf/zoom')->jsParam()?>);
+			AmZoomerObj.loadCarousel();
+			$('div.caroufredsel_wrapper img').on('hover', function(){
+			    AmZoomerObj.loadZoom();
+                      jQuery('#amasty_zoom').attr("src", jQuery(this).parent().attr("data-image"));
+                      jQuery('.zoomImg').attr("src", jQuery(this).parent().attr("data-zoom-image"));
+                      //console.log("");
+			});
+		}
+	});
+})(jQuery);
+</script>

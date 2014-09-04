@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Atypicalbrands_Couponerror>
+            <version>1.0.0</version>
+        </Atypicalbrands_Couponerror>
+    </modules>
+    <global>
+        <!-- rewrite moved to Oro_Checkout module-->
+        <!--<rewrite>
+            <atypicalbrands_couponerror_checkout_cart>
+                <from><![CDATA[#^/checkout/cart/#]]></from>
+                <to>/couponerror/checkout_cart/</to>
+            </atypicalbrands_couponerror_checkout_cart>
+        </rewrite>-->
+    </global>
+    <frontend>
+        <routers>
+            <atypicalbrands_couponerror>
+                <use>standard</use>
+                <args>
+                    <module>Atypicalbrands_Couponerror</module>
+                    <frontName>couponerror</frontName>
+                </args>
+            </atypicalbrands_couponerror>
+        </routers>
+    </frontend>
+</config>

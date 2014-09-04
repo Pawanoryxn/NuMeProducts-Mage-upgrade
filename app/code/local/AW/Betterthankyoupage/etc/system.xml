@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <awall translate="label">
+            <label>aheadWorks Extensions</label>
+            <sort_order>300</sort_order>
+        </awall>
+    </tabs>
+    <sections>
+        <betterthankyoupage translate="label" module="betterthankyoupage">
+            <label>Better Thank You Page</label>
+            <tab>awall</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>50</sort_order>
+            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label" module="betterthankyoupage">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                    <fields>
+                        <module_enabled translate="label" module="betterthankyoupage">
+                            <label>Enable Extension</label>
+                            <show_in_default>1</show_in_default><show_in_website>0</show_in_website><show_in_store>0</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </module_enabled>
+                    </fields>
+                </general>
+                <order_information_section translate="label" module="betterthankyoupage">
+                    <label>Order Information Section</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                    <fields>
+                        <display_section translate="label" module="betterthankyoupage">
+                            <label>Display Section</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </display_section>
+                        <section_sort_order translate="label" module="betterthankyoupage">
+                            <label>Section Sort Order</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                        </section_sort_order>
+                        <display_order_number translate="label" module="betterthankyoupage">
+                            <label>Display Order Number</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                        </display_order_number>
+                        <display_invoice_button translate="label comment" module="betterthankyoupage">
+                            <label>Display Invoice Button</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Note: the View Invoice button isn't displayed in case there are no invoices in the order to view</comment>
+                            <sort_order>40</sort_order>
+                        </display_invoice_button>
+                        <text_message translate="label" module="betterthankyoupage">
+                            <label>Text Message</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>50</sort_order>
+                        </text_message>
+                    </fields>
+                </order_information_section>
+                <social_network_sharing_section translate="label" module="betterthankyoupage">
+                    <label>Social Network Sharing Section</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                    <fields>
+                        <display_section translate="label" module="betterthankyoupage">
+                            <label>Display Section</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </display_section>
+                        <section_sort_order translate="label" module="betterthankyoupage">
+                            <label>Section Sort Order</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                        </section_sort_order>
+                        <sharing_buttons_style translate="label" module="betterthankyoupage">
+                            <label>Sharing Buttons Style</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>betterthankyoupage/adminhtmlSystemConfigSourceSharingbarstyle</source_model>
+                            <sort_order>30</sort_order>
+                        </sharing_buttons_style>
+                    </fields>
+                </social_network_sharing_section>
+                <cms_block_section translate="label" module="betterthankyoupage">
+                    <label>CMS Block Section</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                    <fields>
+                        <display_section translate="label" module="betterthankyoupage">
+                            <label>Display Section</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </display_section>
+                        <section_sort_order translate="label" module="betterthankyoupage">
+                            <label>Section Sort Order</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                        </section_sort_order>
+                        <cms_block translate="label" module="betterthankyoupage">
+                            <label>CMS Block</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>betterthankyoupage/adminhtmlSystemConfigSourceCmsBlock</source_model>
+                            <sort_order>30</sort_order>
+                        </cms_block>
+                    </fields>
+                </cms_block_section>
+                <crosssell_block_section translate="label" module="betterthankyoupage">
+                    <label>Cross Sell Block Section</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                    <fields>
+                        <display_section translate="label" module="betterthankyoupage">
+                            <label>Display Section</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </display_section>
+                        <section_sort_order translate="label" module="betterthankyoupage">
+                            <label>Section Sort Order</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                        </section_sort_order>
+                        <number_of_items_to_show translate="label" module="betterthankyoupage">
+                            <label>Number of Items to Show</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                        </number_of_items_to_show>
+                    </fields>
+                </crosssell_block_section>
+                <newsletter_subscription_section translate="label" module="betterthankyoupage">
+                    <label>Newsletter Subscription Section</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                    <fields>
+                        <display_section translate="label" module="betterthankyoupage">
+                            <label>Display Section</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </display_section>
+                        <section_sort_order translate="label" module="betterthankyoupage">
+                            <label>Section Sort Order</label>
+                            <show_in_default>1</show_in_default><show_in_website>1</show_in_website><show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                        </section_sort_order>
+                        
+                    </fields>
+                </newsletter_subscription_section>
+            </groups> 
+        </betterthankyoupage>
+    </sections>
+</config>

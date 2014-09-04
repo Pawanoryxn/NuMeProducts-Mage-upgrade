@@ -1,0 +1,17 @@
+<?php
+/**
+ * Login form
+ */
+?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="page-title-aff">
+    <h1><?php echo $this->__('WELCOME TO THE NuMe AFFILIATE PROGRAM') ?></h1>
+</div>
+<form action="<?php echo $this->getUrl('affiliateplus/account/loginPost') ?>" method="post" id="login-form">
+    <div class="content aff-login-inline">
+        <input type="text" name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" id="email" class="input-text required-entry validate-email" title="<?php echo $this->__('Email Address') ?>" placeholder="E-Mail" />
+        <input type="password" name="login[password]" class="input-text required-entry validate-password" id="pass" title="<?php echo $this->__('Password') ?>" placeholder="Password" />
+        <button type="submit" class="button" title="<?php echo $this->__('Log In') ?>" name="send" id="send2"><span><span><?php echo $this->__('Log In') ?></span></span></button>
+    </div>       
+</form>
+<div class="clearfix"></div>

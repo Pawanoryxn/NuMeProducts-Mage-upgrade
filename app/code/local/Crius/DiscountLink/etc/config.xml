@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Crius
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt
+ *
+ * @category   Crius
+ * @package    Crius_DiscountLink
+ * @copyright  Copyright (c) 2013 Crius (http://www.criuscommerce.com)
+ * @license    http://www.criuscommerce.com/CRIUS-LICENSE.txt
+ */ 
+-->
+<config>
+    <modules>
+        <Crius_DiscountLink>
+            <version>1.1.1</version>
+        </Crius_DiscountLink>
+    </modules>
+    <global>
+        <models>
+            <discountlink>
+                <class>Crius_DiscountLink_Model</class>
+            </discountlink>
+        </models>
+        <helpers>
+            <discountlink>
+                <class>Crius_DiscountLink_Helper</class>
+            </discountlink>
+        </helpers>
+        <resources>
+            <discountlink_setup>
+                <setup>
+                    <module>Crius_DiscountLink</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
+                </setup>
+            </discountlink_setup>
+        </resources>
+        <events>
+            <controller_front_init_routers>
+                <observers>
+                    <discountlink>
+                        <class>Crius_DiscountLink_Controller_Router</class>
+                        <method>initControllerRouters</method>
+                    </discountlink>
+                </observers>
+            </controller_front_init_routers>
+            <adminhtml_promo_quote_edit_tab_main_prepare_form>
+				<observers>
+					<discountlink>
+						<type>singleton</type>
+						<class>discountlink/observer</class>
+						<method>addSalesRuleUrlField</method>
+					</discountlink>
+				</observers>
+            </adminhtml_promo_quote_edit_tab_main_prepare_form>
+            <core_block_abstract_to_html_before>
+                <observers>
+					<discountlink>
+						<type>singleton</type>
+						<class>discountlink/observer</class>
+						<method>addSalesRuleUrlFieldDependency</method>
+					</discountlink>
+				</observers>
+            </core_block_abstract_to_html_before>
+        </events>
+    </global>
+    <frontend>
+        <routers>
+            <discountlink>
+                <use>standard</use>
+                <args>
+                    <module>Crius_DiscountLink</module>
+                    <frontName>discountlink</frontName>
+                </args>
+            </discountlink>
+        </routers>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <discountlink>
+						<type>singleton</type>
+						<class>discountlink/observer</class>
+						<method>setCoupon</method>
+					</discountlink>
+                </observers>
+            </controller_action_predispatch>
+            <checkout_cart_product_add_after>
+				<observers>
+					<discountlink>
+						<type>singleton</type>
+						<class>discountlink/observer</class>
+						<method>applyCoupon</method>
+					</discountlink>
+				</observers>
+			</checkout_cart_product_add_after>
+			<controller_action_postdispatch_checkout_cart_updatePost>
+				<observers>
+					<discountlink>
+						<type>singleton</type>
+						<class>discountlink/observer</class>
+						<method>applyCoupon</method>
+					</discountlink>
+				</observers>
+			</controller_action_postdispatch_checkout_cart_updatePost>
+			<controller_action_predispatch_checkout_cart_couponPost>
+                <observers>
+					<discountlink>
+						<type>singleton</type>
+						<class>discountlink/observer</class>
+						<method>removeCoupon</method>
+					</discountlink>
+				</observers>
+			</controller_action_predispatch_checkout_cart_couponPost>
+        </events>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Crius_DiscountLink>
+                    <files>
+                        <default>Crius_DiscountLink.csv</default>
+                    </files>
+                </Crius_DiscountLink>
+            </modules>  
+        </translate>
+    </adminhtml>
+</config>
